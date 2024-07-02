@@ -20,6 +20,7 @@
             <li><a href="#" onclick="showSection('createKuppi')"><i class="bi bi-people-fill"></i>&nbsp;&nbsp;&nbsp;Create a Kuppi</a></li>
             <li><a href="#" onclick="showSection('joinKuppi')"><i class="bi bi-person-workspace"></i>&nbsp;&nbsp;&nbsp;Join for a Kuppi</a></li>
             <li><a href="#" onclick="showSection('externalSession')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;External Tutor Session</a></li>
+            <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-gear-fill"></i></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
             <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
             <li><a href="#"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
@@ -325,7 +326,197 @@
             </div>
         </section>
         <section class="content" id="externalSession">
-            
+            <div  class="header">
+                <h4>Browse For External Courses</h4>
+                <p>Join courses conducted by undergraduates at a low cost</p>
+            </div>
+            <div class="courseContent">
+                <h4>Courses Available</h4>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Course Title Here</h5>
+                                <label>Yeran Lakvidu</label><br/>
+                                <label class="time-period">3 Months , 25 Lectures</label><br/>
+                                <label class="ratingval">4.2</label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label>(37)</label>
+                                <p>LKR 6000.00</p>
+                                <a href="#" class="btn btn-primary">Enroll Now</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Course Title Here</h5>
+                                <label>Yeran Lakvidu</label><br/>
+                                <label class="time-period">3 Months , 25 Lectures</label><br/>
+                                <label class="ratingval">4.2</label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label>(37)</label>
+                                <p>LKR 6000.00</p>
+                                <a href="#" class="btn btn-primary">Enroll Now</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Course Title Here</h5>
+                                <label>Yeran Lakvidu</label><br/>
+                                <label class="time-period">3 Months , 25 Lectures</label><br/>
+                                <label class="ratingval">4.2</label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label>(37)</label>
+                                <p>LKR 6000.00</p>
+                                <a href="#" class="btn btn-primary">Enroll Now</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Course Title Here</h5>
+                                <label>Yeran Lakvidu</label><br/>
+                                <label class="time-period">3 Months , 25 Lectures</label><br/>
+                                <label class="ratingval">4.2</label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label class="bi bi-star-fill"></label>
+                                <label>(37)</label>
+                                <p>LKR 6000.00</p>
+                                <a href="#" class="btn btn-primary">Enroll Now</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="earnKuppi">
+                <div class="header">
+                    <h4>Earn From KuppiMate</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
+                        <div>
+                            <span id="heading1">Get Approval and Start<br/>
+                                <span id="heading2">Earning Now</span>
+                            </span>
+                            <a href="#" data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</a>
+                            <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+                            <span class="extraContent">simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span><br/>
+                            <span id="readMoreBtn">ReadMore</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
+                        <div>                
+                            <img src="/KuppiMate/public/images/external session.png" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+                <!--External session approval form-->
+                <div class="modal fade" id="ApprovalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg  modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Reschedule your Kuppi Session</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="#">
+                                    <div>
+                                        <label>Course Title</label><br/>
+                                        <input type="text"name="cTitle" required autocomplete="off"></br>
+                                        <label>Time period</label><br/>
+                                        <input type="text"name="cTime" required autocomplete="off">
+                                    </div>
+                                    <div class="textArea">
+                                        <label>About Course</label><br/>
+                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                                    </div>
+                                    <div class="textArea">
+                                        <label>Course Content</label><br/>
+                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                                    </div>
+                                    <div class="textArea">
+                                        <label>Tell Something About You</label><br/>
+                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                                    </div>
+                                    <div id="FileUpload">
+                                        <label>Upload Your Kuppi Materials</label><br>
+                                        <input type="file" multiple>
+                                    </div>    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary" >Request Approval</button>
+                            </div>
+                                </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content" id="paid-courses">
+            <div class="createKuppiContainer">
+                <div class="createKuppiContainer1"></div>
+            </div>
+            <div class="tutorDetails">
+                <h5>Contact Course Tutor</h5>
+                <span>Name :</span>
+                <span>Name goes Here</span></br>
+                <span>Conatct Number :</span>
+                <span>0710619833</span><br/>
+                <span>Email :</span>
+                <span>designs.yeran@gmail.com</span><br/>
+                <span>University Name :</span>
+                <span>Uva Wellassa University</span>
+            </div>
+            <div class="addReview">
+                <h5>Add a Review about the Course</h5>
+                <textarea class="description form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
+                <span>Rating&nbsp;</span>
+                <form class="star-rating">
+                    <input class="radio-input" type="radio" id="star1" name="star-input" value="5" />
+                    <label class="bi bi-star-fill" for="star1" title="1 stars"></label>
+
+                    <input class="radio-input" type="radio" id="star2" name="star-input" value="4" />
+                    <label class="bi bi-star-fill" for="star2" title="2 stars"></label>
+
+                    <input class="radio-input" type="radio" id="star3" name="star-input" value="3" />
+                    <label class="bi bi-star-fill" for="star3" title="3 stars"></label>
+
+                    <input class="radio-input" type="radio" id="star4" name="star-input" value="2" />
+                    <label class="bi bi-star-fill" for="star4" title="4 stars"></label>
+
+                    <input class="radio-input" type="radio" id="star5" name="star-input" value="1" />
+                    <label class="bi bi-star-fill" for="star5" title="5 star"></label>
+                </form>
+            </div>
         </section>
         <section class="content" id="settings">
             <div class="setting-container">            
@@ -399,7 +590,8 @@
             </div>      
         </section>
     </div>
-<!-- Popu up model in reshedule  --> 
+
+<!-- Popu up model in reshedule  -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg  modal-dialog-scrollable">
                 <div class="modal-content">

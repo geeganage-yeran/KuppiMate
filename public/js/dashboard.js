@@ -83,3 +83,17 @@ clearButton.addEventListener("click",function(){
     dateFilter.value="";
     dateFilter.style.color="#000000"
 })
+
+//Readmore Functionality
+document.getElementById('readMoreBtn').addEventListener('click', function() {
+    var extraContent = document.querySelector('.extraContent');
+    if (extraContent.style.display === 'none') {
+        extraContent.style.display = 'inline';
+        this.textContent = 'ReadLess';
+    } else {
+        extraContent.style.display = 'none';
+        this.textContent = 'ReadMore';
+    }
+  });
+
+  //Rating Process

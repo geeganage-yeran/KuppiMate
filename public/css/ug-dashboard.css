@@ -705,3 +705,116 @@ header img {
     background: none;
     border: none;
 }
+#externalSession .courseContent{
+    height: 600px;
+    overflow: scroll;
+}
+
+#externalSession .courseContent .card p { 
+    font-size: 20px;
+    font-weight: 600;
+    color: #031C40;
+    margin-top: 7px;
+}
+#externalSession .courseContent .card label{
+    margin-top: 4px;
+}
+#externalSession .courseContent .card .ratingval{
+    padding-right: 5px;
+    font-weight: 500;
+}
+#externalSession .courseContent .card .bi-star-fill{
+    color: #D79E31;
+    padding-right: 2px;
+}
+#externalSession .courseContent .card-title{
+    font-weight: 600;
+}
+#externalSession .courseContent .card .time-period{
+    color: #0B5ED7;
+    font-weight: 500;
+}
+#externalSession .courseContent .card .btn{
+    background-color: #0B5ED7;
+}
+#externalSession .courseContent .card .btn:hover{
+    background-color: #0b53be;
+}
+#externalSession .courseContent .card .btn:focus{
+   box-shadow: none;
+
+}
+#externalSession .courseContent h4{
+    text-align: center;
+    font-weight: 600;
+    color:#031C40;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+#externalSession .header h4{
+    text-align: center;
+    font-weight: 700;
+    font-size: 35px;
+    color: #0B5ED7;
+    margin-top: 20px;
+}
+#externalSession .header p{
+    color: #394961;
+    font-weight: 400;
+    font-size: 19px;
+    text-align: center;
+}
+#externalSession .earnKuppi .row{
+    margin-top: 60px;
+}
+#externalSession .earnKuppi #heading1{
+    font-size: 40px;
+    font-weight: 600;
+    color: #031C40;
+    line-height: 55px;
+}
+#externalSession .earnKuppi #heading2{
+    font-size: 55px;
+    font-weight: 600;
+    color: #031C40;
+}
+#externalSession .earnKuppi a{
+    background-color: #0B5ED7;
+    margin-left: 25px;
+}
+#externalSession .earnKuppi a:hover{
+    background-color: #0b53be;
+}
+#externalSession .earnKuppi a:focus{
+    box-shadow: none;
+}
+#externalSession .earnKuppi p{
+    text-align: justify;
+    margin-top: 25px;
+    font-size: 15px;
+
+}
+#externalSession .earnKuppi .extraContent{
+    display: none;
+}
+#externalSession .earnKuppi #readMoreBtn{
+    cursor: pointer;
+    color: #084297;
+    font-weight: 500;
+}
+#externalSession .earnKuppi .modal-footer button:last-child{
+    width: 150px;
+}
+#paid-courses .addReview .description{
+    max-width: 40rem;
+}
+
+#paid-courses .addReview .star-rating label:hover,
+label:hover ~ label,
+.radio-input:checked ~ label,
+.radio-input:checked ~ label ~ label {
+    color: #ffc107;
+}
+#paid-courses .addReview .radio-input{
+    display: none;
+}
