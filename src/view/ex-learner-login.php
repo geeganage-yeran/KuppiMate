@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp-External Learner</title>
     
-    <link rel="stylesheet" href="/KuppiMate/public/css/style1.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/KuppiMate/public/css/external-login.css?v=<?php echo time(); ?>">
 
 </head>
 <body>
