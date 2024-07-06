@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SignUp-undergraduate</title>
-    <link rel="stylesheet" href="/KuppiMate/public/css/css.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/KuppiMate/public/css/ug-signup.css?v=<?php echo time(); ?>">
 
 </head>
 <body>
