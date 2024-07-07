@@ -9,9 +9,9 @@
     <title>User Dashboard</title>
 </head>
 <body>
-    <div class="sideBar">
+    <div class="sideBar" id="sidebar">
         <div class="profile">
-            <h2>Yeran</h2><br>
+            <h2>Yeran</h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
 
             
         </div>
@@ -27,6 +27,9 @@
     </div>
     <div class="mainContainer">
         <header>
+            <div class="ham" id="hambMenu">
+                <i class="bi bi-list"></i>
+            </div>
             <h1 id="header-title"></h1>
             <img src="/KuppiMate/public/images/logo.png" alt="Logo">
         </header>

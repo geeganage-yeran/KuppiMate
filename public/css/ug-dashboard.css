@@ -20,6 +20,7 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+    z-index: 1000;
 }
 .navLinks {
     list-style: none;
@@ -43,7 +44,7 @@ body{
     white-space: nowrap;
 }
 .navLinks li:last-child{
-    margin-top: 120px;
+    margin-top: 90px;
 }
 .navLinks li:first-child{
     margin-top: 16px;
@@ -66,6 +67,16 @@ body{
 .profile h2{
     margin-top: 15px;
     font-weight: 500;
+    color: #0B5ED7;
+    display: inline-block;
+}
+.profile i{
+    margin-left: 90px;
+    font-size: 25px;
+    cursor: pointer;
+    display: none;
+}
+.profile i:hover{
     color: #0B5ED7;
 }
 .profile p{
@@ -817,4 +828,39 @@ label:hover ~ label,
 }
 #paid-courses .addReview .radio-input{
     display: none;
+}
+.ham{
+    display: none;
+}
+.mainContainer header i{
+    font-size: 29px;
+    padding-right: 10px;
+    cursor: pointer;  
+}
+.mainContainer header i:hover{
+    color: #0B5ED7;
+}
+/* -------------------------------------*/
+@media(max-width:768px){
+    .sideBar{
+        transform: translateX(-100%);
+    }
+    .mainContainer{
+        margin-left: 10px;
+        transition: 0.3s ease;
+    }
+    .sideBar.show{
+        transform: translateX(0);
+        transition: 0.4s ease;
+    }
+    .ham{
+        display: block;
+    }
+    .profile i{
+        display: inline-block;
+        margin-left: 95px;
+    }
+    .navLinks li:last-child{
+        margin-top: 65px;
+    }
 }

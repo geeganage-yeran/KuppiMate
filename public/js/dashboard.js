@@ -95,5 +95,16 @@ document.getElementById('readMoreBtn').addEventListener('click', function() {
         this.textContent = 'ReadMore';
     }
   });
+  //Ham menue
+  const hambMenu=document.getElementById("hambMenu");
+  const sideBar=document.getElementById("sidebar");
+  const closeMenue=document.getElementById("closeMenue");
+
+  hambMenu.addEventListener("click",function(){
+    sideBar.classList.toggle("show");
+  });
+  closeMenue.addEventListener("click",function(){
+    sideBar.classList.remove("show");
+  });
 
   //Rating Process
