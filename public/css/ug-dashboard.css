@@ -116,45 +116,37 @@ header img {
 
 /* Home section */
 
-.home-container1{
-    background-image: url(header-image.png);
-    background-size: cover;
-    height: 350px;
+.headerImage{
     margin-top: 20px;
 }
-.home-container2{
-    display: grid;
-    grid-template-columns:2fr 2fr 2fr;
-    text-align: justify;
-    column-gap: 25px;
-    row-gap: 25px;
-}
-.home-container2 div{
+.content .homecont .col-12 div,#my-courses .reviews .col-12 div{
     background-color: #F9F9F9;
     padding: 20px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 20px;
-    cursor: pointer;
 }
-.content .home-container2 div i{
+.content .homecont .col-12 div i{
     font-size: 5rem;
     color: #0B5ED7;
     display: block;
     text-align: center;
 }
-.content .home-container2 div:hover{
+.content .homecont .col-12 div:hover{
     background-color: #cfd7ee;
 }
-.home-container2 div p{
+.content .homecont .col-12 div p{
     color: #4A4F58;
 }
-.home-container-p{
+.content .homecont .col-12 div p:last-child{
+    text-align: justify;
+    margin-top: 15px;
+}
+.content .homecont .col-12 div .homecont-p{
     text-align: center;
     font-weight: 600;
     font-size: 20px;
     margin-bottom: 6px;
 }
-
 /* setting section */
 
 .setting-container {
@@ -164,12 +156,7 @@ header img {
     row-gap: 25px;
     margin-top: 20px;
 }
-.setting-container1 {
-    background-image: url(header-image.png);
-    height: 350px;
-    background-size: cover;
-    grid-column: 1 / span 3;
-}
+
 .edit-header{
     grid-column: 1/span 3;
 }
@@ -252,13 +239,6 @@ header img {
     grid-template-columns: 2fr 2fr 2fr 2fr 2fr 2fr;
     column-gap: 25px;
     row-gap: 25px;
-    margin-top: 20px;
-}
-.createKuppiContainer1{ 
-    background-image: url(header-image.png);
-    height: 300px;
-    background-size: cover;
-    grid-column: 1/span 6;
 }
 #createKuppiHeading{
     grid-column: 1/span 6;
@@ -269,7 +249,7 @@ header img {
 #CreateKuppiTitle{
     grid-column: 1/span 6;
 }
-.createKuppiContainer input{
+.createKuppiContainer input,#my-courses form input{
     width:85%;
     font-size: 15px;
     padding: 8px;
@@ -279,18 +259,18 @@ header img {
     font-weight: 500;
     margin-top: 5px;
 }
-.createKuppiContainer label{
+.createKuppiContainer label,#my-courses form label{
     font-weight: 550;
     color: #667085;
 }
 #CreateKuppiFrom{
     grid-column: 1/span 6;
 }
-#CreateKuppiFrom .Kdate{
+#CreateKuppiFrom .Kdate,#my-courses form .Kdate{
     width: 10rem;
     text-align: center;
 }
-#CreateKuppiFrom .Ktime{
+#CreateKuppiFrom .Ktime,#my-courses form .Ktime{
     width: 9rem;
     text-align: center;
 }
@@ -816,19 +796,146 @@ header img {
 #externalSession .earnKuppi .modal-footer button:last-child{
     width: 150px;
 }
+#externalSession .modal-title{
+    color: #0B5ED7;
+}
+
+/*paid course section */
+
+#paid-courses h3{
+    font-weight: 600;
+    color: #0B5ED7;
+    margin-bottom: 20px;
+}
+
 #paid-courses .addReview .description{
     max-width: 40rem;
 }
+#paid-courses .star{
+    cursor: pointer;
+    font-size: 21px;
+    margin-right: 5px;
+}
+#paid-courses .star i{
+    font-size: 21px;
+}
+#paid-courses .star-rating input[type="number"]{
+    width: 35px;
+    font-weight: bold;
+    font-size: 17px;
+    background: none;
+    border: none;
+}
+#paid-courses .star-rating input[type="submit"]{
+    color:#0B5ED7;
+    background-color: white;
+    padding: 8px 12px 8px 12px;
+    border:2px solid #0B5ED7 ;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 15px;
+    transition: 0.5s;
+}
+#paid-courses .star-rating input[type="submit"]:hover{
+    background-color: #0B5ED7;
+    color: white;
+}
+#paid-courses .card-body .card-title{
+    color: #626060;
+    font-weight: 700;
+}
+#paid-courses h5{
+    margin-bottom: 20px;
+    color: #626060;
+    font-weight: 700;
+}
+#paid-courses .star-rating #rHead{
+    font-size:18px;
+    font-weight: 500;
+}
+.one {
+    color: rgb(255, 0, 0);
+  }
+   
+  .two,.three,.four {
+    color: rgb(247, 210, 0);
+  }
 
-#paid-courses .addReview .star-rating label:hover,
-label:hover ~ label,
-.radio-input:checked ~ label,
-.radio-input:checked ~ label ~ label {
-    color: #ffc107;
+  .five {
+    color: rgb(24, 159, 14);
+  }
+
+#paid-courses .tutorDetails label{
+   margin-top: 10px;
 }
-#paid-courses .addReview .radio-input{
-    display: none;
-}
+#paid-courses .tutorDetails .container .d-flex{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 12px;
+    background-color:  #F9F9F9;
+    max-width: 500px;
+ }
+ #paid-courses .tutorDetails .container .d-flex .p-2{
+    margin-left: 10px;
+ }
+ #paid-courses .course-links .container .d-flex .p-2,#my-courses .container .d-flex{
+    background-color: #F1F1F1;
+    border:2px solid  rgb(98, 96, 96,0.5);
+    border-radius: 10px;
+ }
+ #paid-courses .course-links .container .d-flex .p-2 label,#my-courses .container label{
+    margin-bottom: 5px;
+ }
+ #paid-courses .course-links .container .d-flex .p-2 #mDetail, #my-courses .container #mDetail {
+    color: #0B5ED7;
+    font-weight: 600;
+ }
+ #paid-courses .accordion-item button{
+    background-color:#F1F1F1 ;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-weight: 600;
+ }
+
+ /*---------------------------------*/
+ /*my courses section*/
+
+ #my-courses form label{
+    margin-top: 16px;
+ }
+ #my-courses form .btn{
+    border-radius: 8px;
+
+ }
+ #my-courses form .btn:focus{
+    box-shadow: none;
+    border-style: none;
+ }
+ #my-courses form .btn-outline-primary{
+    color: #0B5ED7;
+ }
+ #my-courses form .btn-primary{
+    background-color: #0B5ED7;
+ }
+ #my-courses form .btn-primary:hover{
+    background-color: #0b53be;
+ }
+ #my-courses form .btn-outline-primary:hover{
+    color: white;
+    background-color: #0b53be;
+ }
+ #my-courses form .btn-outline-primary:focus{
+    border: 1px solid #0B5ED7;
+ }
+ #my-courses .reviews .col-12 div{
+    border: 2px solid #0B5ED7;
+ }
+ #my-courses .reviews .col-12 div p:last-child{
+    text-align: justify;
+ }
+ #my-courses h3{
+    font-weight: 600;
+    color: #626060;
+ }
+
 .ham{
     display: none;
 }
@@ -837,9 +944,11 @@ label:hover ~ label,
     padding-right: 10px;
     cursor: pointer;  
 }
+
 .mainContainer header i:hover{
     color: #0B5ED7;
 }
+
 /* -------------------------------------*/
 @media(max-width:768px){
     .sideBar{

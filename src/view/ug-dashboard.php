@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +9,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>User Dashboard</title>
 </head>
+
 <body>
     <div class="sideBar" id="sidebar">
         <div class="profile">
             <h2>Yeran</h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
-
-            
         </div>
         <ul class="navLinks">
             <li><a href="#" onclick="showSection('home')" class="active"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;&nbsp;Home</a></li>
             <li><a href="#" onclick="showSection('createKuppi')"><i class="bi bi-people-fill"></i>&nbsp;&nbsp;&nbsp;Create a Kuppi</a></li>
             <li><a href="#" onclick="showSection('joinKuppi')"><i class="bi bi-person-workspace"></i>&nbsp;&nbsp;&nbsp;Join for a Kuppi</a></li>
-            <li><a href="#" onclick="showSection('externalSession')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;External Tutor Session</a></li>
-            <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-gear-fill"></i></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
-            <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
+            <li><a href="#" onclick="showSection('externalSession')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;External Tutor Sessions</a></li>
+            <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-cash-stack"></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
+            <li><a href="#" onclick="showSection('my-courses')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;My Courses</a></li>
+            <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
             <li><a href="#"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
@@ -34,38 +35,54 @@
             <img src="/KuppiMate/public/images/logo.png" alt="Logo">
         </header>
         <section class="content" id="home">
-            <div class="home-container1"></div>
-            <div class="home-container2">
-                <div>
-                    <i class="bi bi-person-workspace"></i>
-                    <p class="home-container-p">How to join for a Kuppi</p>
-                    <p> Just click on the Join for a kuppi and you can join for any Kuppi session in srilanka government uuniversities</p> 
-                </div>
-                <div>
-                    <i class="bi bi-people-fill"></i>
-                    <p class="home-container-p">How to shedule a Kuppi</p>
-                    <p>Just click on the Join for a kuppi and you can join for any Kuppi session in srilanka government uuniversities</p>
-                </div>
-                <div>
-                    <i class="bi bi-person-lines-fill"></i>
-                    <p class="home-container-p">About external session</p>
-                    <p>Just click on the Join for a kuppi and you can join for any Kuppi session in srilanka government uuniversities</p>
-                </div>
-                <div>
-                    <i class="bi bi-person-video3"></i>
-                    <p class="home-container-p">Join for a external session</p>
-                    <p>Just click on the Join for a kuppi and you can join for any Kuppi session in srilanka government uuniversities</p>
-                </div>
-                <div>
-                    <i class="bi bi-question-lg"></i>
-                    <p class="home-container-p">Any question</p>
-                    <p>Just click on the Join for a kuppi and you can join for any Kuppi session in srilanka government uuniversities</p>
+            <div class="headerImage">
+                <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
+            </div>
+            <div class="container homecont">
+                <div class="row gx-3">
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <i class="bi bi-person-workspace"></i>
+                            <p class="homecont-p">How to join for a Kuppi</p>
+                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <i class="bi bi-people-fill"></i>
+                            <p class="homecont-p">How to schedule a Kuppi</p>
+                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <i class="bi bi-person-lines-fill"></i>
+                            <p class="homecont-p">About external session</p>
+                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <i class="bi bi-person-video3"></i>
+                            <p class="homecont-p">Join for an external session</p>
+                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <i class="bi bi-question-lg"></i>
+                            <p class="homecont-p">Any questions</p>
+                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
         <section class="content" id="createKuppi">
+            <div class="headerImage">
+                <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
+            </div>
             <div class="createKuppiContainer">
-                <div class="createKuppiContainer1"></div>
                 <div id="createKuppiHeading">Schedule your Kuppi Session</div>
                 <div id="CreateKuppiTitle">
                     <label>Session Title</label><br>
@@ -77,7 +94,7 @@
                     <input class="Ktime Kuppifrom" type="time" name="Kuppitime">
                     <label>to</label>
                     <input class="Kdate Kuppito" type="date" name="KuppiDate">
-                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" >
+                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime">
                 </div>
                 <div id="selectCategory">
                     <label>Session Category</label><br>
@@ -94,50 +111,98 @@
                     <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..."></textarea>
                 </div>
                 <div id="FileUpload">
-                <label>Upload Your Kuppi Materials</label><br>
+                    <label>Upload Your Kuppi Materials</label><br>
                     <input type="file" multiple>
                 </div>
                 <div id="CreateSection">
                     <button>Cancle</button>
                     <button>Create Kuppi</button>
                 </div>
-                <div id="kuppiResultsection" >
+                <div id="kuppiResultsection">
                     <div>
                         <label class="blocks">Session Title Goes Here</label>
-                        <br/>
+                        <br />
                         <label class="Bvalue">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage</label>
                         <label class="blocks">Date/Time :&nbsp; </label>
-                        <label class="Bvalue">06/13/2024  |  12.00PM to 06/13/2024  |  12.00PM</label>
-                        <br/>
+                        <label class="Bvalue">06/13/2024 | 12.00PM to 06/13/2024 | 12.00PM</label>
+                        <br />
                         <label class="blocks">Approval Status :&nbsp;</label>
                         <label class="Bvalue red">Pending</label><br>
                         <label class="blocks">Session Link :&nbsp; </label>
                         <label class="Bvalue">Link will display here</label><br>
                         <button class="btn btn-outline-danger">Delete</button>
                         <button class="btn btn-outline-primary reshedule" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Reschedule</button>
-                        <button class="btn btn-outline-success" >Proceed</button>
+                        <button class="btn btn-outline-success">Proceed</button>
                         <p>Approval process will complete within few minutes</p>
                     </div>
                     <div>
                         <label class="blocks">Session Title Goes Here</label>
-                        <br/>
+                        <br />
                         <label class="Bvalue">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage</label>
                         <label class="blocks">Date/Time :&nbsp; </label>
-                        <label class="Bvalue">06/13/2024  |  12.00PM to 06/13/2024  |  12.00PM</label>
-                        <br/>
+                        <label class="Bvalue">06/13/2024 | 12.00PM to 06/13/2024 | 12.00PM</label>
+                        <br />
                         <label class="blocks">Approval Status :&nbsp;</label>
                         <label class="Bvalue red">Pending</label><br>
                         <label class="blocks">Session Link :&nbsp; </label>
                         <label class="Bvalue">Link will display here</label><br>
                         <button class="btn btn-outline-danger">Delete</button>
                         <button class="btn btn-outline-primary reshedule" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Reschedule</button>
-                        <button class="btn btn-outline-success" >Proceed</button>
+                        <button class="btn btn-outline-success">Proceed</button>
                         <p>Approval process will complete within few minutes</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Popu up model in reshedule  -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg  modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Reschedule your Kuppi Session</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="#">
+                                <div>
+                                    <label>Session Title</label><br />
+                                    <input type="text" name="tName" required autocomplete="off">
+                                </div>
+                                <div>
+                                    <label>Time and Date</label><br />
+                                    <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
+                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                                    <label id="label-popup">to</label>
+                                    <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
+                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                                </div>
+                                <div>
+                                    <label>Session Category</label><br />
+                                    <select name="category" id="category" required>
+                                        <option>Select the Category</option>
+                                        <option value="#">Category 1</option>
+                                        <option value="#">Category 2</option>
+                                        <option value="#">Category 3</option>
+                                        <option value="#">Category 4</option>
+                                    </select>
+                                </div>
+                                <div class="textArea">
+                                    <label class="maxChar">Session Description</label><br />
+                                    <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Done</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
         <section class="content" id="joinKuppi">
+            <div class="headerImage">
+                <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
+            </div>
             <div id="joinHeader">
                 <h4>Upcomming Kuppi Sessions</h4>
             </div>
@@ -153,7 +218,7 @@
                     </select>
                     <label id="date-filter">Filter By Date:</label>
                     <input type="date" class="Kdate Kuppifrom" id="dateFilter">
-                    <button class="btn btn-primary btn-sm" id="clearButton" >Clear All</button>
+                    <button class="btn btn-primary btn-sm" id="clearButton">Clear All</button>
                     <input type="submit" class="btn btn-primary btn-sm" value="Filter">
                 </form>
             </div>
@@ -238,7 +303,7 @@
                     <div class="col">
                         <div class="grid-tile">
                             <span>Uva Wellassa University</span>
-                            <button class="btn btn-primary btn-view" data-bs-toggle="modal" data-bs-target="#universityKuppi" >View Kuppis</button>
+                            <button class="btn btn-primary btn-view" data-bs-toggle="modal" data-bs-target="#universityKuppi">View Kuppis</button>
                         </div>
                     </div>
                     <div class="col">
@@ -291,7 +356,7 @@
                     </div>
                     <div class="col">
                         <div class="grid-tile">
-                            <span>South Eastern University<br/>of Sri Lanka</span>
+                            <span>South Eastern University<br />of Sri Lanka</span>
                             <button class="btn btn-primary btn-view">View Kuppis</button>
                         </div>
                     </div>
@@ -303,7 +368,7 @@
                     </div>
                     <div class="col">
                         <div class="grid-tile">
-                            <span>Sabaragamuwa University<br/>of Sri Lanka</span>
+                            <span>Sabaragamuwa University<br />of Sri Lanka</span>
                             <button class="btn btn-primary btn-view">View Kuppis</button>
                         </div>
                     </div>
@@ -329,7 +394,10 @@
             </div>
         </section>
         <section class="content" id="externalSession">
-            <div  class="header">
+            <div class="headerImage">
+                <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
+            </div>
+            <div class="header">
                 <h4>Browse For External Courses</h4>
                 <p>Join courses conducted by undergraduates at a low cost</p>
             </div>
@@ -341,8 +409,8 @@
                             <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br/>
-                                <label class="time-period">3 Months , 25 Lectures</label><br/>
+                                <label>Yeran Lakvidu</label><br />
+                                <label class="time-period">3 Months , 25 Lectures</label><br />
                                 <label class="ratingval">4.2</label>
                                 <label class="bi bi-star-fill"></label>
                                 <label class="bi bi-star-fill"></label>
@@ -351,69 +419,33 @@
                                 <label class="bi bi-star-fill"></label>
                                 <label>(37)</label>
                                 <p>LKR 6000.00</p>
-                                <a href="#" class="btn btn-primary">Enroll Now</a>
-                                
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#enrollNow" class="btn btn-primary">Enroll Now</a>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br/>
-                                <label class="time-period">3 Months , 25 Lectures</label><br/>
-                                <label class="ratingval">4.2</label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label>(37)</label>
-                                <p>LKR 6000.00</p>
-                                <a href="#" class="btn btn-primary">Enroll Now</a>
-                                
+                            <!--popup enroll now-->
+                            <div class="modal fade" id="enrollNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title fw-bold" id="staticBackdropLabel">Course Title</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 class="fw-bold mb-1">Introduction</h5>
+                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+
+                                            <h5 class="fw-bold mb-1">Course Content</h5>
+                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+
+                                            <h5 class="fw-bold mb-1">Who I Am</h5>
+                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+
+                                            <h3 class="fw-bold">LKR.2000.00</h3>
+                                            <button type="button" class="btn btn-primary mt-2">Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br/>
-                                <label class="time-period">3 Months , 25 Lectures</label><br/>
-                                <label class="ratingval">4.2</label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label>(37)</label>
-                                <p>LKR 6000.00</p>
-                                <a href="#" class="btn btn-primary">Enroll Now</a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br/>
-                                <label class="time-period">3 Months , 25 Lectures</label><br/>
-                                <label class="ratingval">4.2</label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label>(37)</label>
-                                <p>LKR 6000.00</p>
-                                <a href="#" class="btn btn-primary">Enroll Now</a>
-                                
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -425,18 +457,18 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-7">
                         <div>
-                            <span id="heading1">Get Approval and Start<br/>
+                            <span id="heading1">Get Approval and Start<br />
                                 <span id="heading2">Earning Now</span>
                             </span>
                             <a href="#" data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</a>
                             <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                            <span class="extraContent">simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span><br/>
-                            <span id="readMoreBtn">ReadMore</span>
+                                <span class="extraContent">simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span><br />
+                                <span id="readMoreBtn">ReadMore</span>
                             </p>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-5">
-                        <div>                
+                        <div>
                             <img src="/KuppiMate/public/images/external session.png" class="img-fluid" alt="">
                         </div>
                     </div>
@@ -446,85 +478,292 @@
                     <div class="modal-dialog modal-lg  modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">Reschedule your Kuppi Session</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
+                                <h5 class="modal-title" id="staticBackdropLabel">External Session Approval Form</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
                                 <form action="#">
                                     <div>
-                                        <label>Course Title</label><br/>
-                                        <input type="text"name="cTitle" required autocomplete="off"></br>
-                                        <label>Time period</label><br/>
-                                        <input type="text"name="cTime" required autocomplete="off">
+                                        <label>Course Title</label><br />
+                                        <input type="text" name="cTitle" required autocomplete="off"></br>
+                                        <label>Time period</label><br />
+                                        <input type="text" name="cTime" required autocomplete="off">
                                     </div>
                                     <div class="textArea">
-                                        <label>About Course</label><br/>
+                                        <label class="maxChar">About Course</label><br />
+                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                                    </div>
+                                    <div class="fee">
+                                        <label>Course Fee</label><br />
+                                        <input type="text" name="cFee" placeholder="12000" autocomplete="off">
+                                    </div>
+                                    <div class="textArea">
+                                        <label class="maxChar">Course Content</label><br />
                                         <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
                                     </div>
                                     <div class="textArea">
-                                        <label>Course Content</label><br/>
-                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
-                                    </div>
-                                    <div class="textArea">
-                                        <label>Tell Something About You</label><br/>
+                                        <label class="maxChar">Tell Something About You</label><br />
                                         <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
                                     </div>
                                     <div id="FileUpload">
-                                        <label>Upload Your Kuppi Materials</label><br>
+                                        <label>Upload Your External Session Materials</label><br>
                                         <input type="file" multiple>
-                                    </div>    
+                                    </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary" >Request Approval</button>
+                                <button type="submit" class="btn btn-primary">Request Approval</button>
                             </div>
-                                </form>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <section class="content" id="paid-courses">
-            <div class="createKuppiContainer">
-                <div class="createKuppiContainer1"></div>
+            <div class="headerImage">
+                <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
             </div>
-            <div class="tutorDetails">
-                <h5>Contact Course Tutor</h5>
-                <span>Name :</span>
-                <span>Name goes Here</span></br>
-                <span>Conatct Number :</span>
-                <span>0710619833</span><br/>
-                <span>Email :</span>
-                <span>designs.yeran@gmail.com</span><br/>
-                <span>University Name :</span>
-                <span>Uva Wellassa University</span>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Paid Course Title
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <h3>Tiltle of the course Here</h3>
+                            <div class="course-links">
+                                <div class="container">
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tutorDetails">
+                                <h5>Contact Course Tutor</h5>
+                                <div class="container">
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <b><label>Name :</label></b>
+                                            <label>Name goes Here</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>Contact Number :</label></b>
+                                            <label>0710619833</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>Email :</label></b>
+                                            <label>designs.yeran@gmail.com</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>University Name :</label></b>
+                                            <label>Uva Wellassa University</label><br />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="addReview">
+                                <h5>Add a Review about the Course</h5>
+                                <div class="container">
+                                    <form class="star-rating">
+                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
+                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
+                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <input type="number" id="rating-value" readonly><br />
+                                        <input type="submit" value="Submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="addReview">
-                <h5>Add a Review about the Course</h5>
-                <textarea class="description form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
-                <span>Rating&nbsp;</span>
-                <form class="star-rating">
-                    <input class="radio-input" type="radio" id="star1" name="star-input" value="5" />
-                    <label class="bi bi-star-fill" for="star1" title="1 stars"></label>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Paid Course Title
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <h3>Tiltle of the course Here</h3>
+                            <div class="course-links">
+                                <div class="container">
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <label id="mDetail">Meeting LInk :</label>
+                                            <label>Link here</label><br />
+                                            <label id="mDetail">Date/Time :</label>
+                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tutorDetails">
+                                <h5>Contact Course Tutor</h5>
+                                <div class="container">
+                                    <div class="d-flex flex-column mb-3">
+                                        <div class="p-2">
+                                            <b><label>Name :</label></b>
+                                            <label>Name goes Here</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>Contact Number :</label></b>
+                                            <label>0710619833</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>Email :</label></b>
+                                            <label>designs.yeran@gmail.com</label><br />
+                                        </div>
+                                        <div class="p-2">
+                                            <b><label>University Name :</label></b>
+                                            <label>Uva Wellassa University</label><br />
+                                        </div>
 
-                    <input class="radio-input" type="radio" id="star2" name="star-input" value="4" />
-                    <label class="bi bi-star-fill" for="star2" title="2 stars"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="addReview">
+                                <h5>Add a Review about the Course</h5>
+                                <div class="container">
+                                    <form class="star-rating">
+                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
+                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
+                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
+                                        <input type="number" id="rating-value" readonly><br />
+                                        <input type="submit" value="Submit">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content" id="my-courses">
+            <form action="#">
+                <div>
+                    <label class="form-label">Session Title</label><br />
+                    <input type="text" name="tName" required autocomplete="off">
+                </div>
+                <div>
+                    <label class="form-label">Time and Date</label><br />
+                    <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
+                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                    <label id="label-popup">to</label>
+                    <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
+                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                </div>
+                <div class="mt-4">
+                    <button type="reset" class="btn btn-outline-primary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Get the Link</button>
+                </div>
+            </form>
+            <div class="container">
+                <div class="d-flex flex-column mb-3">
+                    <div class="p-2">
+                        <label id="mDetail">Meeting LInk :</label>
+                        <label>Link here</label><br />
+                        <label id="mDetail">Date/Time :</label>
+                        <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                    </div>
+                </div>
+                <div class="d-flex flex-column mb-3">
+                    <div class="p-2">
+                        <label id="mDetail">Meeting LInk :</label>
+                        <label>Link here</label><br />
+                        <label id="mDetail">Date/Time :</label>
+                        <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                    </div>
+                </div>
+            </div>
+            <h3>Ratings and User Reviews</h3>
+            <div class="container reviews">
+                <div class="row gx-3">
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <p class="homecont-p fw-bold">User 1</p>
 
-                    <input class="radio-input" type="radio" id="star3" name="star-input" value="3" />
-                    <label class="bi bi-star-fill" for="star3" title="3 stars"></label>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
 
-                    <input class="radio-input" type="radio" id="star4" name="star-input" value="2" />
-                    <label class="bi bi-star-fill" for="star4" title="4 stars"></label>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div>
+                            <p class="homecont-p fw-bold">User 2</p>
 
-                    <input class="radio-input" type="radio" id="star5" name="star-input" value="1" />
-                    <label class="bi bi-star-fill" for="star5" title="5 star"></label>
-                </form>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <section class="content" id="settings">
-            <div class="setting-container">            
+            <div class="setting-container">
                 <div class="setting-container1"></div>
-                <div class="edit-header"><p>Edit Profile</p></div>
+                <div class="edit-header">
+                    <p>Edit Profile</p>
+                </div>
                 <div>
                     <label>First Name</label><br>
                     <input type="text" name="fName" required autocomplete="off">
@@ -570,7 +809,9 @@
                     <button>Cancle</button>
                     <button>Update Profile</button>
                 </div>
-                <div class="edit-header"><p>Change the Login password</p></div>
+                <div class="edit-header">
+                    <p>Change the Login password</p>
+                </div>
                 <div class="update-password">
                     <label>Current Password</label><br>
                     <input type="password" name="cPassword" autocomplete="off">
@@ -578,8 +819,8 @@
                 <div>
                     <label>New Password</label><br>
                     <input type="password" name="cPassword" autocomplete="off">
-                    <p class="update-password-instruction">The new password must have at least 6 characters, at least 
-                1 digit(s),at least 1 lower case letter(s), at least 1 upper case letter(s)</p>
+                    <p class="update-password-instruction">The new password must have at least 6 characters, at least
+                        1 digit(s),at least 1 lower case letter(s), at least 1 upper case letter(s)</p>
                 </div>
                 <div>
                     <label>New Password Again</label><br>
@@ -589,56 +830,11 @@
                 <div class="setting-button">
                     <button>Cancle</button>
                     <button>Save Password</button>
-                </div>             
-            </div>      
-        </section>
-    </div>
-
-<!-- Popu up model in reshedule  -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg  modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Reschedule your Kuppi Session</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
-                    </div>
-                        <div class="modal-body">
-                            <form action="#">
-                                    <div>
-                                        <label>Session Title</label><br/>
-                                        <input type="text"name="tName" required autocomplete="off">
-                                    </div>
-                                    <div>
-                                        <label>Time and Date</label><br/>
-                                        <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
-                                        <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                        <label id="label-popup">to</label>
-                                        <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
-                                        <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                    </div>
-                                    <div>
-                                        <label>Session Category</label><br/>
-                                        <select name="category"id="category" required>
-                                            <option>Select the Category</option>
-                                            <option value="#">Category 1</option>
-                                            <option value="#">Category 2</option>
-                                            <option value="#">Category 3</option>
-                                            <option value="#">Category 4</option>
-                                        </select>
-                                    </div>
-                                    <div class="textArea">
-                                        <label class="maxChar">Session Description</label><br/>
-                                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
-                                    </div>      
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" >Done</button>
-                        </div>
-                    </form>
                 </div>
             </div>
-        </div>
+        </section>
+    </div>
     <script src="/KuppiMate/public/js/dashboard.js?v=<?php echo time(); ?>"></script>
 </body>
+
 </html>
