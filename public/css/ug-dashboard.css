@@ -147,89 +147,41 @@ header img {
     font-size: 20px;
     margin-bottom: 6px;
 }
-/* setting section */
 
-.setting-container {
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
-    column-gap: 25px;
-    row-gap: 25px;
-    margin-top: 20px;
-}
+/* setting section*/
 
-.edit-header{
-    grid-column: 1/span 3;
+#settings .container table tr td:first-child{
+    color: #0B5ED7;
 }
-.edit-header p{
-    font-size: 20px;
+#settings .container table tr td:last-child{
+    font-weight: 500;
+}
+#settings .container h4{
     font-weight: 600;
     color: #626060;
 }
-.setting-container input{
-    width:20rem;
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 2.2px solid #62606080;
-    color:#000000;
-    font-weight: 500;
-    margin-top: 5px;
-   
-}
-.setting-container #universities{
-    width:20rem;
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 2.2px solid #62606080;
-    color:#626060;
-    font-weight: 500;
-    margin-top: 5px;
-}
-.setting-container input:focus{
-    outline: none;
-}
-.setting-container label{
-    font-weight: 500;
-    color: #252729;
-}
-.setting-container .setting-button button{
-   background: none;
-   padding: 9px;
-   border-radius:7px;
-   font-size: 14px;
-   font-weight: 500;
-   border: none;
-   cursor: pointer;
-   transition: 0.5s;
-}
-.setting-container .setting-button button:first-child{
-    border: 1px solid #0B5ED7;
-    color: #0B5ED7;
-    margin-right: 5px;
-}
-.setting-container .setting-button button:last-child{
-    border: 1px solid #0B5ED7;
+#settings .container .btn-primary{
     background-color: #0B5ED7;
-    color: white;
 }
-.setting-container .setting-button button:last-child:hover{
+#settings .btn-primary:focus{
+    box-shadow: none;
+}
+#settings .btn{
+    border-radius: 8px;
+}
+#settings .btn-primary:hover{
+    background-color: #0b53be;
+}
+#settings .btn-outline-primary:hover{
     background-color: #0b53be;
     color: white;
 }
-.setting-container .setting-button button:first-child:hover{
-    background-color: #dedef3;
+#settings .btn-outline-primary:focus{
+    box-shadow: none;
 }
-.update-password{
-    grid-column: 1/span 3;
-}
-.update-password-instruction{
-    grid-column: 1/span 3;
-    font-size: 10px;
-    font-weight: 500;
-    color: #252729;
-    margin-left: 5px;
-    margin-top: 5px;
+#settings input,#settings select{
+    border: 2px solid rgb(98, 96, 96,0.5);
+    border-radius: 8px;
 }
 
 /* Create Kuppi section */

@@ -767,82 +767,111 @@
             </div>
         </section>
         <section class="content" id="settings">
-            <div class="setting-container">
-                <div class="setting-container1"></div>
-                <div class="edit-header">
-                    <p>Edit Profile</p>
+            <div class="container mt-5">
+                <h4>Profile Details</h4>
+                <div class="d-flex mb-3 mt-4">
+                    <div class="p-2 flex-fill">
+                        <table>
+                            <tr>
+                                <td class="fw-bold pb-3">First Name:</td>
+                                <td class="ps-4 pb-3">Yeran</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold pb-3">Last Name:</td>
+                                <td class="ps-4 pb-3">Lakvidu</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold pb-3">University Name:</td>
+                                <td class="ps-4 pb-3">Uva Wellassa University</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold pb-3">Email:</td>
+                                <td class="ps-4 pb-3">designs.yeran@gmail.com</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold pb-3">Contact:</td>
+                                <td class="ps-4 pb-3">0710619833</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="p-2 flex-fill "></div>
                 </div>
-                <div>
-                    <label>First Name</label><br>
-                    <input type="text" name="fName" required autocomplete="off">
-                </div>
-                <div>
-                    <label>Last Name</label><br>
-                    <input type="text" name="lName" required autocomplete="off">
-                </div>
-                <div>
-                    <label>University Name</label><br>
-                    <!--<input type="text" name="uUniversity" required autocomplete="off">-->
-                    <select name="universities" id="universities">
-                        <option>Please Select Your University</option>
-                        <option value="Uva Wellassa University">Uva Wellassa University</option>
-                        <option value="University of Colombo">University of Colombo</option>
-                        <option value="University of Peradeniya">University of Peradeniya</option>
-                        <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
-                        <option value="University of Kelaniya">University of Kelaniya</option>
-                        <option value="University of Moratuwa">University of Moratuwa</option>
-                        <option value="University of Jaffna">University of Jaffna</option>
-                        <option value="University of Ruhuna">University of Ruhuna</option>
-                        <option value="Eastern University, Sri Lanka">Eastern University, Sri Lanka</option>
-                        <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
-                        <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
-                        <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
-                        <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
-                        <option value="University of the Visual and Performing Arts">University of the Visual and Performing Arts</option>
-                        <option value="Gampaha Wickramarachchi University of Indigenous Medicine">Gampaha Wickramarachchi University of Indigenous Medicine</option>
-                        <option value="University of Vavuniya">University of Vavuniya</option>
-                    </select>
-                </div>
-                <div>
-                    <label> Email</label><br>
-                    <input type="email" name="uEmail" required autocomplete="off">
-                </div>
-                <div>
-                    <label>Contact</label><br>
-                    <input type="text" name="uContact" required maxlength="10" autocomplete="off">
-                </div>
-                <div>
-                </div>
-                <div class="setting-button">
-                    <button>Cancle</button>
-                    <button>Update Profile</button>
-                </div>
-                <div class="edit-header">
-                    <p>Change the Login password</p>
-                </div>
-                <div class="update-password">
-                    <label>Current Password</label><br>
-                    <input type="password" name="cPassword" autocomplete="off">
-                </div>
-                <div>
-                    <label>New Password</label><br>
-                    <input type="password" name="cPassword" autocomplete="off">
-                    <p class="update-password-instruction">The new password must have at least 6 characters, at least
-                        1 digit(s),at least 1 lower case letter(s), at least 1 upper case letter(s)</p>
-                </div>
-                <div>
-                    <label>New Password Again</label><br>
-                    <input type="password" name="cPassword" autocomplete="off">
-                </div>
-                <div></div>
-                <div class="setting-button">
-                    <button>Cancle</button>
-                    <button>Save Password</button>
-                </div>
+            </div>
+            <div class="container">
+                <form class="row g-3">
+                    <div class="class-md-12">
+                        <h4>Edit Profile</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fname" class="form-label">First Name</label>
+                        <input type="text" name="fname" class="form-control" id="fname">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <input type="text" name="lname" class="form-control" id="lname">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="uni" class="form-label">University</label>
+                        <select id="uni" name="uni" class="form-select">
+                            <option>Please Select Your University</option>
+                            <option value="Uva Wellassa University">Uva Wellassa University</option>
+                            <option value="University of Colombo">University of Colombo</option>
+                            <option value="University of Peradeniya">University of Peradeniya</option>
+                            <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
+                            <option value="University of Kelaniya">University of Kelaniya</option>
+                            <option value="University of Moratuwa">University of Moratuwa</option>
+                            <option value="University of Jaffna">University of Jaffna</option>
+                            <option value="University of Ruhuna">University of Ruhuna</option>
+                            <option value="Eastern University, Sri Lanka">Eastern University, Sri Lanka</option>
+                            <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
+                            <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
+                            <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
+                            <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
+                            <option value="University of the Visual and Performing Arts">University of the Visual and Performing Arts</option>
+                            <option value="Gampaha Wickramarachchi University of Indigenous Medicine">Gampaha Wickramarachchi University of Indigenous Medicine</option>
+                            <option value="University of Vavuniya">University of Vavuniya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="contact" class="form-label">Contact</label>
+                        <input type="text" name="contact" class="form-control" id="contact">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="reset" class="btn btn-outline-primary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
+                    </div>
+                </form>
+                <form class="row g-3 mt-3">
+                    <div class="class-md-12">
+                        <h4>Change the Login Password</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="pr-password" class="form-label">Current Password</label>
+                        <input type="password" name="pr-password" class="form-control" id="pr-password" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="new-password" class="form-label">New Password</label>
+                        <input type="password" name="pr-password" class="form-control" id="new-password" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="con-password" class="form-label">Confirm New Password</label>
+                        <input type="password" name="con-password" class="form-control" id="con-password" required>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="reset" class="btn btn-outline-primary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </form>
             </div>
         </section>
     </div>
-    <script src="/KuppiMate/public/js/dashboard.js?v=<?php echo time(); ?>"></script>
+    <script src="/KuppiMate/public/js/ug-dashboard.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
