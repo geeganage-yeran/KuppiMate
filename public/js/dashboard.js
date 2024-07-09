@@ -18,6 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
 let header = document.getElementById("header-title");
 function showSection(sectionId) {
     header.innerHTML = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+    header.style.color="#0B5ED7";
+    header.style.fontWeight="700";
     document.querySelectorAll('.content').forEach(section => {
         section.classList.remove('active');
     });
@@ -28,6 +30,11 @@ function showSection(sectionId) {
     document.querySelector(`.navLinks a[onclick="showSection('${sectionId}')"]`).classList.add('active');
 }
 showSection('home');
+function HeaderVisibility() {
+    header.style.display = (window.innerWidth <= 768) ? "none" : "block";
+}
+HeaderVisibility();
+window.addEventListener("resize",HeaderVisibility);
 
 //Text limit in Text area
 

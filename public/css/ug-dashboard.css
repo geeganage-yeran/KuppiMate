@@ -44,7 +44,7 @@ body{
     white-space: nowrap;
 }
 .navLinks li:last-child{
-    margin-top: 90px;
+    margin-top: 30px;
 }
 .navLinks li:first-child{
     margin-top: 16px;
@@ -894,6 +894,19 @@ header img {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     font-weight: 600;
  }
+ #paid-courses .download{
+    padding: 8px;
+    border-radius: 10px;
+    transition: 0.5s;
+    margin-bottom: 20px;
+ }
+ #paid-courses .download:hover{
+    background-color: #0b7a09;
+    color: white;
+ }
+ #paid-courses .download span{
+    margin-right: 7px;
+ }
 
  /*---------------------------------*/
  /*my courses section*/
@@ -936,6 +949,8 @@ header img {
     color: #626060;
  }
 
+ /* hamberger menue */
+
 .ham{
     display: none;
 }
@@ -950,6 +965,7 @@ header img {
 }
 
 /* -------------------------------------*/
+
 @media(max-width:768px){
     .sideBar{
         transform: translateX(-100%);
@@ -970,6 +986,8 @@ header img {
         margin-left: 95px;
     }
     .navLinks li:last-child{
-        margin-top: 65px;
+        margin-top: 20px;
     }
+    
+    
 }

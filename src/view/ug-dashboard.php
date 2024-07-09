@@ -14,6 +14,8 @@
     <div class="sideBar" id="sidebar">
         <div class="profile">
             <h2>Yeran</h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
+            <label class="fst-normal">undergraduate</label>
+            <span class="badge bg-success">Active</span>
         </div>
         <ul class="navLinks">
             <li><a href="#" onclick="showSection('home')" class="active"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;&nbsp;Home</a></li>
@@ -536,6 +538,9 @@
                             <h3>Tiltle of the course Here</h3>
                             <div class="course-links">
                                 <div class="container">
+                                    <button class="download btn btn-outline-success">
+                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
+                                    </button>
                                     <div class="d-flex flex-column mb-3">
                                         <div class="p-2">
                                             <label id="mDetail">Meeting LInk :</label>
@@ -618,6 +623,9 @@
                             <h3>Tiltle of the course Here</h3>
                             <div class="course-links">
                                 <div class="container">
+                                    <button class="download btn btn-outline-success">
+                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
+                                    </button>
                                     <div class="d-flex flex-column mb-3">
                                         <div class="p-2">
                                             <label id="mDetail">Meeting LInk :</label>
