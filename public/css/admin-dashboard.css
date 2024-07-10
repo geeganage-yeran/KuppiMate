@@ -1,0 +1,25 @@
+.content  .admin-homecont .col-12 div,#my-courses .reviews .col-12 div{
+    background-color:rgb(13, 110, 253,25%);
+    padding: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 20px;
+    color: #031C40;
+}
+#home h4{
+    font-weight: 700;
+    color: #626060;
+    margin-bottom: 20px;
+ }
+#user-management h4,#Kuppi-sessions h4,#External-sessions h4,#user-feedbacks h4{
+    font-weight: 700;
+    color: #626060;
+    margin-bottom: 20px;
+    margin-top: 30px;
+
+ }
+ #user-management hr,#Kuppi-sessions hr,#External-sessions h4,#user-feedbacks hr{
+    height: 10px;
+ }
+ #Kuppi-sessions input[type="text"],#External-sessions input[type="text"]{
+    width: 40px;
+ }
