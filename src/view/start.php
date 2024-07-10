@@ -16,7 +16,7 @@
             <a class="navbar-brand"><img class="navImg ms-4" src="/KuppiMate/public/images/logo.png" alt=""></a>
             <div class="d-flex">
                 <button class="btn btn-outline-primary fw-bold me-2" type="submit">Login</button>
-                <button class="btn btn-primary fw-bold me-2" type="submit">Register</button>
+                <button class="btn btn-primary fw-bold me-2" type="submit" data-bs-toggle="modal" href="#registerModal">Register</button>
             </div>
         </div>
     </nav>
@@ -25,7 +25,7 @@
             <h1>KuppiMate</h1>
             <h2>Digital Plaform<br>For Traditional<br>Kuppis</h2>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-            <button class="btn btn-primary fw-bold me-2" type="submit">Register</button>
+            <button class="btn btn-primary fw-bold me-2" type="submit" data-bs-toggle="modal" href="#registerModal">Register</button>
             <button class="btn btn-outline-primary fw-bold me-2" type="submit">Login</button>
         </div>
         <div class="landImage">
@@ -65,7 +65,7 @@
                             <div class="p-3">
                                 <i class="bi bi-envelope-fill"></i>&nbsp;&nbsp;&nbsp;
                                 <span id="email">kuppimate@gmail.com<span>
-                                <i onclick="copyText()" style="cursor: pointer;" class="bi bi-copy ms-4"></i>
+                                        <i onclick="copyText()" style="cursor: pointer;" class="bi bi-copy ms-4"></i>
                             </div>
                         </div>
                         <div class="d-flex flex-column mb-2">
@@ -83,10 +83,72 @@
             </div>
         </div>
     </div>
+    <!-- register selection -->
+
+    <!-- First Modal -->
+    <div class="modal fade modal1" id="registerModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center modal1Body">
+                    <button class="btn user-selection me-5" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">
+                        <img src="\KuppiMate\public\images\undergraduate.png" class="mb-2" width="110px"><br />Undergraduate
+                    </button>
+                    <button class="btn user-selection" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal" data-bs-dismiss="modal">
+                        <img src="\KuppiMate\public\images\externalLearner.png" class="mb-2" width="80px"><br />External Learner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Modal -->
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn btn-primary me-2" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back</button>
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="fName" placeholder="First Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="lName" placeholder="Last Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third Modal -->
+    <div class="modal fade" id="exampleModalToggle3" aria-hidden="true" aria-labelledby="exampleModalToggleLabel3" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="btn btn-primary me-2" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Back</button>
+                    <h5 class="modal-title" id="exampleModalToggleLabel3">Modal 3</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    External register
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function copyText() {
             var email = document.getElementById("email");
-            var emailContent=email.innerText;
+            var emailContent = email.innerText;
             navigator.clipboard.writeText(emailContent);
         }
     </script>

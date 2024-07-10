@@ -150,3 +150,21 @@ footer{
     background-color: #cbcdcf;
     font-weight: 600;
 }
+
+/* Modal 1 */
+
+.modal1 .user-selection{
+    box-shadow: rgba(25, 95, 224, 0.35) 0px 5px 15px;
+    font-weight: 600;
+    color: #0B5ED7;
+    font-size: 17px;
+}
+.modal1 .user-selection:hover{
+    transform: scale(1.2);
+}
+.modal1 .modal-content{
+    border-radius: 20px;
+}
+.modal1 .modal1Body{
+    padding: 2rem;
+}
