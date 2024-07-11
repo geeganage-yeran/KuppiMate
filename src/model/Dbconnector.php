@@ -16,4 +16,6 @@ class Dbconnector{
             echo "connection failed".$e->getMessage();
         }    
     }
+    
 }
+?>
