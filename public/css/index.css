@@ -162,9 +162,49 @@ footer{
 .modal1 .user-selection:hover{
     transform: scale(1.2);
 }
-.modal1 .modal-content{
+.modal1 .modal-content,.modal2 .modal-content,.modal3 .modal-content{
     border-radius: 20px;
 }
-.modal1 .modal1Body{
+.modal1 .modal1Body,.modal2 .modal-body{
     padding: 2rem;
+}
+.modal2 .veri-desc{
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.modal2 .modal-body h5,.modal3 .modal-body h5{
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+    color: #0B5ED7;
+}
+.modal2 .back,.modal3 .back{
+    color: #0B5ED7;
+    background: white;
+    border: 2px solid #0B5ED7;
+    padding-left: 5px;
+    padding-right: 10px;
+    font-weight: 600;
+    border-radius: 20px;
+}
+.modal2 img,.modal3 img{
+    animation: float 3s ease-in-out infinite;
+}
+input[type="submit"]{
+    background-color: #0B5ED7;
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+input[type="submit"]:hover{
+    background-color: #0b53be;
+}
+input[type="text"],input[type="email"],input[type="password"],.modal2 select,input[type="file"]{
+    background-color: rgb(13, 110, 253,27%);
+    border: none;
+}
+.modal2 span{
+    cursor: pointer;
+    color: #0B5ED7;
 }
