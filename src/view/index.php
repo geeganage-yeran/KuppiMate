@@ -121,21 +121,24 @@
                             <img src="/KuppiMate/public/images/login-laptop.png" class="img-fluid mt-5">
                         </div>
                         <div class="col-md-6 p-4">
-                            <form action="">
+                            <form action="/KuppiMate/src/controller/ugController.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidate()">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" name="fName" placeholder="First Name" required>
+                                    <input type="text" class="form-control" name="fName" id="fName" placeholder="First Name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" name="lName" placeholder="Last Name" required>
+                                    <input type="text" class="form-control" name="lName" id="lName" placeholder="Last Name" required>
                                 </div>
                                 <div class="mb-3">
                                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <input type="text" class="form-control" name="contact" placeholder="contact" required id="contact">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" name="rpassword" placeholder="Repeat Password" required>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="password" class="form-control" id="rpassword" name="rpassword" placeholder="Repeat Password" required>
                                 </div>
                                 <div class="mb-3">
                                     <select class="form-select" name="university" aria-label="Default select example">
@@ -159,7 +162,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="file" class="form-control" name="verficatioDoc" required>
+                                    <input type="file" class="form-control" name="verficationDoc" required>
                                     <label class="veri-desc">For the verification process please upload a valid verification <span data-bs-toggle="popover" data-bs-content="You can upload a clear photo of your university ID or any valid document for verification.">document</span></label>
                                 </div>
                                 <div class="mb-3">
@@ -218,17 +221,7 @@
             </div>
         </div>
     </div>
-    <script>
-        function copyText() {
-            var email = document.getElementById("email");
-            var emailContent = email.innerText;
-            navigator.clipboard.writeText(emailContent);
-        }
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        })
-    </script>
+    <script src="/KuppiMate/public/js/index.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>
