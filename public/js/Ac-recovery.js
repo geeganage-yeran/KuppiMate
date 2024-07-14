@@ -12,7 +12,6 @@ function goBack(previousSectionId) {
     showSection(previousSectionId);
 }
 
-// Code to handle input and navigation between code input fields
 document.addEventListener('DOMContentLoaded', () => {
     const codeInputs = document.querySelectorAll('.code-input');
     

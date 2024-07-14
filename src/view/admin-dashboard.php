@@ -1,3 +1,12 @@
+<?php
+session_start();
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== "administrator") {
+    header("Location: /KuppiMate/src/view/login.php");
+    exit();
+}
+$fName=$_SESSION['first_name'];
+$role=$_SESSION['role'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,9 +23,8 @@
 <body>
     <div class="sideBar" id="sidebar">
         <div class="profile">
-            <h2>Yeran</h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
-            <label class="fst-normal">Administrator</label>
-            <span class="badge bg-success">Active</span>
+            <h2><?php echo ucfirst(strtolower($fName)) ?></h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
+            <label class="fst-normal"><?php echo ucfirst(strtolower($role)) ?></label>
         </div>
         <ul class="navLinks">
             <li><a href="#" onclick="showSection('home')" class="active"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;&nbsp;Overview</a></li>
@@ -24,7 +32,7 @@
             <li><a href="#" onclick="showSection('Kuppi-sessions')"><i class="bi bi-easel-fill"></i>&nbsp;&nbsp;&nbsp;Kuppi Sessions</a></li>
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
-            <li style="margin-top: 170px;"><a href="#"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">

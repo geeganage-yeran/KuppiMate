@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="reset-password-container" class="container">
-        <button class="back" onclick="goBack('reset-password-container')">&lt; Back</button>
+        <button class="back" onclick="document.location='/KuppiMate/src/view/login.php'">&lt; Back</button>
         <h2>Forgot password</h2>
         <p>Please enter your email to reset the password</p>
         <form id="reset-form" action="send-code.php"  method="POST" >
@@ -52,11 +52,12 @@
     </div>
 
     <div id="successful-container" class="container hidden">
-        <i class="fa-regular fa-circle-check"></i>
+        
         <h2 id="tCenter">Successful</h2>
         <p id="sPara">Congratulations! Your password has been changed. Click continue to login.</p>
-        <button class="reset">Continue</button>
+        <button class="reset" onclick="document.location='/KuppiMate/src/view/login.php'">Continue</button>
     </div>
+    
 
     <script src="/KuppiMate/public/js/Ac-recovery.js?v=<?php echo time(); ?>"></script>
 </body>

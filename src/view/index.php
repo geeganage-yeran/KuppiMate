@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <a class="navbar-brand"><img class="navImg ms-4" src="/KuppiMate/public/images/logo.png" alt=""></a>
             <div class="d-flex">
-                <button class="btn btn-outline-primary fw-bold me-2" type="submit">Login</button>
+                <button class="btn btn-outline-primary fw-bold me-2" type="submit" onclick="document.location='/KuppiMate/src/view/login.php'">Login</button>
                 <button class="btn btn-primary fw-bold me-2" type="submit" data-bs-toggle="modal" href="#registerModal">Register</button>
             </div>
         </div>
@@ -26,12 +26,32 @@
             <h2>Digital Plaform<br>For Traditional<br>Kuppis</h2>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
             <button class="btn btn-primary fw-bold me-2" type="submit" data-bs-toggle="modal" href="#registerModal">Register</button>
-            <button class="btn btn-outline-primary fw-bold me-2" type="submit">Login</button>
+            <button class="btn btn-outline-primary fw-bold me-2" type="submit" onclick="document.location='/KuppiMate/src/view/login.php'">Login</button>
         </div>
         <div class="landImage">
             <img src="/KuppiMate/public/images/landing.png" alt="">
         </div>
     </div>
+
+    <!--Registraton failed display-->
+
+    <?php
+    if (isset($_GET['s'])) {
+        if ($_GET['s'] == '0') {
+            echo "<div class='alert alert-warning alert-dismissible fade show  mt-4' role='alert'>
+                                    Registration Failed
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+        }elseif($_GET['s'] == '2'){
+            echo "<div class='alert alert-warning alert-dismissible fade show  mt-4' role='alert'>
+                                    User Email Already Registerd!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+        }
+    }
+    ?>
     <hr class="mt-5">
     <div class="container-fluid d-flex introduction p-4">
         <div class="row">
@@ -121,7 +141,7 @@
                             <img src="/KuppiMate/public/images/login-laptop.png" class="img-fluid mt-5">
                         </div>
                         <div class="col-md-6 p-4">
-                            <form action="/KuppiMate/src/controller/ugController.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidate()">
+                            <form action="/KuppiMate/src/controller/ugController.php" method="POST" enctype="multipart/form-data" onsubmit="return formValidate1()">
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="fName" id="fName" placeholder="First Name" required>
                                 </div>
@@ -195,21 +215,24 @@
                             <img src="/KuppiMate/public/images/login-laptop.png" class="img-fluid mt-3">
                         </div>
                         <div class="col-md-6 p-4">
-                            <form action="">
+                            <form action="/KuppiMate/src/controller/exController.php" method="POST" onsubmit="return formValidate2()">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" name="fName" placeholder="First Name" required>
+                                    <input type="text" class="form-control" name="fName" id="fName2" placeholder="First Name" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" name="lName" placeholder="Last Name" required>
+                                    <input type="text" class="form-control" name="lName" id="lName2" placeholder="Last Name" required>
                                 </div>
                                 <div class="mb-3">
                                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <input type="text" class="form-control" name="contact" id="contact2" placeholder="Contact" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" name="rpassword" placeholder="Repeat Password" required>
+                                    <input type="password" class="form-control" name="password" id="password2" placeholder="Password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="password" class="form-control" name="rpassword" id="rpassword2"  placeholder="Repeat Password" required>
                                 </div>
                                 <div class="mb-3">
                                     <input type="submit" class="form-control p-2" value="Register">

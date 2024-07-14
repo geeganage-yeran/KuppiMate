@@ -1,6 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: /KuppiMate/src/view/login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +32,7 @@
             <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-cash-stack"></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
             <li><a href="#" onclick="showSection('my-courses')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;My Courses</a></li>
             <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
-            <li><a href="#"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
