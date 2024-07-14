@@ -32,7 +32,7 @@ class User
     }
     public function setPassword($password)
     {
-        $this->password =md5($password);
+        $this->password = md5($password);
     }
     public function setContact($contact)
     {
@@ -59,15 +59,16 @@ class User
     {
         $this->verificationFileSize = $verificationFileSize;
     }
-    public function verifyUser($con,$email){
+    public function verifyUser($con, $email)
+    {
         try {
-            $query="SELECT email FROM users WHERE email=?";
-            $stmt=$con->prepare($query);
-            $stmt->bindParam(1,$email);
+            $query = "SELECT email FROM users WHERE email=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $email);
             $stmt->execute();
-            if($stmt->rowCount()>0){
+            if ($stmt->rowCount() > 0) {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         } catch (PDOException $e) {
@@ -79,12 +80,12 @@ class User
     {
         if ($this->verificationFileName) {
             $this->role = "undergraduate";
-            $this->accountStatus="inactive";
-            $this->isVerified=0;
+            $this->accountStatus = "inactive";
+            $this->isVerified = 0;
         } else {
             $this->role = "external_learner";
-            $this->accountStatus="active";
-            $this->isVerified=1;
+            $this->accountStatus = "active";
+            $this->isVerified = 1;
         }
         try {
             $query = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `contact`, `university`, `role`,`account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`,`is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
@@ -112,38 +113,43 @@ class User
         }
     }
 
-    public function login($con){
+    public function login($con)
+    {
         try {
-            $query="SELECT * FROM users WHERE email=?";
+            $query = "SELECT * FROM users WHERE email=?";
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $this->email);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            if($result){
-                if($result['password']===$this->password && $result['account_status']=="active" && $result['is_verified']==1){
-                    $_SESSION['first_name']=$result['first_name'];
-                    $_SESSION['last_name']=$result['last_name'];
-                    $_SESSION['email']=$result['email'];
-                    $_SESSION['contact']=$result['contact'];
-                    $_SESSION['university']=$result['university'];
-                    $_SESSION['role']=$result['role'];
-                    $_SESSION['account_status']=$result['account_status'];
-                    $_SESSION['verification_file_path']=$result['verification_file_path'];
-                    $_SESSION['is_verified']=$result['is_verified']; 
+            if ($result) {
+                if ($result['password'] === $this->password && $result['account_status'] == "active" && $result['is_verified'] == 1) {
+                    $_SESSION['first_name'] = $result['first_name'];
+                    $_SESSION['last_name'] = $result['last_name'];
+                    $_SESSION['email'] = $result['email'];
+                    $_SESSION['contact'] = $result['contact'];
+                    $_SESSION['university'] = $result['university'];
+                    $_SESSION['role'] = $result['role'];
+                    $_SESSION['account_status'] = $result['account_status'];
+                    $_SESSION['verification_file_path'] = $result['verification_file_path'];
+                    $_SESSION['is_verified'] = $result['is_verified'];
                     return true;
-                }else{
+                } elseif ($result['password'] === $this->password) {
+                    if ($result['account_status'] == "inactive" && $result['is_verified'] == 0) {
+                        header("Location: /KuppiMate/src/view/verification-pending.php");
+                        exit();
+                    }
+                } else {
                     return false;
                 }
-            }else{
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
-
-        
     }
-    public function logout(){
+    public function logout()
+    {
         session_destroy();
         return true;
     }

@@ -52,6 +52,12 @@
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
+                        } elseif ($_GET['s'] == '4') {
+                            echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    You are not a registerd User Please register !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
                         }
                     }
                     ?>

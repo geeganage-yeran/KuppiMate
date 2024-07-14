@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== "undergraduate") {
     header("Location: /KuppiMate/src/view/login.php");
     exit();
 }

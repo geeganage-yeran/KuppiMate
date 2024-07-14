@@ -12,14 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $contact = trim($_POST['contact']);
         $password = trim($_POST['password']);
         $university = trim($_POST['university']);
+
         $file = $_FILES['verficationDoc'];
         $fileName = $file['name'];
         $fileSize = $file['size'];
         $fileType = $file['type'];
         $fileTmpName = $file['tmp_name'];
-
+        $uniqueId = uniqid();
+        $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $newFileName = $uniqueId . '.' . $fileExtension;
         $file_location = __DIR__ . '/uploads/';
-        $file_upload = $file_location . basename($fileName);
+        $file_upload = $file_location . $newFileName;
 
         $ugUser = new User();
 
@@ -46,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             } else {
                 echo "Error occured when uploading file";
             }
-        }else{
+        } else {
             header("Location: /KuppiMate/src/view/index.php?s=2");
             exit();
         }

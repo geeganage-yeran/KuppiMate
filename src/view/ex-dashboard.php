@@ -1,35 +1,42 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== "external_learner") {
     header("Location: /KuppiMate/src/view/login.php");
     exit();
 }
+$fName = $_SESSION['first_name'];
+$role = $_SESSION['role'];
+$lName = $_SESSION['last_name'];
+$email = $_SESSION['email'];
+$contact = $_SESSION['contact'];
+$account_status=$_SESSION['account_status'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/KuppiMate/public/css/ug-dashboard.css?v=<?php echo time(); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <title>External Learner Dashboard</title>
+    <title>External Learner</title>
 </head>
 
 <body>
     <div class="sideBar" id="sidebar">
         <div class="profile">
-            <h2>Yeran</h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
-            <label class="fst-normal">External Learner</label>
-            <span class="badge bg-success">Active</span>
+            <h2><?php echo ucfirst(strtolower($fName)) ?></h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
+            <label class="fst-normal"><?php echo ucfirst(strtolower($role)) ?></label>
+            <span class="badge bg-success"><?php echo ucfirst(strtolower($account_status)) ?></span>
         </div>
         <ul class="navLinks">
             <li><a href="#" onclick="showSection('home')" class="active"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;&nbsp;Home</a></li>
             <li><a href="#" onclick="showSection('externalSession')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;External Tutor Sessions</a></li>
             <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-cash-stack"></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
             <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
-            <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php" ><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -311,23 +318,19 @@ if (!isset($_SESSION['email'])) {
                         <table>
                             <tr>
                                 <td class="fw-bold pb-3">First Name:</td>
-                                <td class="ps-4 pb-3">Yeran</td>
+                                <td class="ps-4 pb-3"><?php echo $fName ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-bold pb-3">Last Name:</td>
-                                <td class="ps-4 pb-3">Lakvidu</td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold pb-3">University Name:</td>
-                                <td class="ps-4 pb-3">Uva Wellassa University</td>
+                                <td class="ps-4 pb-3"><?php echo $lName ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-bold pb-3">Email:</td>
-                                <td class="ps-4 pb-3">designs.yeran@gmail.com</td>
+                                <td class="ps-4 pb-3"><?php echo $email ?></td>
                             </tr>
                             <tr>
                                 <td class="fw-bold pb-3">Contact:</td>
-                                <td class="ps-4 pb-3">0710619833</td>
+                                <td class="ps-4 pb-3"><?php echo $contact ?></td>
                             </tr>
                         </table>
                     </div>
@@ -381,7 +384,7 @@ if (!isset($_SESSION['email'])) {
                     </div>
                     <div class="col-12 mt-4">
                         <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Password</button>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
                     </div>
                 </form>
                 <form class="row g-3 mt-3">
@@ -402,7 +405,7 @@ if (!isset($_SESSION['email'])) {
                     </div>
                     <div class="col-12 mt-4">
                         <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                        <button type="submit" class="btn btn-primary">Update Password</button>
                     </div>
                 </form>
             </div>
