@@ -1,11 +1,12 @@
 <?php
-session_start();
+include_once __DIR__ . '/../controller/adminController.php';
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== "administrator") {
     header("Location: /KuppiMate/src/view/login.php");
     exit();
 }
-$fName=$_SESSION['first_name'];
-$role=$_SESSION['role'];
+$fName = $_SESSION['first_name'];
+$role = $_SESSION['role'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,31 +53,31 @@ $role=$_SESSION['role'];
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <p class="homecont-p fw-bold fs-3">Total Users<br>
-                                <span class="fw-bold fs-1">125</span>
+                                <span class="fw-bold fs-1"><?php echo $totalUsers ?></span>
                             </p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
-                            <p class="homecont-p fw-bold fs-3">Verified Accounts<br>
-                                <span class="fw-bold fs-1">125</span>
+                            <p class="homecont-p fw-bold fs-3">Active Accounts<br>
+                                <span class="fw-bold fs-1"><?php echo $totalActive ?></span>
                             </p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
-                            <p class="homecont-p fw-bold fs-3">Verified Accounts<br>
-                                <span class="fw-bold fs-1">125</span>
+                            <p class="homecont-p fw-bold fs-3">External Accounts<br>
+                                <span class="fw-bold fs-1"><?php echo $totalUsers - $totalUndergarduate ?></span>
                             </p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
-                            <p class="homecont-p fw-bold fs-5">Total undergraduates
-                                <span class="fs-5">125</span>
+                            <p class="homecont-p fw-bold fs-5">Total undergraduates -
+                                <span class="fs-5"><?php echo $totalUndergarduate ?></span>
                             </p>
-                            <p class="homecont-p fw-bold fs-5">Need to be Verify
-                                <span class="fs-5">125</span>
+                            <p class="homecont-p fw-bold fs-5">Need to be Verify -
+                                <span class="fs-5"><?php echo $needToVerify ?></span>
                             </p>
                         </div>
                     </div>
@@ -117,7 +118,7 @@ $role=$_SESSION['role'];
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">University</th>
@@ -126,30 +127,21 @@ $role=$_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>2024.05.17</td>
-                                <td><button class="btn btn-primary btn-sm">View</button></td>
-                                <td><button class="btn btn-primary btn-sm">Activate</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>2024.05.17</td>
-                                <td><button class="btn btn-primary btn-sm">View</button></td>
-                                <td><button class="btn btn-primary btn-sm">Activate</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>2024.05.17</td>
-                                <td><button class="btn btn-primary btn-sm">View</button></td>
-                                <td><button class="btn btn-primary btn-sm">Activate</button></td>
-                            </tr>
+                            <?php foreach ($result as $index => $result) : ?>
+                                <tr>
+                                    <th scope="row"><?php echo $index + 1 ?></th>
+                                    <td><?php echo $result['first_name']; ?></td>
+                                    <td><?php echo $result['last_name']; ?></td>
+                                    <td><?php echo $result['university']; ?></td>
+                                    <td><?php echo $result['verification_file_name']; ?></td>
+                                    <td>
+                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                            <input type="hidden" name="acivateId" value="<?php echo $result['id']; ?>">
+                                            <button type="submit" class="btn btn-primary btn-sm">Activate</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -159,34 +151,47 @@ $role=$_SESSION['role'];
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">University</th>
-                                <th scope="col">Verification Status</th>
-                                <th scope="col">Deactivate</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Account Status</th>
+                                <th scope="col"></th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>Uva wellassa University</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td><button class="btn btn-primary btn-sm">Deactivate</button></td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>Uva wellassa University</td>
-                                <td><span class="badge bg-success">Active</span></td>
-                                <td><button class="btn btn-primary btn-sm">Deactivate</button></td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
+                            <?php foreach ($verified as $index => $verified) : ?>
+                                <tr>
+                                    <th scope="row"><?php echo $index + 1 ?></th>
+                                    <td><?php echo $verified['first_name']; ?></td>
+                                    <td><?php echo $verified['last_name']; ?></td>
+                                    <td><?php echo $verified['university']; ?></td>
+                                    <td><?php echo $verified['contact']; ?></td>
+                                    <td>
+                                        <span class="badge <?php echo ($verified['account_status'] == 'active') ? 'bg-success' : 'bg-danger'; ?>">
+                                            <?php echo $verified['account_status']; ?>
+                                        </span></td>
+                                    <td>
+                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                            <?php if ($verified['account_status'] == 'active') {
+                                                echo '<input type="hidden" name="inactiveId" value="' . $verified['id'] . '">';
+                                                echo '<button type="submit" class="btn btn-danger btn-sm">Deactivate</button>';
+                                            } else {
+                                                echo '<input type="hidden" name="reactiveId" value="' . $verified['id'] . '">';
+                                                echo '<button type="submit" class="btn btn-primary btn-sm">Activate</button>';
+                                            } ?>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                            <input type="hidden" name="deleteId" value="<?php echo $verified['id']; ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -196,7 +201,7 @@ $role=$_SESSION['role'];
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
@@ -205,22 +210,21 @@ $role=$_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Yeran</td>
-                                <td>Lavkvidu</td>
-                                <td>design.yeran@gmail.com</td>
-                                <td>0710619833</td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yeran</td>
-                                <td>Lavkvidu</td>
-                                <td>design.yeran@gmail.com</td>
-                                <td>0710619833</td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
+                            <?php foreach ($exLearnerList as $index => $exLearner) : ?>
+                                <tr>
+                                    <th scope="row"><?php echo $index + 1 ?></th>
+                                    <td><?php echo $exLearner['first_name'] ?></td>
+                                    <td><?php echo $exLearner['last_name'] ?></td>
+                                    <td><?php echo $exLearner['email'] ?></td>
+                                    <td><?php echo $exLearner['contact'] ?></td>
+                                    <td>
+                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                            <input type="hidden" name="deleteId" value="<?php echo $exLearner['id']; ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

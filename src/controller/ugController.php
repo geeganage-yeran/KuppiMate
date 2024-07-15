@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $ugUser->setPassword($password);
                 $ugUser->setContact($contact);
                 $ugUser->setUniversity($university);
-                $ugUser->setverificationFileName($fileName);
+                $ugUser->setverificationFileName($newFileName);
                 $ugUser->setverificationFilePath($file_upload);
                 $ugUser->setverificationFileType($fileType);
                 $ugUser->setverificationFileSize($fileSize);

@@ -18,6 +18,10 @@ class User
     private $isVerified;
     private $lastLogin;
 
+    public function setuserId($userId)
+    {
+        $this->userId = $userId;
+    }
     public function setfirstName($firstName)
     {
         $this->firstName = $firstName;
@@ -153,4 +157,112 @@ class User
         session_destroy();
         return true;
     }
+    public function userList($con,$condition)
+    {
+        try { 
+            if($condition == "needToVerify"){
+                $query = "SELECT id,first_name,last_name,university,verification_file_name FROM users WHERE account_status='inactive' AND is_verified=0";
+            }elseif($condition == "verified"){
+                $query = "SELECT id,first_name,last_name,university,account_status,contact FROM users WHERE is_verified=1 AND role='undergraduate'";
+            }elseif($condition=="externalLearnerList"){
+                $query = "SELECT id,first_name,last_name,email,contact FROM users WHERE account_status='active' AND is_verified=1 AND role='external_learner' ";
+            }
+            $rs = $con->query($query);
+            if ($rs->rowCount() > 0) {
+                while ($row = $rs->fetch(PDO::FETCH_ASSOC)) {
+                    $output[] = $row;
+                }
+                return $output;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function ugAccountActivation($con)
+    {
+        try {
+            $query = "UPDATE users SET account_status='active',is_verified=1 WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $this->userId);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function deleteAccount($con){
+        try {
+            $query1="SELECT verification_file_path FROM users WHERE id=?";
+            $stmt1 = $con->prepare($query1);
+            $stmt1->bindParam(1, $this->userId);
+            $stmt1->execute();
+            $vFile=$stmt1->fetchColumn();
+
+            $query2="DELETE FROM users WHERE id=?";
+            $stmt2 = $con->prepare($query2);
+            $stmt2->bindParam(1, $this->userId);
+            $stmt2->execute();
+            if ($stmt2->rowCount() > 0) {
+                if(file_exists($vFile)){
+                    unlink($vFile);
+                }
+                return true;
+            }
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    }
+    public function countDetails($con,$condition){
+        try {
+            $query="SELECT COUNT(*) as count FROM users";
+            if($condition=="totalUsers"){
+                $query.=" WHERE role='undergraduate' OR role='external_learner'";
+            }elseif($condition=="totalUndergarduate"){
+                $query.=" WHERE role='undergraduate'";
+            }elseif($condition=="totalActive"){
+                $query.=" WHERE account_status='active' AND (role='undergraduate' OR role='external_learner') ";
+            }elseif($condition=="needToVerify"){
+                $query.=" WHERE is_verified=0";
+            }
+            $stmt=$con->prepare($query);
+            $stmt->execute();
+            $count=$stmt->fetchColumn();
+            return $count;
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    }
+    public function inactiveAccount($con){
+        try {
+            $query = "UPDATE users SET account_status='inactive' WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $this->userId);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function reactiveAccount($con){
+        try {
+            $query = "UPDATE users SET account_status='active' WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $this->userId);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                return true;
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
 }
