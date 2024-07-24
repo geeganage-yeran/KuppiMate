@@ -122,6 +122,7 @@ $role = $_SESSION['role'];
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">University</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Verification Documents</th>
                                 <th scope="col">Activate</th>
                             </tr>
@@ -133,7 +134,13 @@ $role = $_SESSION['role'];
                                     <td><?php echo $result['first_name']; ?></td>
                                     <td><?php echo $result['last_name']; ?></td>
                                     <td><?php echo $result['university']; ?></td>
-                                    <td><?php echo $result['verification_file_name']; ?></td>
+                                    <td><?php echo $result['email']; ?></td>
+                                    <td>
+                                        <a href="/KuppiMate/src/controller/uploads/<?php echo $result['verification_file_name']; ?>" target="_blank">
+                                            <button class="btn btn-primary btn-sm">View</button>
+                                        </a>
+                                    </td>
+
                                     <td>
                                         <form action="/KuppiMate/src/controller/adminController.php" method="POST">
                                             <input type="hidden" name="acivateId" value="<?php echo $result['id']; ?>">
@@ -172,7 +179,8 @@ $role = $_SESSION['role'];
                                     <td>
                                         <span class="badge <?php echo ($verified['account_status'] == 'active') ? 'bg-success' : 'bg-danger'; ?>">
                                             <?php echo $verified['account_status']; ?>
-                                        </span></td>
+                                        </span>
+                                    </td>
                                     <td>
                                         <form action="/KuppiMate/src/controller/adminController.php" method="POST">
                                             <?php if ($verified['account_status'] == 'active') {
@@ -232,43 +240,49 @@ $role = $_SESSION['role'];
         </section>
         <section class="content" id="Kuppi-sessions">
             <div class="container">
-                <h4>External Tutor Session Requests</h4>
+                <h4>Kuppi Session Requests</h4>
                 <div class="exRequest table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">From Date|Time</th>
                                 <th scope="col">To Date|Time</th>
                                 <th scope="col">Category</th>
-                                <th scope="col">Approve</th>
-                                <th scope="col">Reject</th>
                                 <th scope="col">Link</th>
+                                <th scope="col">Approve</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Data Structures</td>
-                                <td>2024.05.17 02.00PM</td>
-                                <td>2024.05.17 03.00PM</td>
-                                <td>Cat 01</td>
-                                <td><button class="btn btn-primary btn-sm">Approve</button></td>
-                                <td><button class="btn btn-danger btn-sm">Reject</button></td>
-                                <td>
-                                    <form action="#">
-                                        <input type="text" name="link" required>
-                                        <button class="btn btn-primary btn-sm" type="submit">send</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <?php if ($kuppiresult != null) { ?>
+                                <?php foreach ($kuppiresult as $index => $kuppiresult) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $kuppiresult['title']  ?></td>
+                                        <td><?php echo $kuppiresult['session_start_date_time']  ?></td>
+                                        <td><?php echo $kuppiresult['session_end_date_time']  ?></td>
+                                        <td><?php echo $kuppiresult['category_id'] ?></td>
 
+                                        <form action="/KuppiMate/src/controller/adminController.php" method="post">
+                                            <td>
+                                                <input type="text" name="link" required>
+                                                <input type="hidden" name="resultId" value="<?php echo $kuppiresult['id']; ?>">
+                                            </td>
+                                            <td><button type="submit" class="btn btn-primary btn-sm">Approve</button></td>
+
+                                        </form>
+
+                                    </tr>
+                                <?php }; ?>
+                            <?php } else { ?>
+                                <span class="badge bg-secondary">No Kuppi Session Requests Yet</span>
+                            <?php }; ?>
                         </tbody>
                     </table>
                 </div>
                 <hr>
-                <h4>Approved External Tutor Sessions</h4>
+                <h4>Approved Kuppi Sessions</h4>
                 <div class="exApproved table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
@@ -283,16 +297,21 @@ $role = $_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Data Structures</td>
-                                <td>2024.05.17 02.00PM</td>
-                                <td>2024.05.17 03.00PM</td>
-                                <td>Cat 01</td>
-                                <td><span class="badge bg-success">Approved</span></td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
-
+                            <?php if ($kuppiverified != null) { ?>
+                                <?php foreach ($kuppiverified as $index => $kuppiverified) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $kuppiverified['title']  ?></td>
+                                        <td><?php echo $kuppiverified['session_start_date_time']  ?></td>
+                                        <td><?php echo $kuppiverified['session_end_date_time']  ?></td>
+                                        <td><?php echo $kuppiverified['category_id'] ?></td>
+                                        <td><span class="badge bg-success">Approved</span></td>
+                                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                                    </tr>
+                                <?php }; ?>
+                            <?php } else { ?>
+                                <span class="badge bg-secondary">No Kuppi Sessions approved Yet</span>
+                            <?php }; ?>
                         </tbody>
                     </table>
                 </div>
@@ -300,7 +319,7 @@ $role = $_SESSION['role'];
         </section>
         <section class="content" id="External-sessions">
             <div class="container">
-                <h4>Kuppi Sessions - Pending Approval</h4>
+                <h4>External Tutor Sessions - Pending Approval</h4>
                 <div class="exVerification table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>

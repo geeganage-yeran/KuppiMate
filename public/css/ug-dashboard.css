@@ -271,28 +271,27 @@ header img {
     display: block;
     margin-left: 79.5%;
 }
-.content .createKuppiContainer #FileUpload{
-    grid-column: 1/span 6;
-}
-.content .createKuppiContainer #FileUpload input[type="file"]::file-selector-button{
-    background: none;
-    color: #667085;
-    margin-right: 10px;
-    border: 2px solid #0B5ED7;
-    padding: 6px;
-    border-radius: 7px;
-}
-.content .createKuppiContainer #FileUpload input[type="file"]::file-selector-button:hover{
-    background-color:#dedef3;
-    border: 2px solid #dedef3;
-    cursor: pointer;
-
-}
 
 .content .createKuppiContainer #CreateSection{
     grid-column: 1/span 6;
 }
-
+input[type="file"]{
+    border: none;
+    width:230px;
+    border: 1px solid #0B5ED7;
+}
+input[type="file"]::file-selector-button{
+    background: none;
+    color: #0B5ED7;
+    margin-right: 10px;
+    border: 1px solid #0B5ED7;
+    border-radius: 7px;
+    transition: 0.5s;
+}
+input[type="file"]::file-selector-button:hover{
+    background-color: #0b53be;
+    color: white;
+}
 .content .createKuppiContainer #CreateSection button{
     background: none;
     padding: 9px;
@@ -302,6 +301,20 @@ header img {
     border: none;
     cursor: pointer;
     transition: 0.5s;
+}
+.material_upload{
+    border: none;
+    background-color: #0B5ED7;
+    color:white;
+}
+.material_upload:hover{
+    background-color: #0b53be;
+}
+.material_upload:disabled{
+    display: none;
+}
+input[type="file"]:disabled{
+    display: none;
 }
 .content .createKuppiContainer #CreateSection button:first-child{
     border: 1px solid #0B5ED7;
@@ -329,7 +342,7 @@ header img {
     margin-top: 40px;
 }
 .createKuppiContainer #kuppiResultsection div{
-    background-color: #ffffff;
+    background-color: #f8f1f1;
     border-radius: 8px;
     padding: 13px;  
     padding-bottom: 0;

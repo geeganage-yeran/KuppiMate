@@ -136,6 +136,7 @@ class User
                     $_SESSION['account_status'] = $result['account_status'];
                     $_SESSION['verification_file_path'] = $result['verification_file_path'];
                     $_SESSION['is_verified'] = $result['is_verified'];
+                    $_SESSION['id'] = $result['id'];
                     return true;
                 } elseif ($result['password'] === $this->password) {
                     if ($result['account_status'] == "inactive" && $result['is_verified'] == 0) {
@@ -161,7 +162,7 @@ class User
     {
         try { 
             if($condition == "needToVerify"){
-                $query = "SELECT id,first_name,last_name,university,verification_file_name FROM users WHERE account_status='inactive' AND is_verified=0";
+                $query = "SELECT id,first_name,last_name,university,email,verification_file_name FROM users WHERE account_status='inactive' AND is_verified=0";
             }elseif($condition == "verified"){
                 $query = "SELECT id,first_name,last_name,university,account_status,contact FROM users WHERE is_verified=1 AND role='undergraduate'";
             }elseif($condition=="externalLearnerList"){
