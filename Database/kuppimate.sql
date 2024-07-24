@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2024 at 06:08 PM
+-- Generation Time: Jul 24, 2024 at 11:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -55,6 +55,37 @@ CREATE TABLE `category` (
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `category_name`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
+(59, 'Accounting', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(60, 'Agriculture', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(61, 'Architecture', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(62, 'Biotechnology', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(63, 'Business_Administration', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(64, 'Civil_Engineering', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(65, 'Computer_Science', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(66, 'Economics', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(67, 'Education', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(68, 'Electrical_Engineering', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(69, 'English', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(70, 'Environmental_Science', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(71, 'Finance', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(72, 'Information_Technology', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(73, 'Law', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(74, 'Marketing', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(75, 'Mathematics', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(76, 'Mechanical_Engineering', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(77, 'Medicine', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(78, 'Nursing', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(79, 'Pharmacy', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
+(80, 'Physics', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
+(81, 'Psychology', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
+(82, 'Software_Engineering', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
+(83, 'Statistics', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10');
+
 -- --------------------------------------------------------
 
 --
@@ -84,8 +115,10 @@ CREATE TABLE `kuppisession` (
   `category_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `session_date_time` datetime DEFAULT NULL,
+  `session_start_date_time` datetime DEFAULT NULL,
+  `session_end_date_time` datetime DEFAULT NULL,
   `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `session_link` varchar(255) DEFAULT NULL,
   `recorded` tinyint(1) DEFAULT 0,
   `driveLink` varchar(255) DEFAULT NULL,
   `rescheduled_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -94,6 +127,13 @@ CREATE TABLE `kuppisession` (
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kuppisession`
+--
+
+INSERT INTO `kuppisession` (`id`, `category_id`, `title`, `description`, `session_start_date_time`, `session_end_date_time`, `status`, `session_link`, `recorded`, `driveLink`, `rescheduled_date`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
+(27, 65, 'Data Structures and Algorithms', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem Ipsum has been the industry standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book', '2024-07-24 00:08:00', '2024-07-25 00:08:00', 'pending', NULL, 0, NULL, '2024-07-22 18:37:59', 30, NULL, '2024-07-22 18:37:59', '2024-07-22 18:37:59');
 
 -- --------------------------------------------------------
 
@@ -220,6 +260,19 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `contact`, `university`, `role`, `account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`, `is_verified`, `last_login`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
+(15, 'admin', 'admin', 'admin@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', NULL, 'administrator', 'active', NULL, NULL, NULL, NULL, 1, '2024-07-14 06:26:04', NULL, NULL, '2024-07-14 04:11:52', '2024-07-14 04:11:52'),
+(19, 'piyumi', 'weerasinghe', 'piyumi@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', NULL, 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-07-14 16:40:25', NULL, NULL, '2024-07-14 16:40:25', '2024-07-14 16:40:25'),
+(21, 'Michael', 'Johnson', 'michael.j@example.com', '1b984947472da1a7c3659fe135e52c67', '0734567890', 'University of Colombo', 'undergraduate', 'inactive', '66940437bf327.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66940437bf327.pdf', 'application/pdf', 712773, 0, '2024-07-15 15:09:13', NULL, NULL, '2024-07-14 17:00:39', '2024-07-14 17:00:39'),
+(28, 'tharushi', 'nadeeshani', 'tharushi@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0785676543', 'University of Jaffna', 'undergraduate', 'inactive', '6694f4bf48d93.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694f4bf48d93.pdf', 'application/pdf', 712773, 0, '2024-07-15 10:06:55', NULL, NULL, '2024-07-15 10:06:55', '2024-07-15 10:06:55'),
+(29, 'maduja', 'verjini', 'maduja@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0767865453', 'University of Ruhuna', 'undergraduate', 'active', '6694f4e431d49.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694f4e431d49.pdf', 'application/pdf', 712773, 1, '2024-07-18 14:11:25', NULL, NULL, '2024-07-15 10:07:32', '2024-07-15 10:07:32'),
+(30, 'yeran', 'lakvidu', 'geeganageyeran@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', 'Uva Wellassa University', 'undergraduate', 'active', '6694fc45a51e3.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694fc45a51e3.pdf', 'application/pdf', 712773, 1, '2024-07-15 10:58:01', NULL, NULL, '2024-07-15 10:39:01', '2024-07-15 10:39:01'),
+(31, 'mainth', 'nandasiri', 'manith@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', 'University of Ruhuna', 'undergraduate', 'active', '6696c3bda6dc3.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6696c3bda6dc3.pdf', 'application/pdf', 712773, 1, '2024-07-16 19:02:58', NULL, NULL, '2024-07-16 19:02:21', '2024-07-16 19:02:21');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -327,7 +380,7 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -339,13 +392,13 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `kuppisession`
 --
 ALTER TABLE `kuppisession`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `material`
 --
 ALTER TABLE `material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `notice`
@@ -375,7 +428,7 @@ ALTER TABLE `tutorsession`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables
