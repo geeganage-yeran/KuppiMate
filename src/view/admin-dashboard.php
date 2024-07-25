@@ -193,10 +193,7 @@ $role = $_SESSION['role'];
                                         </form>
                                     </td>
                                     <td>
-                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
-                                            <input type="hidden" name="deleteId" value="<?php echo $verified['id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -226,10 +223,7 @@ $role = $_SESSION['role'];
                                     <td><?php echo $exLearner['email'] ?></td>
                                     <td><?php echo $exLearner['contact'] ?></td>
                                     <td>
-                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
-                                            <input type="hidden" name="deleteId" value="<?php echo $exLearner['id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteExternalUser">Delete</button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -306,7 +300,7 @@ $role = $_SESSION['role'];
                                         <td><?php echo $kuppiverified['session_end_date_time']  ?></td>
                                         <td><?php echo $kuppiverified['category_id'] ?></td>
                                         <td><span class="badge bg-success">Approved</span></td>
-                                        <td><button class="btn btn-danger btn-sm">Delete</button></td>
+                                        <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteKuppi">Delete</button></td>
                                     </tr>
                                 <?php }; ?>
                             <?php } else { ?>
@@ -485,6 +479,57 @@ $role = $_SESSION['role'];
                 </div>
             </div>
         </section>
+    </div>
+    <!--undergrduate delete verification-->
+    <div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this user ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/adminController.php" method="post">
+                        <input type="hidden" name="deleteId" value="<?php echo $verified['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--external delete verification-->
+    <div class="modal fade" id="deleteExternalUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteExternalUserLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this user ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/adminController.php" method="post">
+                        <input type="hidden" name="deleteId" value="<?php echo $exLearner['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--kuppi session delete verification-->
+    <div class="modal fade" id="deleteKuppi" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteKuppiLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
+                        <input type="hidden" name="deleteKuppiSessionId" value="<?php echo $kuppiverified['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
 </body>

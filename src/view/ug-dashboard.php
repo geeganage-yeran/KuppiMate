@@ -208,13 +208,9 @@ $account_status = $_SESSION['account_status'];
                                 <button class="material_upload" type="submit" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>Upload Kuppi Materials</button>
                                 <br />
                             </form>
-                            <form action="/KuppiMate/src/controller/createKuppi.php" method="POST">
-                                <input type="hidden" name="deleteSessionId" value="<?php echo $output['id']; ?>">
-                                <button type="submit" class="btn btn-outline-danger">Delete Session</button>
-                                <button onclick="window.open('<?php echo $output['session_link']  ?>', '_blank');" class="btn btn-outline-success" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>start</button>
-                            </form>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete Session</button>
+                            <button onclick="window.open('<?php echo $output['session_link']  ?>', '_blank');" class="btn btn-outline-success ps-4 pe-4" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>start</button>
                             <p>Approval process will complete within few minutes (Note : Only .Zip .Rar files are allowed to Upload)</p>
-
                         </div>
                     <?php }; ?>
                 <?php  } else { ?>
@@ -224,7 +220,6 @@ $account_status = $_SESSION['account_status'];
 
             </div>
     </div>
-
     <!-- Popu up model in reshedule  
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg  modal-dialog-scrollable">
@@ -837,6 +832,79 @@ $account_status = $_SESSION['account_status'];
     </section>
     <section class="content" id="settings">
         <div class="container mt-5">
+            <!-- profile error messages -->
+            <?php
+            if (isset($_GET['id'])) {
+                if ($_GET['id'] == '101') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Invalid name !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '102') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Invalid email !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '103') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Invalid number !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '104') {
+                    echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Updated Succeefully !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '105') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Failed to update details, try again !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '106') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Email already exist use another one !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '107') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    password strength is low !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '108') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Confirm password not match !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '109') {
+                    echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Password update successfully !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '110') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Password update failed !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }elseif ($_GET['id'] == '111') {
+                    echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    modal Password update failed !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }
+            }
+            ?>
+
             <h4>Profile Details</h4>
             <div class="d-flex mb-3 mt-4">
                 <div class="p-2 flex-fill">
@@ -867,7 +935,7 @@ $account_status = $_SESSION['account_status'];
             </div>
         </div>
         <div class="container">
-            <form class="row g-3">
+            <form action="/KuppiMate/src/controller/profileUpdate.php" method="post" class="row g-3">
                 <div class="class-md-12">
                     <h4>Edit Profile</h4>
                 </div>
@@ -880,26 +948,7 @@ $account_status = $_SESSION['account_status'];
                     <input type="text" name="lname" class="form-control" id="lname">
                 </div>
                 <div class="col-md-4">
-                    <label for="uni" class="form-label">University</label>
-                    <select id="uni" name="uni" class="form-select">
-                        <option>Please Select Your University</option>
-                        <option value="Uva Wellassa University">Uva Wellassa University</option>
-                        <option value="University of Colombo">University of Colombo</option>
-                        <option value="University of Peradeniya">University of Peradeniya</option>
-                        <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
-                        <option value="University of Kelaniya">University of Kelaniya</option>
-                        <option value="University of Moratuwa">University of Moratuwa</option>
-                        <option value="University of Jaffna">University of Jaffna</option>
-                        <option value="University of Ruhuna">University of Ruhuna</option>
-                        <option value="Eastern University, Sri Lanka">Eastern University, Sri Lanka</option>
-                        <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
-                        <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
-                        <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
-                        <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
-                        <option value="University of the Visual and Performing Arts">University of the Visual and Performing Arts</option>
-                        <option value="Gampaha Wickramarachchi University of Indigenous Medicine">Gampaha Wickramarachchi University of Indigenous Medicine</option>
-                        <option value="University of Vavuniya">University of Vavuniya</option>
-                    </select>
+
                 </div>
                 <div class="col-md-4">
                     <label for="email" class="form-label">Email</label>
@@ -913,10 +962,10 @@ $account_status = $_SESSION['account_status'];
                 </div>
                 <div class="col-12 mt-4">
                     <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update Password</button>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
                 </div>
             </form>
-            <form class="row g-3 mt-3">
+            <form action="/KuppiMate/src/controller/passwordUpdate.php" method="post" class="row g-3 mt-3">
                 <div class="class-md-12">
                     <h4>Change the Login Password</h4>
                 </div>
@@ -926,7 +975,7 @@ $account_status = $_SESSION['account_status'];
                 </div>
                 <div class="col-md-4">
                     <label for="new-password" class="form-label">New Password</label>
-                    <input type="password" name="pr-password" class="form-control" id="new-password" required>
+                    <input type="password" name="new-password" class="form-control" id="new-password" required>
                 </div>
                 <div class="col-md-4">
                     <label for="con-password" class="form-label">Confirm New Password</label>
@@ -934,11 +983,28 @@ $account_status = $_SESSION['account_status'];
                 </div>
                 <div class="col-12 mt-4">
                     <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="submit" class="btn btn-primary">Update Password</button>
                 </div>
             </form>
         </div>
     </section>
+    </div>
+    <!--delete session confirm-->
+    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete the session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
+                        <input type="hidden" name="deleteSessionId" value="<?php echo $output['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="/KuppiMate/public/js/ug-dashboard.js?v=<?php echo time(); ?>"></script>
 </body>

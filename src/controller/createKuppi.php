@@ -53,7 +53,15 @@ if(isset($_POST['deleteSessionId'])){
     $deleteSessionId=$_POST['deleteSessionId'];
     $kuppisession = new KuppiSession();
     if($kuppisession->deleteSession(Dbconnector::getConnection(), $deleteSessionId)){
-        header("Location: /KuppiMate/src/view/ug-dashboard.php?id=8");
+        header("Location: /KuppiMate/src/view/ug-dashboard.php");
+        exit();
+    }
+}
+if(isset($_POST['deleteKuppiSessionId'])){
+    $deleteSessionId=$_POST['deleteKuppiSessionId'];
+    $kuppisession = new KuppiSession();
+    if($kuppisession->deleteSession(Dbconnector::getConnection(), $deleteSessionId)){
+        header("Location: /KuppiMate/src/view/admin-dashboard.php");
         exit();
     }
 }
