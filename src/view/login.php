@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3">
                         <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
-                        <a href="/KuppiMate/src/view/Ac-recovery.php"><span class="d-block mt-1">Forgotten Your Password?</span></a>
+                        <a href="/KuppiMate/src/view/recovery_password.php"><span class="d-block mt-1">Forgotten Your Password?</span></a>
                     </div>
                     <div class="mb-3 mt-4">
                         <input type="submit" class="form-control p-2" value="Login">

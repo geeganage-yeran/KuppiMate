@@ -341,4 +341,19 @@ class User
             echo $e->getMessage();
         }
     }
+    public function recoveryUpdate($con){
+        try {
+            $query="UPDATE users SET password=? WHERE email=?";
+            $stmt=$con->prepare($query);
+            $stmt->bindparam(1,$this->password);
+            $stmt->bindparam(2,$this->email);
+            $stmt->execute();
+
+            return $stmt->rowCount()>0;
+
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+
+    }
 }
