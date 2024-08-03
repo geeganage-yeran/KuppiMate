@@ -46,7 +46,6 @@ $totalActive = $user->countDetails(Dbconnector::getConnection(), "totalActive");
 $kuppilist = new KuppiSession();
 $kuppiresult = $kuppilist->listSession(Dbconnector::getConnection(), "pending");
 $kuppiverified = $kuppilist->listSession(Dbconnector::getConnection(), "approved");
-
 if (isset($_POST["link"], $_POST['resultId'])) {
     $kuppilist->setkuppiSessionId($_POST['resultId']);
     if ($kuppilist->setSession(Dbconnector::getConnection(), $_POST["link"])) {

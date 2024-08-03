@@ -31,6 +31,9 @@ class KuppiSession
     {
         $this->session_end_date_time = $endDate;
     }
+
+
+    
     public function createSession($con, $categoryId, $userId)
     {
         try {

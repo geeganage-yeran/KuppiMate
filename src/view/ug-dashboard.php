@@ -220,50 +220,6 @@ $account_status = $_SESSION['account_status'];
 
             </div>
     </div>
-    <!-- Popu up model in reshedule  
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg  modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Reschedule your Kuppi Session</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#">
-                                <div>
-                                    <label>Session Title</label><br />
-                                    <input type="text" name="tName" required autocomplete="off">
-                                </div>
-                                <div>
-                                    <label>Time and Date</label><br />
-                                    <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
-                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                    <label id="label-popup">to</label>
-                                    <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
-                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                </div>
-                                <div>
-                                    <label>Session Category</label><br />
-                                    <select name="category" id="category2" required>
-                                        <option>Select the Category</option>
-                                        <option value="#">Category 1</option>
-                                        <option value="#">Category 2</option>
-                                        <option value="#">Category 3</option>
-                                        <option value="#">Category 4</option>
-                                    </select>
-                                </div>
-                                <div class="textArea">
-                                    <label class="maxChar">Session Description</label><br />
-                                    <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Done</button>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
     </section>
     <section class="content" id="joinKuppi">
         <div class="headerImage">
@@ -468,6 +424,17 @@ $account_status = $_SESSION['account_status'];
             <p>Join courses conducted by undergraduates at a low cost</p>
         </div>
         <div class="courseContent">
+            <?php
+            if (isset($_GET['s'])) {
+                if ($_GET['s'] == '101') {
+                    echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Payment Success visit Paid courses section !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                }
+            }
+            ?>
             <h4>Courses Available</h4>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col">
@@ -506,7 +473,9 @@ $account_status = $_SESSION['account_status'];
                                         <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
 
                                         <h3 class="fw-bold">LKR.2000.00</h3>
-                                        <button type="button" class="btn btn-primary mt-2">Buy Now</button>
+                                        <form method="post" action="/KuppiMate/src/controller/checkout.php">
+                                            <button type="submit" class="btn btn-primary mt-2">Buy Now</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -841,61 +810,61 @@ $account_status = $_SESSION['account_status'];
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '102') {
+                } elseif ($_GET['id'] == '102') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Invalid email !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '103') {
+                } elseif ($_GET['id'] == '103') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Invalid number !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '104') {
+                } elseif ($_GET['id'] == '104') {
                     echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
                                     Updated Succeefully !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '105') {
+                } elseif ($_GET['id'] == '105') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Failed to update details, try again !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '106') {
+                } elseif ($_GET['id'] == '106') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Email already exist use another one !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '107') {
+                } elseif ($_GET['id'] == '107') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     password strength is low !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '108') {
+                } elseif ($_GET['id'] == '108') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Confirm password not match !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '109') {
+                } elseif ($_GET['id'] == '109') {
                     echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
                                     Password update successfully !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '110') {
+                } elseif ($_GET['id'] == '110') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Password update failed !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-                }elseif ($_GET['id'] == '111') {
+                } elseif ($_GET['id'] == '111') {
                     echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     modal Password update failed !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
