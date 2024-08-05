@@ -24,7 +24,7 @@
         <div class="landText mt-4">
             <h1>KuppiMate</h1>
             <h2>Digital Plaform<br>For Traditional<br>Kuppis</h2>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+            <p>KuppiMate is a digital platform designed to facilitate "Kuppi" sessions for university students, providing a seamless way to access academic help online. It allows students to easily register, schedule, and participate in study sessions, fostering collaboration and knowledge sharing.</p>
             <button class="btn btn-primary fw-bold me-2" type="submit" data-bs-toggle="modal" href="#registerModal">Register</button>
             <button class="btn btn-outline-primary fw-bold me-2" type="submit" onclick="document.location='/KuppiMate/src/view/login.php'">Login</button>
         </div>
@@ -60,9 +60,9 @@
             </div>
             <div class="col-md-6 d-flex flex-column justify-content-center align-items-center text-center">
                 <h4 class="fs-3 fw-bold mt-3">What is KuppiMate ?</h4>
-                <p>Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.
+                <p>KuppiMate is a digital platform specifically designed to facilitate "Kuppi" sessions for university students. It addresses the challenges students face in accessing academic help due to geographical limitations by providing an online environment for collaboration and learning. Through a simple registration process, students can create profiles, schedule sessions, and participate in discussions, making academic assistance more accessible and efficient. The platform fosters a community-driven approach to learning, encouraging students to share knowledge and support each other.
                 </p>
-                <p>Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.Courses covering all tech domains for you to learn and explore new oppurtunities. Learn from Industry Experts and land your Dream Job.
+                <p>In addition to its core function of hosting Kuppi sessions, KuppiMate offers various features to enhance the learning experience. Students can categorize sessions by subject, access a notice board for upcoming sessions, and utilize a downloading section for essential learning materials. The platform also supports external tutor sessions, allowing qualified individuals to offer paid or free tutoring services to both undergraduates and external learners. With a focus on accessibility, collaboration, and quality, KuppiMate aims to transform the traditional Kuppi sessions into a more dynamic and inclusive digital learning environment.
                     <button data-bs-toggle="modal" data-bs-target="#exampleModal">Contact Us</button>
                 </p>
             </div>

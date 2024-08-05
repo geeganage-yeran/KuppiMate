@@ -63,35 +63,35 @@ $account_status = $_SESSION['account_status'];
                         <div>
                             <i class="bi bi-person-workspace"></i>
                             <p class="homecont-p">How to join for a Kuppi</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>To join a Kuppi session on KuppiMate, first sign up with your email address and complete the academic verification process. After logging in, go to upcoming Kuppi sessions, select one that matches your academic needs, and click on the session link to join and participate.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-people-fill"></i>
                             <p class="homecont-p">How to schedule a Kuppi</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>To schedule a Kuppi session on KuppiMate, log in and navigate to the create a kuppi section. Enter the details such as topic, date, time, and university, then submit your request for approval. Once approved, your session will appear on the notice board for others to join.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-person-lines-fill"></i>
                             <p class="homecont-p">About external session</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>External sessions on KuppiMate allow verified undergraduates to host educational sessions for both peers and external learners. These sessions can be free or paid, providing flexible learning opportunities.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-person-video3"></i>
                             <p class="homecont-p">Join for an external session</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>Registered users can browse available sessions, select one of interest, and complete payment and registration for the session.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-question-lg"></i>
                             <p class="homecont-p">Any questions</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>You can just send an email to kuppimate@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -148,31 +148,11 @@ $account_status = $_SESSION['account_status'];
                     <div id="selectCategory">
                         <label>Session Category</label><br>
                         <select name="category" id="category" required>
-                            <option value="accounting">Accounting</option>
-                            <option value="agriculture">Agriculture</option>
-                            <option value="architecture">Architecture</option>
-                            <option value="biotechnology">Biotechnology</option>
-                            <option value="business_administration">Business_Administration</option>
-                            <option value="civil_engineering">Civil_Engineering</option>
-                            <option value="computer_science">Computer_Science</option>
-                            <option value="economics">Economics</option>
-                            <option value="education">Education</option>
-                            <option value="electrical_engineering">Electrical_Engineering</option>
-                            <option value="english">English</option>
-                            <option value="environmental_science">Environmental_Science</option>
-                            <option value="finance">Finance</option>
-                            <option value="information_technology">Information_Technology</option>
-                            <option value="law">Law</option>
-                            <option value="marketing">Marketing</option>
-                            <option value="mathematics">Mathematics</option>
-                            <option value="mechanical_engineering">Mechanical_Engineering</option>
-                            <option value="medicine">Medicine</option>
-                            <option value="nursing">Nursing</option>
-                            <option value="pharmacy">Pharmacy</option>
-                            <option value="physics">Physics</option>
-                            <option value="psychology">Psychology</option>
-                            <option value="software_engineering">Software_Engineering</option>
-                            <option value="statistics">Statistics</option>
+                            <?php if ($catList != null) { ?>
+                                <?php foreach ($catList as $catName) { ?>
+                                    <option value="<?php echo $catName['category_name'] ?>"><?php echo $catName['category_name'] ?></option>
+                            <?php }
+                            } ?>
                         </select>
                     </div>
                     <div class="textArea">
@@ -184,6 +164,8 @@ $account_status = $_SESSION['account_status'];
                         <button type="submit">Create Kuppi</button>
                     </div>
             </form>
+            <div id="addCategory">
+            </div>
             <div id="kuppiResultsection">
                 <?php if ($output != null) { ?>
                     <?php foreach ($output as $index => $output) { ?>
@@ -216,8 +198,6 @@ $account_status = $_SESSION['account_status'];
                 <?php  } else { ?>
                     <span class="badge bg-secondary">No Session Created Yet</span>
                 <?php } ?>
-
-
             </div>
     </div>
     </section>
@@ -496,9 +476,8 @@ $account_status = $_SESSION['account_status'];
                             <span id="heading2">Earning Now</span>
                         </span>
                         <a href="#" data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</a>
-                        <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-                            <span class="extraContent">simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</span><br />
-                            <span id="readMoreBtn">ReadMore</span>
+                        <p>KuppiMate offers undergraduates a unique opportunity to earn by sharing their knowledge and conducting external sessions. By becoming a verified tutor, students can schedule and lead sessions on various subjects they excel in. Once approved, these sessions can be attended by other students and external leaners, providing a platform to not only teach but also to earn. 
+                        The process is straightforward: get verified, schedule your sessions, and start earning from your expertise. Take advantage of this chance to make a difference and gain valuable experience while earning through KuppiMate.
                         </p>
                     </div>
                 </div>

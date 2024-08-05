@@ -20,7 +20,7 @@ if (!isset($_SESSION['email'])) {
 
 <body>
     <div id="verify-code-container" class="container hidden">
-        <button class="back"     >&lt; Back</button>
+        <button class="back" onclick="location.href='/KuppiMate/src/view/recovery_password.php'"    >&lt; Back</button>
         <h2>Check your email</h2>
         <form action="/KuppiMate/src/controller/otpVerification.php" method="POST">
             <input type="text" maxlength="1" class="code-input" name="digit1" required>

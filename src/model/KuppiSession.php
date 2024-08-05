@@ -77,7 +77,7 @@ class KuppiSession
     {
         try {
             if ($condition == "pending") {
-                $query = "SELECT * FROM `kuppisession` WHERE status='pending'";
+                $query = "SELECT ks.*, c.category_name FROM kuppisession ks JOIN category c ON ks.category_id = c.id WHERE ks.status='pending'";
                 $stmt = $con->prepare($query);
                 $stmt->execute();
                 if ($stmt->rowCount() > 0) {
@@ -88,7 +88,7 @@ class KuppiSession
                 }
             }
             if ($condition == "approved") {
-                $query = "SELECT * FROM `kuppisession` WHERE status='approved'";
+                $query = "SELECT ks.*, c.category_name FROM kuppisession ks JOIN category c ON ks.category_id = c.id WHERE ks.status='approved'";
                 $stmt = $con->prepare($query);
                 $stmt->execute();
                 if ($stmt->rowCount() > 0) {

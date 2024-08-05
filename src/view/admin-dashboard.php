@@ -31,6 +31,7 @@ $role = $_SESSION['role'];
             <li><a href="#" onclick="showSection('home')" class="active"><i class="bi bi-house-fill"></i>&nbsp;&nbsp;&nbsp;Overview</a></li>
             <li><a href="#" onclick="showSection('user-management')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;User Managment</a></li>
             <li><a href="#" onclick="showSection('Kuppi-sessions')"><i class="bi bi-easel-fill"></i>&nbsp;&nbsp;&nbsp;Kuppi Sessions</a></li>
+            <li><a href="#" onclick="showSection('Kuppi-categories')"><i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Kuppi Categories</a></li>
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
             <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
@@ -256,7 +257,7 @@ $role = $_SESSION['role'];
                                         <td><?php echo $kuppiresult['title']  ?></td>
                                         <td><?php echo $kuppiresult['session_start_date_time']  ?></td>
                                         <td><?php echo $kuppiresult['session_end_date_time']  ?></td>
-                                        <td><?php echo $kuppiresult['category_id'] ?></td>
+                                        <td><?php echo $kuppiresult['category_name'] ?></td>
 
                                         <form action="/KuppiMate/src/controller/adminController.php" method="post">
                                             <td>
@@ -298,7 +299,7 @@ $role = $_SESSION['role'];
                                         <td><?php echo $kuppiverified['title']  ?></td>
                                         <td><?php echo $kuppiverified['session_start_date_time']  ?></td>
                                         <td><?php echo $kuppiverified['session_end_date_time']  ?></td>
-                                        <td><?php echo $kuppiverified['category_id'] ?></td>
+                                        <td><?php echo $kuppiverified['category_name'] ?></td>
                                         <td><span class="badge bg-success">Approved</span></td>
                                         <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteKuppi">Delete</button></td>
                                     </tr>
@@ -308,6 +309,75 @@ $role = $_SESSION['role'];
                             <?php }; ?>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </section>
+        <section class="content" id="Kuppi-categories">
+            <div class="container mt-4">
+                <h4>Available Category List</h4>
+                <div class="exRequest table-responsive">
+                    <table class="table table-hover text-center table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($catList != null) { ?>
+                                <?php foreach ($catList as $index => $catNames) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $catNames['category_name']  ?></td>
+                                        <td><button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCat">Delete</button></td>
+                                    </tr>
+                                <?php }; ?>
+                            <?php } else { ?>
+                                <span class="badge bg-secondary">No Categories Available</span>
+                            <?php }; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="addCategory mt-4">
+                    <?php if (isset($_GET['id'])) {
+                        if ($_GET['id'] == '120') {
+                            echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    canot use special characters numbers except underscore
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                        } elseif ($_GET['id'] == '122') {
+                            echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Category Already Exist !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                        } elseif ($_GET['id'] == '121') {
+                            echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                        Category Created Successfully 
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                        </button>
+                                        </div>";
+                        } elseif ($_GET['id'] == '130') {
+                            echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                        Category Deleted Successfully 
+                                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                        </button>
+                                        </div>";
+                        }
+                    }
+                    ?>
+                    <h6 class="mb-3">If Category is not listed you can add it from here:</h6>
+                    <form action="/KuppiMate/src/controller/categoryController.php" method="post">
+                        <div>
+                            <input type="text" class="form-control" name="catName" placeholder="category name" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary btn-sm mt-2">Add Category</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -524,6 +594,23 @@ $role = $_SESSION['role'];
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
                         <input type="hidden" name="deleteKuppiSessionId" value="<?php echo $kuppiverified['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--category delete verification-->
+    <div class="modal fade" id="deleteCat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteCatLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this Category ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/categoryDelete.php" method="post">
+                        <input type="hidden" name="deleteCatId" value="<?php echo $catNames['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-primary">yes</button>
                     </form>

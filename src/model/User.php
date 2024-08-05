@@ -356,4 +356,14 @@ class User
         }
 
     }
+    public function updateLastLogin($con,$id){
+        try {
+            $query="UPDATE users SET last_login=CURRENT_TIMESTAMP WHERE id=?";
+            $stmt=$con->prepare($query);
+            $stmt->bindparam(1,$id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

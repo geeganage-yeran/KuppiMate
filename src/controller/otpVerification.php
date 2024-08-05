@@ -5,7 +5,7 @@ if (isset($_POST['digit1'], $_POST['digit2'], $_POST['digit3'], $_POST['digit4']
 
     $otp = $_POST['digit1'] . $_POST['digit2'] . $_POST['digit3'] . $_POST['digit4'] . $_POST['digit5'];
 
-    if ($otp == $_SESSION['otp'] && (time() - $_SESSION['otp_time']) <= 60) {
+    if ($otp == $_SESSION['otp'] && (time() - $_SESSION['otp_time']) <= 120) {
         header("Location: /KuppiMate/src/view/reset_confirm.php");
         exit();
     } else {

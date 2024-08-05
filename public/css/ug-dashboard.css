@@ -336,7 +336,19 @@ input[type="file"]:disabled{
 .content .createKuppiContainer #CreateSection button:first-child:hover{
     background-color: #dedef3;
 }
-
+.createKuppiContainer #addCategory{
+    grid-column: 1/span 3;
+}
+.createKuppiContainer #addCategory h6{
+    font-size: 17px;
+    font-weight: 500;
+    color: #515868;
+}
+.createKuppiContainer #addCategory .btn{
+    background-color:#0b53be;
+    padding: 8px;
+    border-radius: 6px;
+}
 .createKuppiContainer #kuppiResultsection{
     grid-column: 1/span 5;
     margin-top: 40px;
@@ -393,7 +405,7 @@ input[type="file"]:disabled{
     background:#0B5ED7;
 }
 
-/* Reshedule PopUp message in Create Kuppi Section 
+/* Reshedule PopUp message in Create Kuppi Section */
 
 .modal-body form input{
     width:85%;

@@ -11,6 +11,8 @@ if (isset($_SESSION['id'])) {
     header("Location: /KuppiMate/src/view/login.php");
     exit();
 }
+$catname=new Category();
+$catList=$catname->getCategory(Dbconnector::getConnection());
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['tName'], $_POST['description'], $_POST['startDate'], $_POST['endDate'], $_POST['category'], $_SESSION['id'])) {

@@ -8,6 +8,8 @@ $user = new User();
 $result = $user->userList(Dbconnector::getConnection(), "needToVerify");
 $verified = $user->userList(Dbconnector::getConnection(), "verified");
 $exLearnerList = $user->userList(Dbconnector::getConnection(), "externalLearnerList");
+$category=new Category();
+$catList=$category->getCategory(Dbconnector::getConnection());
 
 if (isset($_POST['acivateId'])) {
     $user->setuserId($_POST['acivateId']);
