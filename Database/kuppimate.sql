@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 04:16 PM
+-- Generation Time: Aug 05, 2024 at 05:44 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -83,8 +83,7 @@ INSERT INTO `category` (`id`, `category_name`, `created_by`, `updated_by`, `crea
 (79, 'Pharmacy', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (80, 'Physics', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
 (81, 'Psychology', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
-(82, 'Software_Engineering', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10'),
-(83, 'Statistics', 15, NULL, '2024-07-16 04:47:10', '2024-07-16 04:47:10');
+(91, 'new_category', 15, 15, '2024-08-05 01:15:10', '2024-08-05 01:15:10');
 
 -- --------------------------------------------------------
 
@@ -128,14 +127,6 @@ CREATE TABLE `kuppisession` (
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `kuppisession`
---
-
-INSERT INTO `kuppisession` (`id`, `category_id`, `title`, `description`, `session_start_date_time`, `session_end_date_time`, `status`, `session_link`, `recorded`, `driveLink`, `rescheduled_date`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(33, 65, 'Rapid Application Development', 'But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system', '2024-07-24 11:25:00', '2024-07-25 11:25:00', 'pending', NULL, 0, NULL, '2024-07-24 17:56:35', 30, NULL, '2024-07-24 17:56:35', '2024-07-24 17:56:35'),
-(34, 83, 'statistics', 'dummy text here', '2024-08-09 23:30:00', '2024-08-03 11:31:00', 'approved', 'https://us05web.zoom.us/j/81076669864?pwd=Yok9Pa6t3eiOLxwvreaOtDEMyu2dZZ.1', 0, NULL, '2024-08-02 06:01:05', 30, NULL, '2024-08-02 06:00:11', '2024-08-02 06:00:11');
-
 -- --------------------------------------------------------
 
 --
@@ -155,13 +146,6 @@ CREATE TABLE `material` (
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `material`
---
-
-INSERT INTO `material` (`id`, `kuppi_session_id`, `tutor_session_id`, `file_size`, `file_name`, `file_type`, `file_path`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(9, 34, NULL, 4492, '34.zip', NULL, 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/material-uploads/34.zip', 30, 30, '2024-08-02 06:01:57', '2024-08-02 06:01:57');
 
 -- --------------------------------------------------------
 
@@ -272,14 +256,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `contact`, `university`, `role`, `account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`, `is_verified`, `last_login`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(15, 'admin', 'admin', 'admin@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', NULL, 'administrator', 'active', NULL, NULL, NULL, NULL, 1, '2024-07-14 06:26:04', NULL, NULL, '2024-07-14 04:11:52', '2024-07-14 04:11:52'),
+(15, 'admin', 'admin', 'admin@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', NULL, 'administrator', 'active', NULL, NULL, NULL, NULL, 1, '2024-08-05 03:44:08', NULL, NULL, '2024-07-14 04:11:52', '2024-07-14 04:11:52'),
 (19, 'piyumi', 'weerasinghe', 'piyumi@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', NULL, 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-07-25 19:21:15', NULL, NULL, '2024-07-14 16:40:25', '2024-07-14 16:40:25'),
 (21, 'Michael', 'Johnson', 'michael.j@example.com', '1b984947472da1a7c3659fe135e52c67', '0734567890', 'University of Colombo', 'undergraduate', 'inactive', '66940437bf327.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66940437bf327.pdf', 'application/pdf', 712773, 0, '2024-07-15 15:09:13', NULL, NULL, '2024-07-14 17:00:39', '2024-07-14 17:00:39'),
 (28, 'tharushi', 'nadeeshani', 'tharushi@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0785676543', 'University of Jaffna', 'undergraduate', 'active', '6694f4bf48d93.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694f4bf48d93.pdf', 'application/pdf', 712773, 1, '2024-08-02 05:57:20', NULL, NULL, '2024-07-15 10:06:55', '2024-07-15 10:06:55'),
-(30, 'Nandasiri', 'lakvidu', 'geeganageyeran@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0756000901', 'Uva Wellassa University', 'undergraduate', 'active', '6694fc45a51e3.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694fc45a51e3.pdf', 'application/pdf', 712773, 1, '2024-08-02 06:03:25', NULL, NULL, '2024-07-15 10:39:01', '2024-07-15 10:39:01'),
-(34, 'manith', 'nandasiri', 'designs.yeran@gmail.com', '178135aea145d95431736cb9fbe0ad2f', '0710619833', NULL, 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-08-02 05:54:29', NULL, NULL, '2024-07-26 10:24:28', '2024-07-26 10:24:28'),
-(35, 'kavinda', 'chamod', 'kavinda@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0710619833', 'University of Colombo', 'undergraduate', 'active', '66ac773ae9dda.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66ac773ae9dda.pdf', 'application/pdf', 712773, 1, '2024-08-02 06:07:10', NULL, NULL, '2024-08-02 06:05:46', '2024-08-02 06:05:46'),
-(36, 'kasun', 'chamika', 'kasuna@gmail.com', '178135aea145d95431736cb9fbe0ad2f', '0710619833', NULL, 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-08-03 14:09:45', NULL, NULL, '2024-08-03 14:07:54', '2024-08-03 14:07:54');
+(30, 'Nandasiri', 'lakvidu', 'geeganageyeran@gmail.com', '0e3fc51fb56a25e8780c673c9ad77a8a', '0756000901', 'Uva Wellassa University', 'undergraduate', 'active', '6694fc45a51e3.pdf', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6694fc45a51e3.pdf', 'application/pdf', 712773, 1, '2024-08-05 01:46:54', NULL, NULL, '2024-07-15 10:39:01', '2024-07-15 10:39:01');
 
 --
 -- Indexes for dumped tables
@@ -389,7 +370,7 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `feedback`
@@ -401,13 +382,13 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `kuppisession`
 --
 ALTER TABLE `kuppisession`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `material`
 --
 ALTER TABLE `material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `notice`
@@ -437,7 +418,7 @@ ALTER TABLE `tutorsession`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints for dumped tables
@@ -455,7 +436,6 @@ ALTER TABLE `attendance`
 -- Constraints for table `category`
 --
 ALTER TABLE `category`
-  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `category_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`);
 
 --
