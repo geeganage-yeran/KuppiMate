@@ -3,8 +3,8 @@
 let header = document.getElementById("header-title");
 function showSection(sectionId) {
     header.innerHTML = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-    header.style.color="#0B5ED7";
-    header.style.fontWeight="700";
+    header.style.color = "#0B5ED7";
+    header.style.fontWeight = "700";
     document.querySelectorAll('.content').forEach(section => {
         section.classList.remove('active');
     });
@@ -19,7 +19,7 @@ function HeaderVisibility() {
     header.style.display = (window.innerWidth <= 768) ? "none" : "block";
 }
 HeaderVisibility();
-window.addEventListener("resize",HeaderVisibility);
+window.addEventListener("resize", HeaderVisibility);
 
 //Text limit in Text area
 
@@ -49,47 +49,71 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-//notice filter section
+// Notice filter section
 const categorySelect = document.getElementById("category-select");
 const dateFilter = document.getElementById("dateFilter");
+const uniFilter = document.getElementById("uni-select");
 const clearButton = document.getElementById("clearButton");
 
 categorySelect.addEventListener("change", function () {
-    if (categorySelect.value !== 'All') {
+    if (categorySelect.value !== '') {
         dateFilter.disabled = true;
         dateFilter.style.color = "#e2e2e2";
+        uniFilter.disabled = true;
+        uniFilter.style.color = "#e2e2e2";
     } else {
         dateFilter.disabled = false;
         dateFilter.style.color = "#000000";
-    }
-})
-dateFilter.addEventListener("change", function () {
-    if (dateFilter.value) {
-        categorySelect.disabled = true;
-        categorySelect.value = "";
-    } else {
-        categorySelect.disabled = false;
-    }
-})
-clearButton.addEventListener("click", function () {
-    categorySelect.disabled = false;
-    categorySelect.value = "all";
-    dateFilter.disabled = false;
-    dateFilter.value = "";
-    dateFilter.style.color = "#000000"
-})
-
-//Readmore Functionality
-document.getElementById('readMoreBtn').addEventListener('click', function () {
-    var extraContent = document.querySelector('.extraContent');
-    if (extraContent.style.display === 'none') {
-        extraContent.style.display = 'inline';
-        this.textContent = 'ReadLess';
-    } else {
-        extraContent.style.display = 'none';
-        this.textContent = 'ReadMore';
+        uniFilter.disabled = false;
+        uniFilter.style.color = "#000000";
     }
 });
+
+dateFilter.addEventListener("change", function () {
+    if (dateFilter.value !== '') {
+        categorySelect.disabled = true;
+        categorySelect.style.color = "#e2e2e2";
+        uniFilter.disabled = true;
+        uniFilter.style.color = "#e2e2e2";
+    } else {
+        categorySelect.disabled = false;
+        categorySelect.style.color = "#000000";
+        uniFilter.disabled = false;
+        uniFilter.style.color = "#000000";
+    }
+});
+
+uniFilter.addEventListener("change", function () {
+    if (uniFilter.value !== '') {
+        categorySelect.disabled = true;
+        categorySelect.style.color = "#e2e2e2";
+        dateFilter.disabled = true;
+        dateFilter.style.color = "#e2e2e2";
+    } else {
+        categorySelect.disabled = false;
+        categorySelect.style.color = "#000000";
+        dateFilter.disabled = false;
+        dateFilter.style.color = "#000000";
+    }
+});
+
+clearButton.addEventListener("click", function () {
+    // Reset all filters
+    categorySelect.disabled = false;
+    categorySelect.value = "";
+    categorySelect.style.color = "#000000";
+
+    dateFilter.disabled = false;
+    dateFilter.value = "";
+    dateFilter.style.color = "#000000";
+
+    uniFilter.disabled = false;
+    uniFilter.value = "";
+    uniFilter.style.color = "#000000";
+});
+
+
+
 //Ham menue
 const hambMenu = document.getElementById("hambMenu");
 const sideBar = document.getElementById("sidebar");
@@ -116,9 +140,9 @@ function rating(n) {
         else if (n == 5) cls = "five";
         stars[i].className = "star " + cls;
     }
-    ratingValue.value =  n;
+    ratingValue.value = n;
 }
- 
+
 function remove() {
     let i = 0;
     while (i < 5) {
@@ -127,3 +151,77 @@ function remove() {
     }
 }
 
+// setting previous dates off
+
+const now = new Date();
+const year = now.getFullYear();
+const month = String(now.getMonth() + 1).padStart(2, '0');
+const day = String(now.getDate()).padStart(2, '0');
+const hours = String(now.getHours()).padStart(2, '0');
+const minutes = String(now.getMinutes()).padStart(2, '0');
+
+
+const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+document.querySelector('.Kuppifrom').setAttribute('min', minDateTime);
+document.querySelector('.Kuppito').setAttribute('min', minDateTime);
+document.querySelector('.Kuppifrom').addEventListener('input', function () {
+    const startDate = this.value;
+    document.querySelector('.Kuppito').setAttribute('min', startDate);
+});
+
+
+// filter validation 
+
+function filterValidate() {
+    var cat = document.getElementById('category-select').value;
+    var dateFilter = document.getElementById('dateFilter').value;
+
+    if (cat === '' && dateFilter === '') {
+        alert('Select a category or date to filter notice');
+        return false;
+    } else {
+        return true;
+    }
+}
+
+//settings validate
+function validateSetting() {
+    const fname = document.getElementById("fname").value;
+    const lname = document.getElementById("lname").value;
+    const email = document.getElementById("email").value;
+    const contact = document.getElementById("contact").value;
+
+    if (fname == '' && lname == '' && email == '' && contact == '') {
+        alert('At least one field should be filled to update the profile');
+        return false;
+    } else if (fname !== '' && !fname.match(/^[a-zA-Z]+$/)) {
+        alert('Invalid characters in first name field');
+        return false;
+    } else if (lname !== '' && !lname.match(/^[a-zA-Z]+$/)) {
+        alert('Invalid characters in last name field');
+        return false;
+    } else if (email !== '' && !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+        alert('Invalid characters in email');
+        return false;
+    } else if (contact !== '' && !contact.match(/^\d{10}$/)) {
+        alert('Invalid contact number use the format as 07XXXXXXXX');
+        return false;
+    }
+    return true;
+
+}
+
+//set session id for feedback
+
+function setSessionId(button) {
+    const sessionId = button.getAttribute('data-session-id');
+    document.getElementById('session-id').value = sessionId;
+}
+
+//messages timeout
+setTimeout(function () {
+    var alertElement = document.getElementById('alertMessage');
+    if (alertElement) {
+        alertElement.classList.remove('show');
+    }
+},5000)

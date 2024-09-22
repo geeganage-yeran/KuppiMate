@@ -25,20 +25,21 @@
             <div class="col-lg-4 p-3  leftText  d-md-block mt-5">
                 <h1>Login to</h1>
                 <h2>KuppiMate</h2>
-                <p>if you don't have an account</br>you can <a href="/KuppiMate/src/view/index.php">Register Here!</a></p>
+                <p>If you don't have an account</br>you can <a href="/KuppiMate/src/view/index.php">Register Here!</a></p>
             </div>
-            <div class="col-lg-4 p-3 d-none d-lg-block mt-5">
+            <div class="col-lg-4 p-3 d-none d-lg-block mt-5 moving">
                 <img src="/KuppiMate/public/images/login-laptop.png" class="img-fluid" alt="">
             </div>
             <div class="col-lg-4 p-5">
                 <div class="profileImg">
+                    <img src="/KuppiMate/public/images/profile.png" class="rounded-circle" alt="">
                 </div>
                 <form action="/KuppiMate/src/controller/loginController.php" method="POST">
                     <div class="mb-3 mt-5">
                         <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <a href="/KuppiMate/src/view/recovery_password.php"><span class="d-block mt-1">Forgotten Your Password?</span></a>
                     </div>
                     <div class="mb-3 mt-4">

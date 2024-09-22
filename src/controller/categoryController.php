@@ -6,7 +6,7 @@ include_once __DIR__ . '/../model/Dbconnector.php';
 
 if($_SERVER["REQUEST_METHOD"]=="POST"){
     if(isset($_POST['catName']) && !empty($_POST['catName'])){
-        if(!preg_match("/^[A-Za-z_]*$/",$_POST['catName'])){
+        if(!preg_match("/^[A-Za-z_ ]*$/",$_POST['catName'])){
             header("Location: /KuppiMate/src/view/admin-dashboard.php?id=120");
             exit();
         }else{
@@ -24,5 +24,3 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         }
     }
 }
-
-?>

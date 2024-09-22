@@ -33,12 +33,13 @@ class KuppiSession
     }
 
 
-    
+
     public function createSession($con, $categoryId, $userId)
     {
         try {
-            $query = "INSERT INTO kuppisession (`category_id`,`title`,`description`,`session_start_date_time`,`session_end_date_time`,`created_by`) VALUES (?,?,?,?,?,? )";
+            $query = "INSERT INTO kuppisession (category_id, title, description, session_start_date_time, session_end_date_time, created_by) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $con->prepare($query);
+
             $stmt->bindParam(1, $categoryId);
             $stmt->bindParam(2, $this->title);
             $stmt->bindParam(3, $this->description);
@@ -47,10 +48,17 @@ class KuppiSession
             $stmt->bindParam(6, $userId);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
-                return true;
+
+                $lastIdQuery = "SELECT LAST_INSERT_ID()";
+                $lastIdStmt = $con->prepare($lastIdQuery);
+                $lastIdStmt->execute();
+                $lastId = $lastIdStmt->fetchColumn();
+
+                return $lastId;
             }
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return null;
         }
     }
 
@@ -69,9 +77,7 @@ class KuppiSession
         }
     }
 
-    public function categorizeSession()
-    {
-    }
+    public function categorizeSession() {}
 
     public function listSession($con, $condition)
     {
@@ -103,9 +109,7 @@ class KuppiSession
         }
     }
 
-    public function filterSession()
-    {
-    }
+    public function filterSession() {}
 
     public function getSession($con, $userId)
     {
@@ -152,7 +156,7 @@ class KuppiSession
             $stmt1->execute();
             $filePath = $stmt1->fetchColumn();
 
-            $query3="DELETE FROM material WHERE kuppi_session_id=?";
+            $query3 = "DELETE FROM material WHERE kuppi_session_id=?";
             $stmt3 = $con->prepare($query3);
             $stmt3->bindParam(1, $session_id);
             $stmt3->execute();
@@ -161,6 +165,11 @@ class KuppiSession
             $stmt2 = $con->prepare($query2);
             $stmt2->bindParam(1, $session_id);
             $stmt2->execute();
+
+            $query4 = "DELETE FROM notice WHERE `session_id`=?";
+            $stmt4 = $con->prepare($query4);
+            $stmt4->bindParam(1, $session_id);
+            $stmt4->execute();
 
             if ($stmt2->rowCount() > 0) {
                 if (file_exists($filePath)) {
@@ -173,7 +182,5 @@ class KuppiSession
         }
     }
 
-    public function updateSessionStatus()
-    {
-    }
+    public function updateSessionStatus() {}
 }

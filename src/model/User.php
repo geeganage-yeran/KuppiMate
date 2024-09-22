@@ -8,7 +8,7 @@ class User
     private $email;
     private $password;
     private $contact;
-    private $university;
+    private $universityId;
     private $role;
     private $accountStatus;
     private $verificationFileName;
@@ -36,15 +36,15 @@ class User
     }
     public function setPassword($password)
     {
-        $this->password = md5($password);
+        $this->password = $password;
     }
     public function setContact($contact)
     {
         $this->contact = $contact;
     }
-    public function setUniversity($university)
+    public function setUniversityId($universityId)
     {
-        $this->university = $university;
+        $this->universityId = $universityId;
     }
     public function setverificationFileName($verificationFileName)
     {
@@ -105,15 +105,15 @@ class User
             $this->isVerified = 1;
         }
         try {
-            $query = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `contact`, `university`, `role`,`account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`,`is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
+            $query = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `password`, `contact`, `university_id`, `role`,`account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`,`is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? ,?)";
 
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $this->firstName);
             $stmt->bindParam(2, $this->lastName);
             $stmt->bindParam(3, $this->email);
-            $stmt->bindParam(4, $this->password);
+            $stmt->bindParam(4, password_hash($this->password,PASSWORD_BCRYPT));
             $stmt->bindParam(5, $this->contact);
-            $stmt->bindParam(6, $this->university);
+            $stmt->bindParam(6, $this->universityId);
             $stmt->bindParam(7, $this->role);
             $stmt->bindParam(8, $this->accountStatus);
             $stmt->bindParam(9, $this->verificationFileName);
@@ -122,9 +122,7 @@ class User
             $stmt->bindParam(12, $this->verificationFileSize);
             $stmt->bindParam(13, $this->isVerified);
             $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                return true;
-            }
+            return true;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -133,25 +131,25 @@ class User
     public function login($con)
     {
         try {
-            $query = "SELECT * FROM users WHERE email=?";
+            $query = "SELECT uni.name,u.* FROM users u LEFT JOIN university uni ON u.university_id=uni.id WHERE email=?";
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $this->email);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result) {
-                if ($result['password'] === $this->password && $result['account_status'] == "active" && $result['is_verified'] == 1) {
+                if (password_verify($this->password,$result['password']) && $result['account_status'] == "active" && $result['is_verified'] == 1) {
                     $_SESSION['first_name'] = $result['first_name'];
                     $_SESSION['last_name'] = $result['last_name'];
                     $_SESSION['email'] = $result['email'];
                     $_SESSION['contact'] = $result['contact'];
-                    $_SESSION['university'] = $result['university'];
+                    $_SESSION['university'] = $result['name'];
                     $_SESSION['role'] = $result['role'];
                     $_SESSION['account_status'] = $result['account_status'];
                     $_SESSION['verification_file_path'] = $result['verification_file_path'];
                     $_SESSION['is_verified'] = $result['is_verified'];
                     $_SESSION['id'] = $result['id'];
                     return true;
-                } elseif ($result['password'] === $this->password) {
+                } elseif (password_verify($this->password,$result['password'])) {
                     if ($result['account_status'] == "inactive" && $result['is_verified'] == 0) {
                         header("Location: /KuppiMate/src/view/verification-pending.php");
                         exit();
@@ -175,9 +173,15 @@ class User
     {
         try {
             if ($condition == "needToVerify") {
-                $query = "SELECT id,first_name,last_name,university,email,verification_file_name FROM users WHERE account_status='inactive' AND is_verified=0";
+                $query = "SELECT u.id,u.first_name,u.last_name,uni.name,u.email,u.verification_file_name 
+                FROM users u 
+                LEFT JOIN university uni ON uni.id = u.university_id 
+                WHERE u.account_status='inactive' AND u.is_verified=0";
             } elseif ($condition == "verified") {
-                $query = "SELECT id,first_name,last_name,university,account_status,contact FROM users WHERE is_verified=1 AND role='undergraduate'";
+                $query = "SELECT u.id,u.first_name,u.last_name,uni.name,u.account_status,u.contact 
+                FROM users u
+                LEFT JOIN university uni ON uni.id = u.university_id  
+                WHERE u.is_verified=1 AND u.role='undergraduate'";
             } elseif ($condition == "externalLearnerList") {
                 $query = "SELECT id,first_name,last_name,email,contact FROM users WHERE account_status='active' AND is_verified=1 AND role='external_learner' ";
             }
@@ -327,9 +331,9 @@ class User
             } elseif ($condition == "password-update") {
                 $query = "UPDATE users SET password = ? WHERE id = ? AND password = ?";
                 $stmt = $con->prepare($query);
-                $stmt->bindParam(1, $this->password);
+                $stmt->bindParam(1, password_hash($this->password,PASSWORD_BCRYPT));
                 $stmt->bindParam(2, $this->userId);
-                $stmt->bindParam(3, md5($oldPsw));
+                $stmt->bindParam(3, password_hash($oldPsw,PASSWORD_BCRYPT));
 
                 if ($stmt->execute()) {
                     return $stmt->rowCount() > 0;

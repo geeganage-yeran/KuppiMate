@@ -34,7 +34,7 @@ $role = $_SESSION['role'];
             <li><a href="#" onclick="showSection('Kuppi-categories')"><i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Kuppi Categories</a></li>
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
-            <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li style="margin-top: 170px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -85,7 +85,7 @@ $role = $_SESSION['role'];
                 </div>
             </div>
             <div class="container">
-                <h4>Noice Section</h4>
+                <h4>Notice Section</h4>
                 <div class="notice table-responsive">
                     <table class="table table-hover text-center">
                         <thead>
@@ -95,18 +95,36 @@ $role = $_SESSION['role'];
                                 <th scope="col">Category Name</th>
                                 <th scope="col">Created Date</th>
                                 <th scope="col">Description</th>
-                                <th scope="col">BroadCcast</th>
+                                <th scope="col">Broadcast</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>yeran</td>
-                                <td>Computer Science</td>
-                                <td>2024.05.17</td>
-                                <td>Description Here</td>
-                                <td><button class="btn btn-primary btn-sm">Broadcast</button></td>
-                            </tr>
+                            <?php if (!empty($noticeToDisplay)) {
+                                foreach ($noticeToDisplay as $index => $notice1) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1; ?></th>
+                                        <td><?php echo $notice1['first_name']; ?></td>
+                                        <td><?php echo $notice1['category_name']; ?></td>
+                                        <td><?php echo $notice1['created_date'];
+                                            $notice1['created_date']; ?></td>
+                                        <td><span class="description" data-bs-toggle="popover" data-bs-content="<?php echo $notice1['description']; ?>">View Description</span></td>
+                                        <td>
+                                            <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                                <?php if ($notice1['broadcasted'] == 1) {
+                                                    echo '<button type="button" data-bs-toggle="modal" data-bs-target="#deleteNotice" class="btn btn-danger btn-sm">Remove Notice</button>';
+                                                } else {
+                                                    echo '<input type="hidden" name="noticeId" value="' . $notice1['id'] . '">';
+                                                    echo '<button type="submit" class="btn btn-primary btn-sm">Broadcast</button>';
+                                                } ?>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                            <?php   }
+                            }
+                            ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -129,27 +147,31 @@ $role = $_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($result as $index => $result) : ?>
-                                <tr>
-                                    <th scope="row"><?php echo $index + 1 ?></th>
-                                    <td><?php echo $result['first_name']; ?></td>
-                                    <td><?php echo $result['last_name']; ?></td>
-                                    <td><?php echo $result['university']; ?></td>
-                                    <td><?php echo $result['email']; ?></td>
-                                    <td>
-                                        <a href="/KuppiMate/src/controller/uploads/<?php echo $result['verification_file_name']; ?>" target="_blank">
-                                            <button class="btn btn-primary btn-sm">View</button>
-                                        </a>
-                                    </td>
+                            <?php if ($result != null) { ?>
+                                <?php foreach ($result as $index => $result) : ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $result['first_name']; ?></td>
+                                        <td><?php echo $result['last_name']; ?></td>
+                                        <td><?php echo $result['name']; ?></td>
+                                        <td><?php echo $result['email']; ?></td>
+                                        <td>
+                                            <a href="/KuppiMate/src/controller/uploads/<?php echo $result['verification_file_name']; ?>" target="_blank">
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                            </a>
+                                        </td>
 
-                                    <td>
-                                        <form action="/KuppiMate/src/controller/adminController.php" method="POST">
-                                            <input type="hidden" name="acivateId" value="<?php echo $result['id']; ?>">
-                                            <button type="submit" class="btn btn-primary btn-sm">Activate</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
+                                        <td>
+                                            <form action="/KuppiMate/src/controller/adminController.php" method="POST">
+                                                <input type="hidden" name="acivateId" value="<?php echo $result['id']; ?>">
+                                                <button type="submit" class="btn btn-primary btn-sm">Activate</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php } else { ?>
+                                <span class="badge bg-secondary">No Any Verification Requests</span>
+                            <?php }; ?>
                         </tbody>
                     </table>
                 </div>
@@ -170,12 +192,12 @@ $role = $_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($verified as $index => $verified) : ?>
+                            <?php if($verified!=NULL){foreach ($verified as $index => $verified) : ?>
                                 <tr>
                                     <th scope="row"><?php echo $index + 1 ?></th>
                                     <td><?php echo $verified['first_name']; ?></td>
                                     <td><?php echo $verified['last_name']; ?></td>
-                                    <td><?php echo $verified['university']; ?></td>
+                                    <td><?php echo $verified['name']; ?></td>
                                     <td><?php echo $verified['contact']; ?></td>
                                     <td>
                                         <span class="badge <?php echo ($verified['account_status'] == 'active') ? 'bg-success' : 'bg-danger'; ?>">
@@ -197,7 +219,7 @@ $role = $_SESSION['role'];
                                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete</button>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endforeach;}else{ echo '<span class="badge bg-secondary">No Any Verified Undergraduate Accounts</span>'; } ?>
                         </tbody>
                     </table>
                 </div>
@@ -216,7 +238,7 @@ $role = $_SESSION['role'];
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($exLearnerList as $index => $exLearner) : ?>
+                            <?php if($exLearnerList!=NULL){foreach ($exLearnerList as $index => $exLearner) : ?>
                                 <tr>
                                     <th scope="row"><?php echo $index + 1 ?></th>
                                     <td><?php echo $exLearner['first_name'] ?></td>
@@ -227,7 +249,7 @@ $role = $_SESSION['role'];
                                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteExternalUser">Delete</button>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endforeach;}else{ echo '<span class="badge bg-secondary">No Any Verified External Accounts</span>'; } ?>
                         </tbody>
                     </table>
                 </div>
@@ -261,7 +283,7 @@ $role = $_SESSION['role'];
 
                                         <form action="/KuppiMate/src/controller/adminController.php" method="post">
                                             <td>
-                                                <input type="text" name="link" required>
+                                                <input type="text" placeholder=" Paste the Link" name="link" required>
                                                 <input type="hidden" name="resultId" value="<?php echo $kuppiresult['id']; ?>">
                                             </td>
                                             <td><button type="submit" class="btn btn-primary btn-sm">Approve</button></td>
@@ -612,6 +634,41 @@ $role = $_SESSION['role'];
                     <form action="/KuppiMate/src/controller/categoryDelete.php" method="post">
                         <input type="hidden" name="deleteCatId" value="<?php echo $catNames['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--delete notice verification-->
+    <div class="modal fade" id="deleteNotice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteNoticeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this notice ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/adminController.php" method="post">
+                        <input type="hidden" name="noticeDeleteId" value="<?php echo $notice1['id']; ?>">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Logout confirmation-->
+    <div class="modal fade" id="logoutConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to logout ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/logout.php" method="post">
+                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-primary">yes</button>
                     </form>
                 </div>

@@ -1,3 +1,6 @@
+<?php
+include_once __DIR__ . '/../controller/universityContoller.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,7 +46,7 @@
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
-        }elseif($_GET['s'] == '2'){
+        } elseif ($_GET['s'] == '2') {
             echo "<div class='alert alert-warning alert-dismissible fade show  mt-4' role='alert'>
                                     User Email Already Registerd!
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
@@ -152,33 +155,22 @@
                                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" name="contact" placeholder="contact" required id="contact">
+                                    <input type="text" class="form-control" name="contact" placeholder="Contact" required id="contact">
                                 </div>
                                 <div class="mb-3">
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" id="rpassword" name="rpassword" placeholder="Repeat Password" required>
+                                    <input type="password" class="form-control" id="rpassword" name="rpassword" placeholder="Confirm Password" required>
                                 </div>
                                 <div class="mb-3">
-                                    <select class="form-select" name="university" aria-label="Default select example">
-                                        <option>Please Select Your University</option>
-                                        <option value="Uva Wellassa University">Uva Wellassa University</option>
-                                        <option value="University of Colombo">University of Colombo</option>
-                                        <option value="University of Peradeniya">University of Peradeniya</option>
-                                        <option value="University of Sri Jayewardenepura">University of Sri Jayewardenepura</option>
-                                        <option value="University of Kelaniya">University of Kelaniya</option>
-                                        <option value="University of Moratuwa">University of Moratuwa</option>
-                                        <option value="University of Jaffna">University of Jaffna</option>
-                                        <option value="University of Ruhuna">University of Ruhuna</option>
-                                        <option value="Eastern University, Sri Lanka">Eastern University, Sri Lanka</option>
-                                        <option value="South Eastern University of Sri Lanka">South Eastern University of Sri Lanka</option>
-                                        <option value="Rajarata University of Sri Lanka">Rajarata University of Sri Lanka</option>
-                                        <option value="Sabaragamuwa University of Sri Lanka">Sabaragamuwa University of Sri Lanka</option>
-                                        <option value="Wayamba University of Sri Lanka">Wayamba University of Sri Lanka</option>
-                                        <option value="University of the Visual and Performing Arts">University of the Visual and Performing Arts</option>
-                                        <option value="Gampaha Wickramarachchi University of Indigenous Medicine">Gampaha Wickramarachchi University of Indigenous Medicine</option>
-                                        <option value="University of Vavuniya">University of Vavuniya</option>
+                                    <select class="form-select" id="uniSelection" aria-label="Default select example" name="university">
+                                        <option value="">Please Select Your University</option>
+                                        <?php if (!empty($uniList)) { ?>
+                                            <?php foreach ($uniList as $uniName) { ?>
+                                                <option value="<?php echo $uniName['id'] ?>"><?php echo $uniName['name'] ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -232,7 +224,7 @@
                                     <input type="password" class="form-control" name="password" id="password2" placeholder="Password" required>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" name="rpassword" id="rpassword2"  placeholder="Repeat Password" required>
+                                    <input type="password" class="form-control" name="rpassword" id="rpassword2" placeholder="Confirm Password" required>
                                 </div>
                                 <div class="mb-3">
                                     <input type="submit" class="form-control p-2" value="Register">

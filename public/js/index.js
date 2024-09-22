@@ -14,6 +14,7 @@ function formValidate1(){
     var password=document.getElementById('password').value;
     var rpassword=document.getElementById('rpassword').value;
     var contact=document.getElementById('contact').value.trim();
+    var uniId=document.getElementById('uniSelection').value;
     if (!fName.match(/^[a-zA-Z'-]+$/)) {
         alert('Check your first name');
         return false;
@@ -28,6 +29,9 @@ function formValidate1(){
         return false;
     }else if(!contact.match(/^\d{10}$/)){
         alert('Incorrect number');
+        return false;
+    }else if(uniId==''){
+        alert('Select a Valid University Name');
         return false;
     }
     return true;

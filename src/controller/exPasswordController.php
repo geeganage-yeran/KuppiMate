@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $user->setUserId($user_id);
     $currentPassword = $_POST['pr-password'];
     $dbpasw = $user->getPassword(Dbconnector::getConnection());
-    if ($dbpasw && md5($currentPassword) === $dbpasw) {
+    if ($dbpasw && password_verify($currentPassword,$dbpasw)) {
 
         $user->setPassword($newpassword);
         if ($user->updateProfile(Dbconnector::getConnection(), "password-update", $currentPassword)) {

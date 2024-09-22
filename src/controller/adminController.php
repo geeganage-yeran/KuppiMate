@@ -3,6 +3,7 @@ include_once __DIR__ . '/../model/User.php';
 include_once __DIR__ . '/../model/Dbconnector.php';
 include_once __DIR__ . '/../model/Category.php';
 include_once __DIR__ . '/../model/KuppiSession.php';
+include_once __DIR__ . '/../model/Notice.php';
 
 $user = new User();
 $result = $user->userList(Dbconnector::getConnection(), "needToVerify");
@@ -57,3 +58,26 @@ if (isset($_POST["link"], $_POST['resultId'])) {
         }
     }
 }
+
+// Notices to be Broadcast
+
+$noticeSet=new Notice();
+$noticeToDisplay=$noticeSet->listNotices(Dbconnector::getConnection());
+
+if(isset($_POST['noticeId'])){
+    $noticeId=$_POST['noticeId'];
+    if($noticeSet->broadcastNotice(Dbconnector::getConnection(),$noticeId)){
+        header("Location:/KuppiMate/src/view/admin-dashboard.php");
+        exit();
+    }
+}
+if(isset($_POST['noticeDeleteId'])){
+    $noticeDeleteId=$_POST['noticeDeleteId'];
+    if($noticeSet->deleteNotice(Dbconnector::getConnection(), $noticeDeleteId)){
+        header("Location:/KuppiMate/src/view/admin-dashboard.php");
+        exit();
+    }else{
+        echo 'error occur';
+    }
+}
+

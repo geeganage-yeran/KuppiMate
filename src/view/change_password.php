@@ -18,7 +18,7 @@ if (!isset($_SESSION['email'])) {
 <body>
     <div id="new-password-container" class="container hidden">
        <h2>Set a new password</h2>
-        <p>Create a new password. Ensure it differs from previous ones for security.</p>
+        <p >Create a new password. Ensure it differs from previous ones for security.</p>
         <form action="/KuppiMate/src/controller/recoverPasswordController.php" method="post" >
             <input type="password" name="new-password" placeholder="Password" required><br>
             <input type="password" name="con-password" placeholder="Confirm Password" required><br>

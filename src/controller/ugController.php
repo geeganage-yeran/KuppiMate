@@ -1,7 +1,8 @@
 <?php
-
 include_once __DIR__ . '/../model/User.php';
 include_once __DIR__ . '/../model/Dbconnector.php';
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['fName'], $_POST['lName'], $_POST['email'], $_POST['contact'], $_POST['password'], $_POST['university'], $_FILES['verficationDoc'])) {
@@ -11,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
         $contact = trim($_POST['contact']);
         $password = trim($_POST['password']);
-        $university = trim($_POST['university']);
+        $universityId = $_POST['university'];
 
         $file = $_FILES['verficationDoc'];
         $fileName = $file['name'];
@@ -33,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 $ugUser->setEmail($email);
                 $ugUser->setPassword($password);
                 $ugUser->setContact($contact);
-                $ugUser->setUniversity($university);
+                $ugUser->setUniversityId($universityId);
                 $ugUser->setverificationFileName($newFileName);
                 $ugUser->setverificationFilePath($file_upload);
                 $ugUser->setverificationFileType($fileType);

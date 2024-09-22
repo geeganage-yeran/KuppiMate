@@ -10,7 +10,7 @@ body{
     display: flex;
 }
 .sideBar {
-    width: 250px;
+    width: 255px;
     height: 100vh;
     background-color: #ffffff;
     position: fixed;
@@ -44,7 +44,7 @@ body{
     white-space: nowrap;
 }
 .navLinks li:last-child{
-    margin-top: 30px;
+    margin-top: 5px;
 }
 .navLinks li:first-child{
     margin-top: 16px;
@@ -551,7 +551,6 @@ input[type="file"]:disabled{
 }
 .card-body .link{
     background-color: #179D14;
-    border-radius: 10px;
     border: none;
 }
 .card-body .link:hover{
@@ -569,9 +568,17 @@ input[type="file"]:disabled{
 .card-body button{
     margin-top: 7px;
 }
+.card-body .enroll{
+   background-color:#0B5ED7;
+}
+.card-body .enroll:hover{
+    background-color:#0b53be;
+}
+.card-body .enroll:focus{
+    box-shadow: none;
+}
 .card-body .download{
     background-color: #394961;
-    border-radius: 10px;
     border: none;
 }
 .card-body .download:hover{
@@ -620,6 +627,7 @@ input[type="file"]:disabled{
     background-color:none;
     box-shadow: none;
 }
+
 #joinKuppi .filter-category .btn{
     background-color:#0B5ED7;
     color:white ;
@@ -627,7 +635,12 @@ input[type="file"]:disabled{
     padding-right: 10px;
     border:none;
     border-radius: 8px;
-    margin-left: 8px;
+   /* margin-left: 8px;*/
+}
+#joinKuppi .enrolled{
+    font-size: 13px;
+    font-weight: 500;
+    padding: 5px 8px 5px 8px;
 }
 #joinKuppi .filter-category .btn:focus{
     box-shadow: none;
@@ -653,7 +666,16 @@ input[type="file"]:disabled{
     padding: 2px;
     border-radius: 7px;
 }
-#joinKuppi .filter-category #category-select:focus{
+#joinKuppi .filter-category #uni-select {
+    color:rgb(0, 0, 0);
+    font-weight: 300;
+    border: none;
+    background-color:#e2e2e2;
+    font-size: 15px;
+    padding: 2px;
+    border-radius: 7px;
+}
+#joinKuppi .filter-category .category-select:focus{
     outline:none
 }
 #joinKuppi .filter-category input[type='date']{
