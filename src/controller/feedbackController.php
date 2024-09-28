@@ -1,10 +1,24 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once __DIR__ . '/../model/Feedback.php';
 include_once __DIR__ . '/../model/Dbconnector.php';
 
 $feedback = new Feedback();
 $feedbackList = $feedback->getFeedback(Dbconnector::getConnection());
 
+$averageRating = $feedback->averageFeedback(Dbconnector::getConnection(), $_SESSION['id']);
+if (!empty($averageRating)) {
+    $sessionCount = count($averageRating);
+    $totalRating = 0;
+    foreach ($averageRating as $avgRating) {
+        $totalRating += $avgRating['average_rating'];
+    }
+    $averageRatingCount = $totalRating / $sessionCount;
+}else{
+    $averageRatingCount = 0;
+}
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['ratingLevel'], $_POST['session_id'], $_POST['description'])) {
         if (!empty($_POST['ratingLevel']) && !empty($_POST['session_id']) && !empty($_POST['description'])) {

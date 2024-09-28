@@ -8,7 +8,6 @@ class KuppiSession
     private $session_end_date_time;
     private $status;
     private $recorded;
-    private $driveLink;
     private $rescheduledDate;
 
     public function setTitle($title)
@@ -31,9 +30,6 @@ class KuppiSession
     {
         $this->session_end_date_time = $endDate;
     }
-
-
-
     public function createSession($con, $categoryId, $userId)
     {
         try {
@@ -61,7 +57,6 @@ class KuppiSession
             return null;
         }
     }
-
     public function approveSession($con)
     {
         try {
@@ -76,9 +71,6 @@ class KuppiSession
             echo $e->getMessage();
         }
     }
-
-    public function categorizeSession() {}
-
     public function listSession($con, $condition)
     {
         try {
@@ -108,9 +100,6 @@ class KuppiSession
             echo $e->getMessage();
         }
     }
-
-    public function filterSession() {}
-
     public function getSession($con, $userId)
     {
         try {
@@ -128,8 +117,6 @@ class KuppiSession
             echo $e->getMessage();
         }
     }
-
-
     public function setSession($con, $session_link)
     {
         try {
@@ -145,7 +132,6 @@ class KuppiSession
             echo $e->getMessage();
         }
     }
-
     public function deleteSession($con, $session_id)
     {
         try {
@@ -181,6 +167,21 @@ class KuppiSession
             echo $e->getMessage();
         }
     }
-
-    public function updateSessionStatus() {}
+    public function updateSessionRecordStatus($con,$driveLink) {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $updated_by = $_SESSION['id'];
+            $query="UPDATE  kuppisession SET recorded=1,driveLink=?,updated_by=? WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $driveLink);
+            $stmt->bindParam(2,$updated_by);
+            $stmt->bindParam(3, $this->kuppiSessionId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

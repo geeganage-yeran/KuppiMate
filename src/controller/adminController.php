@@ -41,6 +41,7 @@ if (isset($_POST["reactiveId"])) {
     }
 }
 
+
 $totalUsers = $user->countDetails(Dbconnector::getConnection(), "totalUsers");
 $totalUndergarduate = $user->countDetails(Dbconnector::getConnection(), "totalUndergarduate");
 $needToVerify = $user->countDetails(Dbconnector::getConnection(), "needToVerify");
@@ -57,6 +58,17 @@ if (isset($_POST["link"], $_POST['resultId'])) {
             exit();
         }
     }
+}
+
+if(isset($_POST["recordId"])){
+    $kuppilist->setkuppiSessionId($_POST["recordId"]);
+    $recordedLink=$_POST['recordedLink'];
+    if($kuppilist->updateSessionRecordStatus(Dbconnector::getConnection(),$recordedLink)){
+        header("Location: /KuppiMate/src/view/admin-dashboard.php");
+        exit();
+    }else{
+        echo "Error";
+    }    
 }
 
 // Notices to be Broadcast

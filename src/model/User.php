@@ -16,7 +16,7 @@ class User
     private $verificationFileType;
     private $verificationFileSize;
     private $isVerified;
-    private $lastLogin;
+
 
     public function setuserId($userId)
     {

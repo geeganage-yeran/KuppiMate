@@ -224,4 +224,37 @@ setTimeout(function () {
     if (alertElement) {
         alertElement.classList.remove('show');
     }
-},5000)
+},5000);
+
+//external course registration form validation
+
+function validateExternalCourseForm() {
+    var courseTitle = document.getElementById('cTitle').value.trim();
+    var timePeriod = document.getElementById('cTime').value.trim();
+    var description = document.getElementById('description').value.trim();
+    var courseFee = document.getElementById('cFee').value.trim();
+    var courseContent = document.getElementById('descriptionC').value.trim();
+    var aboutYou = document.getElementById('descriptionA').value.trim();
+
+    if (!courseTitle) {
+        alert('Course Title is required.');
+        return false;
+    } else if (!timePeriod) {
+        alert('Time Period is required.');
+        return false;
+    } else if (!description) {
+        alert('Course Description is required.');
+        return false;
+    } else if (courseFee && isNaN(courseFee)) {
+        alert('Course Fee must be a valid number.');
+        return false;
+    } else if (!courseContent) {
+        alert('Course Content is required.');
+        return false;
+    } else if (!aboutYou) {
+        alert('Personal Description is required.');
+        return false;
+    }
+    
+    return true;
+}

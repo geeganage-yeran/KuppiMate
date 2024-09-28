@@ -16,9 +16,4 @@ class Subscription {
         
     }
 
-    public function getSubscription() {
-       
-    }
 }
-
-?>

@@ -42,7 +42,7 @@ class Attendance {
 
     public function listAttendance($con,$user_id) {
         try {
-            $query="SELECT a.*, k.title,DATE(a.attended_date) AS attendedDate 
+            $query="SELECT a.*, k.title,k.recorded,k.driveLink,DATE(a.attended_date) AS attendedDate 
                     FROM attendance a 
                     JOIN kuppisession k ON k.id = a.session_id 
                     WHERE a.user_id = ? AND a.status = 'attended';";
@@ -56,8 +56,5 @@ class Attendance {
         }
     }
 
-    public function markAttendance() {
-       
-    }
 }
 

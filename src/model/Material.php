@@ -38,17 +38,4 @@ class Material {
         
     }
 
-    public function downloadMaterial() {
-        
-    }
-
-    public function deleteMaterial() {
-    
-    }
-
-    public function setMaterial() {
-       
-    }
 }
-
-?>

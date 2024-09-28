@@ -5,16 +5,11 @@ class Payment {
     private $amount;
     private $paymentDate;
 
-    public function processPayment() {
+    public function savePaymentDetails() {
         // Implementation
     }
 
     public function listPayment() {
         // Implementation
     }
-
-    public function verifyPayment() {
-        // Implementation
-    }
 }
-?>

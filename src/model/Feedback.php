@@ -41,4 +41,21 @@ class Feedback{
         }
     }
 
+    public function averageFeedback($con,$created_by){
+        try {
+            $query="SELECT AVG(f.rating) AS average_rating
+            FROM kuppisession ks
+            LEFT JOIN feedback f ON ks.id = f.session_id
+            WHERE ks.created_by = ?
+            GROUP BY ks.id, ks.created_by;";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1,$created_by);
+            $stmt->execute();
+            $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 }
