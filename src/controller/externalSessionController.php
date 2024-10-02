@@ -60,10 +60,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $tutorSession->setCourseContent($courseContent);
         $tutorSession->setAboutTutor($aboutYou);
         if ($tutorSession->createTutorSession(Dbconnector::getConnection())) {
-            header("Location: /KuppiMate/src/view/ug-dashboard.php");
+            header("Location: /KuppiMate/src/view/ug-dashboard.php?s=1001");
             exit();
         } else {
             echo 'Error with database';
         }
     }
 }
+
+
+//pending sessions to display on ug dashboard
+
+$tutorSession=new TutorSession();
+$pendingTutorSessions=$tutorSession->getPendingTutorSessionById(Dbconnector::getConnection());
+
+//approved sessions display on ug dashboard
+
+$approvedTutorSessions=$tutorSession->getApprovedTutorSessionId(Dbconnector::getConnection());
+
+//courses available
+$courses=$tutorSession->getApprovedTutorSessions(Dbconnector::getConnection());

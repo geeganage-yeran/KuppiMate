@@ -4,6 +4,8 @@ include_once __DIR__ . '/../controller/noticeController.php';
 include_once __DIR__ . '/../controller/attendanceController.php';
 include_once __DIR__ . '/../controller/universityContoller.php';
 include_once __DIR__ . '/../controller/feedbackController.php';
+include_once __DIR__ . '/../controller/externalSessionController.php';
+include_once __DIR__ . '/../controller/subscriptionController.php';
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== "undergraduate") {
     header("Location: /KuppiMate/src/view/login.php");
@@ -441,6 +443,7 @@ $account_status = $_SESSION['account_status'];
                 <p>Join courses conducted by undergraduates at a low cost</p>
             </div>
             <div class="courseContent">
+                <!-- message display -->
                 <?php
                 if (isset($_GET['s'])) {
                     if ($_GET['s'] == '101') {
@@ -449,57 +452,105 @@ $account_status = $_SESSION['account_status'];
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
+                    } elseif ($_GET['s'] == '1001') {
+                        echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Session request submitted successfully!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
                     }
                 }
                 ?>
                 <h4>Courses Available</h4>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <?php if ($courses != NULL) { ?>
+                        <?php foreach ($courses as $course) { ?>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $course['title']; ?></h5>
+                                        <label>
+                                            <?php echo $course['first_name'] . ' '; ?>
+                                            <?php echo $course['last_name']; ?>
+                                        </label><br />
+                                        <label class="time-period"><?php echo $course['time_period']; ?></label><br />
+                                        <label class="ratingval"><?php echo number_format($course['average_feedback'], 1); ?></label>
+                                        <!-- calculating rating starts to be color -->
+                                        <?php
+                                        $average_feedback = number_format($course['average_feedback'], 1);
+                                        $full_stars = floor($average_feedback);
+                                        $half_star = ($average_feedback - $full_stars) >= 0.5 ? 1 : 0;
+                                        $total_stars = 5;
+                                        ?>
 
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br />
-                                <label class="time-period">3 Months , 25 Lectures</label><br />
-                                <label class="ratingval">4.2</label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label>(37)</label>
-                                <p>LKR 6000.00</p>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#enrollNow" class="btn btn-primary">Enroll Now</a>
-                            </div>
-                            <!--popup enroll now-->
-                            <div class="modal fade" id="enrollNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fw-bold" id="staticBackdropLabel">Course Title</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5 class="fw-bold mb-1">Introduction</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                                        <?php for ($i = 0; $i < $full_stars; $i++): ?>
+                                            <label class="bi bi-star-fill filled"></label>
+                                        <?php endfor; ?>
 
-                                            <h5 class="fw-bold mb-1">Course Content</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                                        <?php if ($half_star): ?>
+                                            <label class="bi bi-star-half filled"></label>
+                                        <?php endif; ?>
 
-                                            <h5 class="fw-bold mb-1">Who I Am</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                                        <?php for ($i = 0; $i < ($total_stars - $full_stars - $half_star); $i++): ?>
+                                            <label class="bi bi-star"></label>
+                                        <?php endfor; ?>
 
-                                            <h3 class="fw-bold">LKR.2000.00</h3>
-                                            <form method="post" action="/KuppiMate/src/controller/checkout.php">
-                                                <button type="submit" class="btn btn-primary mt-2">Buy Now</button>
-                                            </form>
+                                        <label><?php echo '(' . $course['feedback_count'] . ')'; ?></label>
+                                        <p>LKR <?php echo number_format($course['tutor_fee'], 2, '.', ',') ?></p>
+                                        <?php if (in_array($course['id'], $alreadyEnrolledCourses)) { ?>
+                                            <button class="btn btn-primary" disabled>Already Enrolled</button>
+                                        <?php } else { ?>
+                                            <button
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#enrollNow"
+                                                data-session-id="<?php echo $course['id']; ?>"
+                                                data-session-title="<?php echo $course['title']; ?>"
+                                                data-description="<?php echo $course['description']; ?>"
+                                                data-course-content="<?php echo $course['course_content']; ?>"
+                                                data-about-tutor="<?php echo $course['about_tutor']; ?>"
+                                                data-tutor-fee="<?php echo $course['tutor_fee']; ?>"
+                                                class="btn btn-primary">
+                                                Enroll Now
+                                            </button>
+                                        <?php } ?>
+                                    </div>
+                                    <!-- Popup Enroll Now Modal -->
+                                    <div class="modal fade" id="enrollNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fw-bold" id="staticBackdropLabel"></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="fw-bold mb-1">Description</h5>
+                                                    <p class="fs-6" id="course-description"></p>
+
+                                                    <h5 class="fw-bold mb-1">Course Content</h5>
+                                                    <p class="fs-6" id="course-content"></p>
+
+                                                    <h5 class="fw-bold mb-1">Who I Am</h5>
+                                                    <p class="fs-6" id="about-tutor"></p>
+
+                                                    <h3 class="fw-bold" id="tutor-fee"></h3>
+                                                    
+                                                    <form method="post" action="/KuppiMate/src/controller/checkout.php">
+                                                        <input type="hidden" name="course_id" id="course-id" value="">
+                                                        <input type="hidden" name="course_title" id="course-title-set" value="">
+                                                        <input type="hidden" name="course_fee" id="course-fee-set" value="">
+                                                        <button type="submit" class="btn btn-primary mt-2">Buy Now</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        <?php }
+                    } else { ?>
+                        <span class="m-auto mt-5 fs-6 badge bg-warning text-dark">Sorry ! no sessions available</span>
+                    <?php } ?>
 
                 </div>
             </div>
@@ -513,9 +564,9 @@ $account_status = $_SESSION['account_status'];
                             <span id="heading1">Get Approval and Start<br />
                                 <span id="heading2">Earning Now</span>
                             </span>
-                            <?php if($averageRatingCount>=3.5 && $sessionCount>=2 ){ ?>
-                            <button data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</button>
-                            <?php }else{ ?>
+                            <?php if ($averageRatingCount >= 3.5 && $sessionCount >= 2) { ?>
+                                <button data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</button>
+                            <?php } else { ?>
                                 <span class="badge bg-warning text-dark fs-6">Not Eligible Yet</span>
                             <?php } ?>
                             <p>KuppiMate offers undergraduates a unique opportunity to earn by sharing their knowledge and conducting external sessions. By becoming a verified tutor, students can schedule and lead sessions on various subjects they excel in. Once approved, these sessions can be attended by other students and external leaners, providing a platform to not only teach but also to earn.
@@ -865,101 +916,160 @@ $account_status = $_SESSION['account_status'];
             <div class="headerImage">
                 <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
             </div>
+
+            <!--message display section-->
+            <?php
+            if (isset($_GET['id'])) {
+                if ($_GET['id'] == '103') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                    Session deleted successfully
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                } elseif ($_GET['id'] == '102') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                    Error occurred ! please contact administrator
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }
+            }
+            ?>
+            <!-- pending sessions section -->
+
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <span class="badge bg-danger text-light mt-2">No Approved Yet</span>
+                <?php if (!empty($pendingTutorSessions)) { ?>
+                    <?php foreach ($pendingTutorSessions as  $pending) { ?>
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $pending['title']; ?></h5>
+                                    <p class="card-text"><?php echo $pending['description']; ?></p>
+                                    <span style="font-size: 12px;" class="badge bg-<?php if ($pending['status'] == 'rejected') {
+                                                                                        echo 'warning';
+                                                                                    } else {
+                                                                                        echo 'primary text-light';
+                                                                                    } ?>  mt-2"><?php echo $pending['status']; ?></span>
+                                    <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#externalSessionDeleteConfirm" data-session-id="<?php echo $pending['id']; ?>"><span style="font-size: 12px;" class="badge bg-danger text-light">Delete</span></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    <?php }
+                } else { ?>
+                    <span class="badge fs-6 bg-warning text-dark">You don't have any pending or rejected external tutor sessions</span>
+                <?php } ?>
             </div>
-            <div class="accordion" id="accordionExample">
-                <!-- Single Accordion Item -->
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Session Form, Meeting Details, and Reviews
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
 
-                            <!-- Session Form -->
-                            <form action="#">
-                                <div>
-                                    <label class="form-label">Session Title</label><br />
-                                    <input type="text" name="tName" required autocomplete="off">
-                                </div>
-                                <div>
-                                    <label class="form-label">Time and Date</label><br />
-                                    <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
-                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                    <label id="label-popup">to</label>
-                                    <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
-                                    <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                </div>
-                                <div class="mt-4">
-                                    <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Get the Link</button>
-                                </div>
+            <!--approve external session delete confirmation-->
+            <div class="modal fade" id="externalSessionDeleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            Do you want to delete your session ?
+                        </div>
+                        <div class="modal-footer">
+                            <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                                <input type="text" name="delete_session_id" id="delete_session_id_set" value="" hidden>
+                                <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-primary border-0">yes</button>
                             </form>
-
-                            <!-- Meeting Details -->
-                            <div class="container mt-4">
-                                <div class="d-flex flex-column mb-3">
-                                    <div class="p-2">
-                                        <label id="mDetail">Meeting Link :</label>
-                                        <label>Link here</label><br />
-                                        <label id="mDetail">Date/Time :</label>
-                                        <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column mb-3">
-                                    <div class="p-2">
-                                        <label id="mDetail">Meeting Link :</label>
-                                        <label>Link here</label><br />
-                                        <label id="mDetail">Date/Time :</label>
-                                        <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Ratings and User Reviews -->
-                            <h3 class="mt-4">Ratings and User Reviews</h3>
-                            <div class="container reviews">
-                                <div class="row gx-3">
-                                    <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                        <div>
-                                            <p class="homecont-p fw-bold">User 1</p>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                        <div>
-                                            <p class="homecont-p fw-bold">User 2</p>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <hr>
+            <h4 style="color: #0B5ED7;" class="mt-0 fw-bold" >Your Approved External Courses</h4>
+            <div class="accordion" id="accordionExample">
+                <?php if (!empty($approvedTutorSessions)) { ?>
+                    <?php foreach ($approvedTutorSessions as $key => $approved) { ?>
+                        <!-- Single Accordion Item -->
+                        <div class="accordion-item mt-4">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button fw-bold " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $key+1;  ?>" aria-expanded="true" aria-controls="collapseOne">
+                                    <?php echo $approved['title'];  ?>
+                                </button>
+                            </h2>
+                            <div id="collapse<?php echo $key+1;  ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+
+                                    <!-- Session Form -->
+                                    <form action="#">
+                                        <div>
+                                            <label class="form-label">Session Title</label><br />
+                                            <input type="text" name="tName" required autocomplete="off">
+                                        </div>
+                                        <div>
+                                            <label class="form-label">Time and Date</label><br />
+                                            <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
+                                            <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                                            <label id="label-popup">to</label>
+                                            <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
+                                            <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
+                                        </div>
+                                        <div class="mt-4">
+                                            <button type="reset" class="btn btn-outline-primary">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Get the Link</button>
+                                        </div>
+                                    </form>
+
+                                    <!-- Meeting Details -->
+                                    <div class="container mt-4">
+                                        <div class="d-flex flex-column mb-3">
+                                            <div class="p-2">
+                                                <label id="mDetail">Meeting Link :</label>
+                                                <label>Link here</label><br />
+                                                <label id="mDetail">Date/Time :</label>
+                                                <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-column mb-3">
+                                            <div class="p-2">
+                                                <label id="mDetail">Meeting Link :</label>
+                                                <label>Link here</label><br />
+                                                <label id="mDetail">Date/Time :</label>
+                                                <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ratings and User Reviews -->
+                                    <h3 class="mt-4">Ratings and User Reviews</h3>
+                                    <div class="container reviews">
+                                        <div class="row gx-3">
+                                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                                <div>
+                                                    <p class="homecont-p fw-bold">User 1</p>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                                <div>
+                                                    <p class="homecont-p fw-bold">User 2</p>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <i class="bi bi-star-fill"></i>
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    <?php }
+                } else { ?>
+                    <span class="badge bg-warning text-dark">You don't have any approved external tutor sessions</span>
+                <?php } ?>
+
+            </div>
+
 
         </section>
         <section class="content" id="settings">

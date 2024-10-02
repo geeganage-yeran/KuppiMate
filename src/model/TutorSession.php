@@ -81,11 +81,27 @@ class TutorSession
         }
     }
 
-    public function getApprovedTutorSession() {}
+    public function getApprovedTutorSessionId($con) {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $created_by = $_SESSION['id'];
+            $query = "SELECT * FROM tutorsession WHERE created_by=? AND `status`='approved'";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $created_by);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+
+    }
     public function getPendingTutorSession($con)
     {
         try {
-            $query = "SELECT t.*, u.first_name,u.id AS users_id, COUNT(k.id) AS kuppiCount
+            $query = "SELECT t.*, u.first_name,u.id AS users_id
                     FROM tutorsession t
                     LEFT JOIN users u ON t.created_by = u.id
                     LEFT JOIN kuppisession k ON t.created_by = k.created_by
@@ -100,10 +116,48 @@ class TutorSession
         }
     }
 
+    public function getPendingTutorSessionById($con)
+    {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $created_by = $_SESSION['id'];
+            $query = "SELECT * FROM tutorsession WHERE created_by=? AND (`status`='pending' OR `status`='rejected')";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $created_by);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+
     public function updateTutorSessionStatus($con)
     {
         try {
-            $query = "UPDATE tutorsession SET `status`='approved' WHERE id=?";
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $created_by = $_SESSION['id'];
+            $query = "UPDATE tutorsession SET `status`='approved',updated_by=? WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $created_by);
+            $stmt->bindParam(2, $this->tutorSessionId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
+
+    public function deleteTutorSession($con)
+    {
+        try {
+            $query = "DELETE FROM tutorsession WHERE id=?";
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $this->tutorSessionId);
             $stmt->execute();
@@ -113,16 +167,23 @@ class TutorSession
         }
     }
 
-    public function rejectTutorSession($con)
-    {
+    public function getApprovedTutorSessions($con) {
         try {
-            $query = "UPDATE tutorsession SET `status`='rejected' WHERE id=?";
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $created_by = $_SESSION['id'];
+            $query = "SELECT t.*, u.first_name, u.last_name, AVG(f.rating) as average_feedback, COUNT(f.comment) as feedback_count FROM tutorsession t 
+            LEFT JOIN users u ON t.created_by = u.id 
+            LEFT JOIN feedback f ON t.id = f.session_id AND f.related_table = 'tutorsession' WHERE t.status = 'approved' AND t.created_by != ? GROUP BY t.id;";
             $stmt = $con->prepare($query);
-            $stmt->bindParam(1, $this->tutorSessionId);
+            $stmt->bindParam(1, $created_by);
             $stmt->execute();
-            return true;
+            $result = $stmt->fetchAll();
+            return $result;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
     }
 }

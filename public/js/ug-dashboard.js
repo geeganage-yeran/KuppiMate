@@ -224,7 +224,7 @@ setTimeout(function () {
     if (alertElement) {
         alertElement.classList.remove('show');
     }
-},5000);
+}, 5000);
 
 //external course registration form validation
 
@@ -255,6 +255,41 @@ function validateExternalCourseForm() {
         alert('Personal Description is required.');
         return false;
     }
-    
+
     return true;
 }
+
+//external tutor session delete confirmation
+var externalSessionConfirmModal = document.getElementById('externalSessionDeleteConfirm');
+externalSessionConfirmModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var sessionId = button.getAttribute('data-session-id');
+    var session_id_input = document.getElementById('delete_session_id_set');
+    session_id_input.value = sessionId;
+})
+
+//courses buynow details display 
+const enrollButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+enrollButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        // Get data from button
+        const courseId = this.getAttribute('data-session-id');
+        const description = this.getAttribute('data-description');
+        const courseContent = this.getAttribute('data-course-content');
+        const aboutTutor = this.getAttribute('data-about-tutor');
+        const tutorFee = this.getAttribute('data-tutor-fee');
+        const courseTitle = this.getAttribute('data-session-title');
+        // Update modal content
+        document.getElementById('staticBackdropLabel').innerText = courseTitle; // or use a specific title if available
+        document.getElementById('course-description').innerText = description;
+        document.getElementById('course-content').innerText = courseContent;
+        document.getElementById('about-tutor').innerText = aboutTutor;
+        document.getElementById('tutor-fee').innerText = 'LKR:'+tutorFee+'.00';
+
+        // Set hidden input value
+        document.getElementById('course-id').value = courseId;
+        document.getElementById('course-title-set').value = courseTitle;
+        document.getElementById('course-fee-set').value = tutorFee;
+    });
+});

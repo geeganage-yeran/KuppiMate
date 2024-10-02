@@ -34,19 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
         }
     }
 
-    if (isset($_POST['avgRatingId'],$_POST['$avgSessionId'])) {
-            $feedback = new Feedback();
-            $avgRatingId=$_POST['avgRatingId'];
-            $avgSessionId=$_POST['$avgSessionId'];
-            $averageRatingCount=$feedback->averageFeedback(Dbconnector::getConnection(),$avgRatingId);
-            if (!empty($averageRatingCount)) {
-                $_SESSION['averageRating'] = $averageRatingCount; // Store feedback data in session
-                $_SESSION['$avgSessionId']=$avgSessionId;
-            } else {
-                $_SESSION['averageRating'] = []; // Handle empty feedback case
-                $_SESSION['$avgSessionId']=[];
-            }
-            header("Location: /KuppiMate/src/view/admin-dashboard.php?id=103");
+    if (isset($_POST['delete_session_id'])) {
+        $tutorPending->setTutorSessionId($_POST['delete_session_id']);
+        if ($tutorPending->deleteTutorSession(Dbconnector::getConnection())) {
+            header("Location: /KuppiMate/src/view/ug-dashboard.php?id=103");
             exit();
+        } else {
+            header("Location: /KuppiMate/src/view/ug-dashboard.php?id=102");
+            exit();
+        }
     }
 }

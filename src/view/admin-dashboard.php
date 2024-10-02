@@ -22,7 +22,7 @@ $role = $_SESSION['role'];
     <title>Admin</title>
 </head>
 
-<>
+<body>
     <div class="sideBar" id="sidebar">
         <div class="profile">
             <h2><?php echo ucfirst(strtolower($fName)) ?></h2><i class="bi bi-x-lg" id="closeMenue"></i><br>
@@ -35,7 +35,7 @@ $role = $_SESSION['role'];
             <li><a href="#" onclick="showSection('Kuppi-categories')"><i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Kuppi Categories</a></li>
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
-            <li style="margin-top: 170px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li style="margin-top: 90px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -342,9 +342,7 @@ $role = $_SESSION['role'];
                                                     $isRecorded = true;
                                                 }
                                                 ?>
-                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {
-                                                                                                                echo 'disabled';
-                                                                                                            } ?>>Upload Link</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {echo 'disabled';} ?>>Upload Link</button>
                                             </td>
                                         </form>
                                         <td><span class="badge bg-success">Approved</span></td>
@@ -435,12 +433,10 @@ $role = $_SESSION['role'];
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Created By</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Fee(LKR)</th>
-                                <th scope="col">Hosted Kuppi Session Count</th>
-                                <th scope="col">Feedback Status</th>
                                 <th scope="col">Approve</th>
                                 <th scope="col">Reject</th>
                             </tr>
@@ -453,18 +449,12 @@ $role = $_SESSION['role'];
                                         <td> <?php echo $pedingSession1['first_name'] ?> </td>
                                         <td> <?php echo $pedingSession1['title'] ?> </td>
                                         <td> <?php echo number_format($pedingSession1['tutor_fee'], 2, '.', ',') ?> </td>
-                                        <td> <?php echo $pedingSession1['kuppiCount'] ?> </td>
                                         <td>
-
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#externalSessionConfirm" data-session-id="<?php echo $pedingSession1['id']; ?>">Approve</button>
                                         </td>
-                                        <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                                            <input type="text" name="session_id" value="<?php echo $pedingSession1['id'] ?>" hidden>
-                                            <td><button class="btn btn-primary btn-sm" type="submit" <?php if ($pedingSession1['kuppiCount'] == 0) {echo 'disabled';} ?>>Approve</button></td>
-                                        </form>
-                                        <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                                            <input type="text" name="reject_session_id" value="<?php echo $pedingSession1['id'] ?>" hidden>
-                                            <td><button class="btn btn-danger btn-sm" type="submit">Reject</button></td>
-                                        </form>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#externalSessionRejectConfirm" data-session-id="<?php echo $pedingSession1['id']; ?>">Reject</button>
+                                        </td>
                                     </tr>
                                 <?php }
                             } else { ?>
@@ -623,7 +613,7 @@ $role = $_SESSION['role'];
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
                         <input type="hidden" name="deleteId" value="<?php echo $verified['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
@@ -640,7 +630,7 @@ $role = $_SESSION['role'];
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
                         <input type="hidden" name="deleteId" value="<?php echo $exLearner['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
@@ -657,7 +647,7 @@ $role = $_SESSION['role'];
                     <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
                         <input type="hidden" name="deleteKuppiSessionId" value="<?php echo $kuppiverified['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
@@ -674,13 +664,12 @@ $role = $_SESSION['role'];
                     <form action="/KuppiMate/src/controller/categoryDelete.php" method="post">
                         <input type="hidden" name="deleteCatId" value="<?php echo $catNames['id']; ?>">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!--delete notice verification-->
     <div class="modal fade" id="deleteNotice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteNoticeLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -691,14 +680,13 @@ $role = $_SESSION['role'];
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
                         <input type="hidden" name="noticeDeleteId" value="<?php echo $notice1['id']; ?>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
     <!--Logout confirmation-->
     <div class="modal fade" id="logoutConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutConfirmLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -709,13 +697,48 @@ $role = $_SESSION['role'];
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/logout.php" method="post">
                         <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--approve external session confirmation-->
+    <div class="modal fade" id="externalSessionConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to approve this session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                        <input type="text" name="session_id" id="session_id_set" value="" hidden>
+                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!--reject external session confirmation-->
+     <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to reject this session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                        <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
+                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
-    </body>
+    <script src="/KuppiMate/public/js/admin.js?v=<?php echo time(); ?>"></script>
+</body>
 
 </html>
