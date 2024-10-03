@@ -33,7 +33,18 @@ class Payment {
         }
     }
 
-    public function listPayment() {
-        // Implementation
+    public function listPayment($con) {
+        try {
+            $query="SELECT p.*, u.first_name, u.last_name,ts.title,DATE(p.created_date) AS paidDate,TIME(p.created_date) AS paidTime
+            FROM payment p
+            JOIN users u ON u.id = p.user_id
+            JOIN tutorsession ts ON ts.id = p.tutor_session_id";
+            $stmt=$con->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 }

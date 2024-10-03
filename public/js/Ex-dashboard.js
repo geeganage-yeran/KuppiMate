@@ -2,6 +2,7 @@
 
 let header = document.getElementById("header-title");
 function showSection(sectionId) {
+    console.log(sectionId);
     header.innerHTML = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
     header.style.color="#0B5ED7";
     header.style.fontWeight="700";

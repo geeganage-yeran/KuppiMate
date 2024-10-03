@@ -40,8 +40,20 @@ class Subscription {
         }
     }
 
-    public function listSubscription() {
-        
+    public function listSubscription($con) {
+        try {
+            $query = "SELECT u.first_name, u.last_name, COUNT(s.tutor_session_id) AS subscription_count
+            FROM subscription s
+            JOIN tutorsession ts ON ts.id = s.tutor_session_id
+            JOIN users u ON u.id = ts.created_by
+            GROUP BY u.id, u.first_name, u.last_name;";
+            $stmt = $con->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
 
 }

@@ -153,6 +153,24 @@ class TutorSession
         }
     }
 
+    public function rejectTutorSession($con)
+    {
+        try {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $created_by = $_SESSION['id'];
+            $query = "UPDATE tutorsession SET `status`='rejected',updated_by=? WHERE id=?";
+            $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $created_by);
+            $stmt->bindParam(2, $this->tutorSessionId);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
 
     public function deleteTutorSession($con)
     {

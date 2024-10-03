@@ -1,6 +1,11 @@
 <?php
 include_once __DIR__ . '/../controller/adminController.php';
 include_once __DIR__ . '/../controller/externalSessionApproval.php';
+include_once __DIR__ . '/../controller/feedbackAdminController.php';
+include_once __DIR__ . '/../controller/paymentController.php';
+include_once __DIR__ . '/../controller/subscriptionController.php';
+
+
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== "administrator") {
     header("Location: /KuppiMate/src/view/login.php");
@@ -35,7 +40,8 @@ $role = $_SESSION['role'];
             <li><a href="#" onclick="showSection('Kuppi-categories')"><i class="bi bi-grid"></i>&nbsp;&nbsp;&nbsp;Kuppi Categories</a></li>
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
-            <li style="margin-top: 90px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li><a href="#" onclick="showSection('payments')"><i class="bi bi-cash"></i>&nbsp;&nbsp;&nbsp;Payment Details</a></li>
+            <li class="mt-3" style="margin-top: 90px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -313,7 +319,7 @@ $role = $_SESSION['role'];
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">From Date|Time</th>
                                 <th scope="col">To Date|Time</th>
@@ -342,7 +348,9 @@ $role = $_SESSION['role'];
                                                     $isRecorded = true;
                                                 }
                                                 ?>
-                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {echo 'disabled';} ?>>Upload Link</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {
+                                                                                                                echo 'disabled';
+                                                                                                            } ?>>Upload Link</button>
                                             </td>
                                         </form>
                                         <td><span class="badge bg-success">Approved</span></td>
@@ -359,7 +367,7 @@ $role = $_SESSION['role'];
         </section>
         <section class="content" id="Kuppi-categories">
             <div class="container mt-4">
-                <h4>Available Category List</h4>
+                <h4 class="fw-bold">Available Category List</h4>
                 <div class="exRequest table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
@@ -379,7 +387,7 @@ $role = $_SESSION['role'];
                                     </tr>
                                 <?php }; ?>
                             <?php } else { ?>
-                                <span class="badge bg-secondary">No Categories Available</span>
+                                <span class="badge bg-warning text-dark">No categories available</span>
                             <?php }; ?>
                         </tbody>
                     </table>
@@ -388,25 +396,25 @@ $role = $_SESSION['role'];
                 <div class="addCategory mt-4">
                     <?php if (isset($_GET['id'])) {
                         if ($_GET['id'] == '120') {
-                            echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     canot use special characters numbers except underscore
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
                         } elseif ($_GET['id'] == '122') {
-                            echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                                     Category Already Exist !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
                         } elseif ($_GET['id'] == '121') {
-                            echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                            echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
                                         Category Created Successfully 
                                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                         </button>
                                         </div>";
                         } elseif ($_GET['id'] == '130') {
-                            echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                            echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
                                         Category Deleted Successfully 
                                         <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                         </button>
@@ -494,46 +502,29 @@ $role = $_SESSION['role'];
                     </table>
                 </div>
                 <hr>
-                <h4>Recent Payment Details</h4>
-                <div class="payments table-responsive">
-                    <table class="table table-hover text-center table-responsive">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Paid By</th>
-                                <th scope="col">Tutor Name</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Ammount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Yeran Lakvidu</td>
-                                <td>Piyumi Ridmitha</td>
-                                <td>2024.05.17</td>
-                                <td>LKR.2000.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr>
                 <h4>Course Subscription Details</h4>
                 <div class="subscription table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Tutor Name</th>
-                                <th scope="col">No of Subscription</th>
+                                <th scope="col">Subscription Count</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Yeran Lakvidu</td>
-                                <td>40</td>
-                            </tr>
+                            <?php if ($subList != null) { ?>
+                                <?php foreach ($subList as $index => $sub) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $sub['first_name'].' '.$sub['last_name'] ?></td>
+                                        <td><?php echo $sub['subscription_count'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <span class="badge bg-warning text-dark">No Subscriptions To Display Yet</span>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -542,39 +533,74 @@ $role = $_SESSION['role'];
         <section class="content" id="user-feedbacks">
             <div class="container">
                 <h4>User Feedbacks Section</h4>
+                <!--feedback operation messages-->
+                <?php if (isset($_GET['f'])) {
+                    if ($_GET['f'] == '0') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Successfully deleted
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['f'] == '1') {
+                        echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            Failed to deleted
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                            </button>
+                            </div>";
+                    } elseif ($_GET['f'] == '2') {
+                        echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            Error with databse please contact administartor
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                            </button>
+                            </div>";
+                    }
+                } ?>
                 <div class="feedbacks table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Feedback By</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Tutor Name</th>
-                                <th scope="col">Kuppi Session Tutor</th>
+                                <th scope="col">Session Type</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Rating</th>
+                                <th scope="col">Feedback By</th>
                                 <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Yeran</td>
-                                <td>Piyumi</td>
-                                <td>N/A</td>
-                                <td>Feedaback Description Here</td>
-                                <td>4</td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Yeran</td>
-                                <td>N/A</td>
-                                <td>Piyumi</td>
-                                <td>Feedaback Description Here</td>
-                                <td>4</td>
-                                <td><button class="btn btn-danger btn-sm">Delete</button></td>
-                            </tr>
-
+                            <?php if ($listFeedbacks != null) { ?>
+                                <?php foreach ($listFeedbacks as $index => $feedback) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $feedback['sessionCreatorFirstName'] . ' ' . $feedback['sessionCreatorLastName'] ?></td>
+                                        <td><?php echo $feedback['related_table'] ?></td>
+                                        <td><?php echo $feedback['comment'] ?></td>
+                                        <td><b><?php echo $feedback['rating'] ?></b></td>
+                                        <td><?php echo $feedback['feedbackByFirstName'] . ' ' . $feedback['feedbackByLastName'] ?></td>
+                                        <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFeedback" data-session-id="<?php echo $feedback['id']; ?>">Delete</button></td>
+                                    </tr>
+                                    <!--Delete Feedback Verification-->
+                                    <div class="modal fade" id="deleteFeedback" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteFeedbackLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    Do you want to delete this feedback ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="/KuppiMate/src/controller/feedbackAdminController.php" method="post">
+                                                        <input type="hidden" id="deleteFeedbackSet" name="deleteFeedId" value="">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <span class="badge bg-warning text-dark">No Feedbacks To Display</span>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -583,19 +609,84 @@ $role = $_SESSION['role'];
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Tutor Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">No of Kuppis</th>
-                                <th scope="col">Average Rating count</th>
+                                <th scope="col">No of External Courses</th>
+                                <th scope="col">Average Rating Count</th>
+                                <th scope="col">Level</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if ($feedbackCount != null) { ?>
+                                <?php foreach ($feedbackCount as $index => $feedbackC) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
+                                        <td><?php echo $feedbackC['first_name'] . ' ' . $feedbackC['last_name'] ?></td>
+                                        <td><?php echo $feedbackC['email'] ?></td>
+                                        <td><?php echo $feedbackC['kuppicount'] ?></td>
+                                        <td><?php echo $feedbackC['tutorsession_count'] ?></td>
+                                        <td><?php echo number_format($feedbackC['average_rating'], 2); ?></td>
+                                        <td>
+                                            <?php if (number_format($feedbackC['average_rating'], 2) >= 4.00) { ?>
+                                                <span class="badge bg-success">Excellent</span>
+                                            <?php } else if (number_format($feedbackC['average_rating'], 2) >= 3.00) { ?>
+                                                <span class="badge bg-warning text-dark">Satisfactory</span>
+                                            <?php } else { ?>
+                                                <span class="badge bg-danger">Needs Improvement</span>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <span class="badge bg-warning text-dark">No Feedbacks To Display</span>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <section class="content" id="payments">
+            <div class="mt-4 container">
+                <?php $earnings = 0 ?>
+                <div class="panel">
+                    <?php if ($paymentList != null) { ?>
+                        <?php foreach ($paymentList as $key => $payment) { ?>
+                            <?php $earnings += $payment['amount'] * 0.2 ?>
+                        <?php } ?>
+                        <div class="amount">LKR <?php echo  number_format($earnings, 2) ?></div>
+                    <?php  } else { ?>
+                        <div class="amount">LKR 0.00</div>
+                    <?php } ?>
+
+                    <div class="footer">Total Earnings After 20% Service Fee</div>
+                </div>
+                <div class="mt-4 payments table-responsive">
+                    <table class="table table-hover text-center table-responsive">
+                        <thead>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Yeran</td>
-                                <td>05</td>
-                                <td>4.5</td>
+                                <th scope="col">No</th>
+                                <th scope="col">Paid By</th>
+                                <th scope="col">Course Name</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Ammount</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($paymentList != null) { ?>
+                                <?php foreach ($paymentList as $key => $payment) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $key + 1 ?></th>
+                                        <td><?php echo $payment['first_name'] . ' ' . $payment['last_name'] ?></td>
+                                        <td><?php echo $payment['title'] ?></td>
+                                        <td><?php echo $payment['paidDate'] ?></td>
+                                        <td><?php echo $payment['paidTime'] ?></td>
+                                        <td><?php echo $payment['amount'] ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php  } ?>
                         </tbody>
                     </table>
                 </div>
@@ -720,8 +811,8 @@ $role = $_SESSION['role'];
             </div>
         </div>
     </div>
-     <!--reject external session confirmation-->
-     <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+    <!--reject external session confirmation-->
+    <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">

@@ -5,3 +5,5 @@ include_once __DIR__ . '/../model/Subscription.php';
 
 $subscription=new Subscription();
 $alreadyEnrolledCourses=$subscription->getSubscriptionWithId(Dbconnector::getConnection());
+
+$subList=$subscription->listSubscription(Dbconnector::getConnection());
