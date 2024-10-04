@@ -259,30 +259,16 @@ $account_status = $_SESSION['account_status'];
                                                 <?php  } ?>
                                             </ol>
                                             
-                                            <div class="d-flex flex-column mb-3 mt-3">
-                                                <div class="p-2">
-                                                    <label id="mDetail">Meeting LInk :</label>
-                                                    <label>Link here</label><br />
-                                                    <label id="mDetail">Date/Time :</label>
-                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                            <!-- Session link -->
+                                            <hr>
+                                                <div class="d-flex flex-column mb-3">
+                                                    <div class="p-2">
+                                                        <label id="mDetail">Meeting Link :</label>
+                                                        <label><?php echo $paidCourse['session_link']; ?></label><br />
+                                                        <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="d-flex flex-column mb-3">
-                                                <div class="p-2">
-                                                    <label id="mDetail">Meeting LInk :</label>
-                                                    <label>Link here</label><br />
-                                                    <label id="mDetail">Date/Time :</label>
-                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column mb-3">
-                                                <div class="p-2">
-                                                    <label id="mDetail">Meeting LInk :</label>
-                                                    <label>Link here</label><br />
-                                                    <label id="mDetail">Date/Time :</label>
-                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                                </div>
-                                            </div>
+                                            <hr>
                                         </div>
                                     </div>
                                     <div class="tutorDetails">

@@ -795,14 +795,16 @@ $account_status = $_SESSION['account_status'];
                                                     <span class="badge bg-warning text-dark">No course materials available</span>
                                                 <?php  } ?>
                                             </ol>
-                                            <div class="d-flex flex-column mb-3 mt-3">
-                                                <div class="p-2">
-                                                    <label id="mDetail">Meeting LInk :</label>
-                                                    <label>Link here</label><br />
-                                                    <label id="mDetail">Date/Time :</label>
-                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                            <!-- Session link -->
+                                            <hr>
+                                                <div class="d-flex flex-column mb-3">
+                                                    <div class="p-2">
+                                                        <label id="mDetail">Meeting Link :</label>
+                                                        <label><?php echo $paidCourse['session_link']; ?></label><br />
+                                                        <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <hr>
                                         </div>
                                     </div>
                                     <div class="tutorDetails">
@@ -958,9 +960,7 @@ $account_status = $_SESSION['account_status'];
 
             <!--approve external session display -->
 
-             <!--approve external session display -->
-
-             <h4 style="color: #0B5ED7;" class="mt-0 fw-bold">Your Approved External Courses</h4>
+            <h4 style="color: #0B5ED7;" class="mt-0 fw-bold">Your Approved External Courses</h4>
             <div class="accordion" id="accordionExample">
                 <?php if (!empty($approvedTutorSessions)) { ?>
                     <?php foreach ($approvedTutorSessions as $key => $approved) { ?>
@@ -1015,75 +1015,58 @@ $account_status = $_SESSION['account_status'];
                                             <span class="badge bg-warning text-dark">No upload materials available</span>
                                         <?php  } ?>
                                     </ol>
-                                    <!-- Session Form -->
-                                    <hr>
-                                    <form action="#">
-                                        <div>
-                                            <label class="form-label">Session Title</label><br />
-                                            <input type="text" name="tName" required autocomplete="off">
-                                        </div>
-                                        <div>
-                                            <label class="form-label">Time and Date</label><br />
-                                            <input class="Kdate Kuppifrom" type="date" name="KuppiDate" required>
-                                            <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                            <label id="label-popup">to</label>
-                                            <input class="Kdate Kuppito" type="date" name="KuppiDate" required>
-                                            <input class="Ktime Kuppifrom" type="time" name="Kuppitime" required>
-                                        </div>
-                                        <div class="mt-4">
-                                            <button type="reset" class="btn btn-outline-primary">Cancel</button>
-                                            <button type="submit" class="btn btn-primary">Get the Link</button>
-                                        </div>
-                                    </form>
+                                    <!-- Session link -->
                                     <hr>
 
-                                    <!-- Meeting Details -->
                                     <div class="container mt-4">
                                         <div class="d-flex flex-column mb-3">
                                             <div class="p-2">
                                                 <label id="mDetail">Meeting Link :</label>
-                                                <label>Link here</label><br />
-                                                <label id="mDetail">Date/Time :</label>
-                                                <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                            </div>
-                                        </div>
-                                        <div class="d-flex flex-column mb-3">
-                                            <div class="p-2">
-                                                <label id="mDetail">Meeting Link :</label>
-                                                <label>Link here</label><br />
-                                                <label id="mDetail">Date/Time :</label>
-                                                <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                                <label><?php echo $approved['session_link']; ?></label><br />
+                                                <button onclick="window.open('<?php echo $approved['session_link']; ?>','_blank')" type="button" class="btn btn-primary btn-sm">Start Now</button>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <hr>
 
                                     <!-- Ratings and User Reviews -->
                                     <h3 class="mt-4">Ratings and User Reviews</h3>
                                     <div class="container reviews">
                                         <div class="row gx-3">
-                                            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                                <div>
-                                                    <p class="homecont-p fw-bold">User 1</p>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                                <div>
-                                                    <p class="homecont-p fw-bold">User 2</p>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <i class="bi bi-star-fill"></i>
-                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                                                </div>
-                                            </div>
+                                            <?php if ($approved['comment_list'] != null && $approved['comment_information'] != null && $approved['rating_list'] != null && $approved['date_list'] != null) {
+
+                                                $commentList = explode(',', $approved['comment_list']);
+                                                $commentedBy = explode(',', $approved['comment_information']);
+                                                $ratingList = explode(',', $approved['rating_list']);
+                                                $dateList = explode(',', $approved['date_list']);
+
+
+                                                $count = min(count($commentList), count($commentedBy), count($ratingList), count($dateList));
+
+                                                for ($i = 0; $i < $count; $i++) { ?>
+                                                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                                        <div>
+                                                            <p class="homecont-p fw-bold"><?php echo trim($commentedBy[$i]); ?></p>
+
+                                                            <!-- Display the star ratings -->
+                                                            <?php
+
+                                                            $rating = intval(trim($ratingList[$i]));
+                                                            for ($j = 0; $j < $rating; $j++) { ?>
+                                                                <i class="bi bi-star-fill"></i>
+                                                            <?php } ?>
+
+                                                            <p><?php echo trim($commentList[$i]); ?></p>
+                                                            <p><?php echo trim($dateList[$i]); ?></p>
+                                                        </div>
+                                                    </div>
+                                                <?php }
+                                            } else { ?>
+                                                <span class="badge bg-warning text-dark">Not Rated Yet</span>
+                                            <?php } ?>
                                         </div>
+
                                     </div>
 
                                 </div>

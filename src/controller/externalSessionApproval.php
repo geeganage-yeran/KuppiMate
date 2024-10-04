@@ -23,12 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=102");
             exit();
         }
-    } else {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=106");
-        exit();
-    }
-
-    if (isset($_POST['reject_session_id'])) {
+    }elseif (isset($_POST['reject_session_id'])) {
         $tutorPending->setTutorSessionId($_POST['reject_session_id']);
         if ($tutorPending->rejectTutorSession(Dbconnector::getConnection())) {
             header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=103");
@@ -37,18 +32,22 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
             header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=102");
             exit();
         }
-    }else {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=106");
-        exit();
-    }
-
-    if (isset($_POST['delete_session_id'])) {
+    }elseif (isset($_POST['delete_session_id'])) {
         $tutorPending->setTutorSessionId($_POST['delete_session_id']);
         if ($tutorPending->deleteTutorSession(Dbconnector::getConnection())) {
             header("Location: /KuppiMate/src/view/ug-dashboard.php?id=103");
             exit();
         } else {
             header("Location: /KuppiMate/src/view/ug-dashboard.php?id=102");
+            exit();
+        }
+    }elseif (isset($_POST['delete_session_id_admin'])) {
+       $tutorPending->setTutorSessionId($_POST['delete_session_id_admin']);
+        if ($tutorPending->deleteTutorSession(Dbconnector::getConnection())) {
+            header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=1001");
+            exit();
+        } else {
+            header("Location: /KuppiMate/src/view/admin-dashboard.php?ex=1002");
             exit();
         }
     }

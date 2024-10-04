@@ -348,13 +348,11 @@ $role = $_SESSION['role'];
                                                     $isRecorded = true;
                                                 }
                                                 ?>
-                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {
-                                                                                                                echo 'disabled';
-                                                                                                            } ?>>Upload Link</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {echo 'disabled';} ?>>Upload Link</button>
                                             </td>
                                         </form>
                                         <td><span class="badge bg-success">Approved</span></td>
-                                        <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteKuppi">Delete</button></td>
+                                        <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteKuppi" data-session-id="<?php echo $kuppiverified['id']; ?>">Delete</button></td>
                                     </tr>
                                 <?php }; ?>
                             <?php } else { ?>
@@ -455,6 +453,18 @@ $role = $_SESSION['role'];
                             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                             </button>
                             </div>";
+                    } elseif ($_GET['ex'] == '1001') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Deleted Successfully
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['ex'] == '1002') {
+                        echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            Error Occurred Failed To Delete !
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                            </button>
+                            </div>";
                     }
                 } ?>
                 <h4>External Tutor Sessions - Pending Approval</h4>
@@ -517,16 +527,16 @@ $role = $_SESSION['role'];
                             <?php if ($approvedExternalSessions != null) { ?>
                                 <?php foreach ($approvedExternalSessions as $index => $approvedExternal) { ?>
                                     <tr>
-                                        <th scope="row"><?php echo $index+1 ?></th>
+                                        <th scope="row"><?php echo $index + 1 ?></th>
                                         <td><?php echo $approvedExternal['title'] ?></td>
                                         <td><?php echo $approvedExternal['time_period'] ?></td>
-                                        <td><button class="btn btn-danger btn-sm" type="submit">Delete</button></td>
+                                        <td><button data-bs-toggle="modal" data-bs-target="#externalSessionDeleteConfirm" data-session-id="<?php echo $approvedExternal['id']; ?>" class="btn btn-danger btn-sm" type="submit">Delete</button></td>
                                     </tr>
                                 <?php } ?>
                             <?php } else { ?>
                                 <span class="badge bg-warning text-dark">No approved sessions available</span>
                             <?php } ?>
-                            
+
 
                         </tbody>
                     </table>
@@ -767,7 +777,7 @@ $role = $_SESSION['role'];
                 </div>
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
-                        <input type="hidden" name="deleteKuppiSessionId" value="<?php echo $kuppiverified['id']; ?>">
+                        <input type="hidden" name="deleteKuppiSessionId" id="deleteKuppiSessionIdSet" value="">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
@@ -835,6 +845,40 @@ $role = $_SESSION['role'];
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
                         <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
+                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--reject external session confirmation-->
+    <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to reject this session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                        <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
+                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
+                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--delete external session confirmation-->
+    <div class="modal fade" id="externalSessionDeleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Do you want to delete this session ?
+                </div>
+                <div class="modal-footer">
+                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                        <input type="text" name="delete_session_id_admin" id="delete_session_id_admin_set" value="" hidden>
                         <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>
