@@ -54,6 +54,10 @@ class Notice
 
     public function filterNotices($con, $condition, $catId, $date,$uniId)
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $session_created_by = $_SESSION['id'];
         if ($condition == 'filterByCategory') {
             try {
                 $query = "SELECT m.file_name,k.session_link,DATE(k.session_start_date_time) AS startDate,TIME(k.session_start_date_time) AS startTime,uni.name,u.id AS users_id,k.id AS sessions_id,c.category_name,n.* 
@@ -63,9 +67,10 @@ class Notice
                 JOIN kuppisession k ON k.id=n.session_id
                 LEFT JOIN material m ON m.kuppi_session_id=n.session_id
                 LEFT JOIN university uni ON uni.id = u.university_id
-                WHERE n.broadcasted=1 AND n.category_id=?";
+                WHERE n.broadcasted=1 AND n.category_id=? AND k.created_by <> ?";
                 $stmt = $con->prepare($query);
                 $stmt->bindParam(1, $catId);
+                $stmt->bindParam(2, $session_created_by);
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -81,9 +86,10 @@ class Notice
                 JOIN kuppisession k ON k.id=n.session_id
                 LEFT JOIN material m ON m.kuppi_session_id=n.session_id
                 LEFT JOIN university uni ON uni.id = u.university_id
-                WHERE n.broadcasted=1 AND DATE(k.session_start_date_time)=?";
+                WHERE n.broadcasted=1 AND DATE(k.session_start_date_time)=? AND k.created_by <> ?";
                 $stmt = $con->prepare($query);
                 $stmt->bindParam(1, $date);
+                $stmt->bindParam(2, $session_created_by);
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -99,9 +105,10 @@ class Notice
                 JOIN kuppisession k ON k.id=n.session_id
                 LEFT JOIN material m ON m.kuppi_session_id=n.session_id
                 LEFT JOIN university uni ON uni.id = u.university_id
-                WHERE n.broadcasted=1 AND u.university_id=?";
+                WHERE n.broadcasted=1 AND u.university_id=? AND k.created_by <> ?";
                 $stmt = $con->prepare($query);
                 $stmt->bindParam(1, $uniId);
+                $stmt->bindParam(2, $session_created_by);
                 $stmt->execute();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -158,6 +165,10 @@ class Notice
 
     public function displayNotice($con)
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $session_created_by = $_SESSION['id'];
         try {
             $query = "SELECT m.file_name,k.session_link,DATE(k.session_start_date_time) AS startDate,TIME(k.session_start_date_time) AS startTime,u.university_id,u.id AS users_id,k.id AS sessions_id,uni.name,c.category_name,n.* 
             FROM notice n 
@@ -166,8 +177,9 @@ class Notice
             JOIN kuppisession k ON k.id = n.session_id 
             LEFT JOIN material m ON m.kuppi_session_id = n.session_id 
             LEFT JOIN university uni ON uni.id = u.university_id 
-            WHERE n.broadcasted = 1;";
+            WHERE n.broadcasted = 1 AND k.created_by <> ? ;";
             $stmt = $con->prepare($query);
+            $stmt->bindParam(1, $session_created_by);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;

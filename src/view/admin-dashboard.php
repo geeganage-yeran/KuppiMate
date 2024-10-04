@@ -436,6 +436,27 @@ $role = $_SESSION['role'];
         </section>
         <section class="content" id="External-sessions">
             <div class="container">
+                <?php if (isset($_GET['ex'])) {
+                    if ($_GET['ex'] == '101') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Approved Successfully
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['ex'] == '102') {
+                        echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            Failed to Approve
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                            </button>
+                            </div>";
+                    } elseif ($_GET['ex'] == '106') {
+                        echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                            Error Occurred !
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                            </button>
+                            </div>";
+                    }
+                } ?>
                 <h4>External Tutor Sessions - Pending Approval</h4>
                 <div class="exVerification table-responsive">
                     <table class="table table-hover text-center table-responsive">
@@ -445,6 +466,8 @@ $role = $_SESSION['role'];
                                 <th scope="col">Created By</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Fee(LKR)</th>
+                                <th scope="col">Time Period</th>
+                                <th scope="col">Session Link</th>
                                 <th scope="col">Approve</th>
                                 <th scope="col">Reject</th>
                             </tr>
@@ -457,9 +480,16 @@ $role = $_SESSION['role'];
                                         <td> <?php echo $pedingSession1['first_name'] ?> </td>
                                         <td> <?php echo $pedingSession1['title'] ?> </td>
                                         <td> <?php echo number_format($pedingSession1['tutor_fee'], 2, '.', ',') ?> </td>
-                                        <td>
-                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#externalSessionConfirm" data-session-id="<?php echo $pedingSession1['id']; ?>">Approve</button>
-                                        </td>
+                                        <td> <?php echo $pedingSession1['time_period'] ?> </td>
+                                        <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
+                                            <td>
+                                                <input type="text" placeholder=" Paste the Link" name="exLink" required>
+                                                <input type="text" name="session_id" value="<?php echo $pedingSession1['id'] ?>" hidden>
+                                            </td>
+                                            <td><button type="submit" class="btn btn-primary btn-sm">Approve</button></td>
+
+                                        </form>
+
                                         <td>
                                             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#externalSessionRejectConfirm" data-session-id="<?php echo $pedingSession1['id']; ?>">Reject</button>
                                         </td>
@@ -477,29 +507,30 @@ $role = $_SESSION['role'];
                     <table class="table table-hover text-center table-responsive">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Title</th>
-                                <th scope="col">From Date|Time</th>
-                                <th scope="col">To Date|Time</th>
-                                <th scope="col">Link</th>
+                                <th scope="col">Time Period</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Data Structures</td>
-                                <td>2024.05.17 02.00PM</td>
-                                <td>2024.05.17 03.00PM</td>
-                                <td>
-                                    <form action="#">
-                                        <input type="text" name="link" required>
-                                        <button class="btn btn-primary btn-sm" type="submit">send</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <?php if ($approvedExternalSessions != null) { ?>
+                                <?php foreach ($approvedExternalSessions as $index => $approvedExternal) { ?>
+                                    <tr>
+                                        <th scope="row"><?php echo $index+1 ?></th>
+                                        <td><?php echo $approvedExternal['title'] ?></td>
+                                        <td><?php echo $approvedExternal['time_period'] ?></td>
+                                        <td><button class="btn btn-danger btn-sm" type="submit">Delete</button></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <span class="badge bg-warning text-dark">No approved sessions available</span>
+                            <?php } ?>
+                            
 
                         </tbody>
                     </table>
+
                 </div>
                 <hr>
                 <h4>Course Subscription Details</h4>
@@ -518,7 +549,7 @@ $role = $_SESSION['role'];
                                 <?php foreach ($subList as $index => $sub) { ?>
                                     <tr>
                                         <th scope="row"><?php echo $index + 1 ?></th>
-                                        <td><?php echo $sub['first_name'].' '.$sub['last_name'] ?></td>
+                                        <td><?php echo $sub['first_name'] . ' ' . $sub['last_name'] ?></td>
                                         <td><?php echo $sub['subscription_count'] ?></td>
                                     </tr>
                                 <?php } ?>
@@ -787,23 +818,6 @@ $role = $_SESSION['role'];
                 </div>
                 <div class="modal-footer">
                     <form action="/KuppiMate/src/controller/logout.php" method="post">
-                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--approve external session confirmation-->
-    <div class="modal fade" id="externalSessionConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    Do you want to approve this session ?
-                </div>
-                <div class="modal-footer">
-                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                        <input type="text" name="session_id" id="session_id_set" value="" hidden>
                         <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
                         <button type="submit" class="btn btn-primary border-0">yes</button>
                     </form>

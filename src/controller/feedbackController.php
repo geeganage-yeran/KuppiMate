@@ -8,7 +8,9 @@ include_once __DIR__ . '/../model/Dbconnector.php';
 $feedback = new Feedback();
 $feedbackList = $feedback->getFeedback(Dbconnector::getConnection());
 
-$averageRating = $feedback->averageFeedback(Dbconnector::getConnection(), $_SESSION['id']);
+$created_by=$_SESSION['id'];
+
+$averageRating = $feedback->averageFeedback(Dbconnector::getConnection(),$created_by );
 if (!empty($averageRating)) {
     $sessionCount = count($averageRating);
     $totalRating = 0;

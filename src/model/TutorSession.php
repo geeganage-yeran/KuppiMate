@@ -87,7 +87,12 @@ class TutorSession
                 session_start();
             }
             $created_by = $_SESSION['id'];
-            $query = "SELECT * FROM tutorsession WHERE created_by=? AND `status`='approved'";
+            $query = "SELECT t.*,m.id as materialId, 
+            GROUP_CONCAT(m.file_name ORDER BY m.id SEPARATOR ', ') AS file_names
+            FROM tutorsession t
+            LEFT JOIN material m ON m.tutor_session_id = t.id
+            WHERE t.created_by = ? AND t.status = 'approved'
+            GROUP BY t.id";
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $created_by);
             $stmt->execute();
@@ -135,17 +140,18 @@ class TutorSession
     }
 
 
-    public function updateTutorSessionStatus($con)
+    public function updateTutorSessionStatus($con,$sesson_link)
     {
         try {
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
             $created_by = $_SESSION['id'];
-            $query = "UPDATE tutorsession SET `status`='approved',updated_by=? WHERE id=?";
+            $query = "UPDATE tutorsession SET `status`='approved',updated_by=?,session_link=? WHERE id=?";
             $stmt = $con->prepare($query);
             $stmt->bindParam(1, $created_by);
-            $stmt->bindParam(2, $this->tutorSessionId);
+            $stmt->bindParam(2, $sesson_link);
+            $stmt->bindParam(3, $this->tutorSessionId);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -171,17 +177,34 @@ class TutorSession
         }
     }
 
-
     public function deleteTutorSession($con)
     {
         try {
-            $query = "DELETE FROM tutorsession WHERE id=?";
-            $stmt = $con->prepare($query);
-            $stmt->bindParam(1, $this->tutorSessionId);
-            $stmt->execute();
-            return true;
+
+            $query1 = "SELECT file_path FROM material WHERE tutor_session_id=?";
+            $stmt1 = $con->prepare($query1);
+            $stmt1->bindParam(1, $this->tutorSessionId);
+            $stmt1->execute();
+            $filePath = $stmt1->fetchColumn();
+
+            $query3 = "DELETE FROM material WHERE tutor_session_id=?";
+            $stmt3 = $con->prepare($query3);
+            $stmt3->bindParam(1, $this->tutorSessionId);
+            $stmt3->execute();
+
+            $query2 = "DELETE FROM tutorsession WHERE id=?";
+            $stmt2 = $con->prepare($query2);
+            $stmt2->bindParam(1, $this->tutorSessionId);
+            $stmt2->execute();
+
+            if ($stmt2->rowCount() > 0) {
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+                return true;
+            }
         } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            echo $e->getMessage();
         }
     }
 
@@ -203,5 +226,17 @@ class TutorSession
             echo "Error: " . $e->getMessage();
         }
 
+    }
+
+   public function getAllApprovedTutorSessions($con){
+    try {
+        $query = "SELECT * FROM tutorsession WHERE `status`='approved'";
+        $stmt = $con->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
     }
 }

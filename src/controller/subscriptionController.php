@@ -7,3 +7,5 @@ $subscription=new Subscription();
 $alreadyEnrolledCourses=$subscription->getSubscriptionWithId(Dbconnector::getConnection());
 
 $subList=$subscription->listSubscription(Dbconnector::getConnection());
+
+$paidCourses=$subscription->getAllSubscriptionWithId(Dbconnector::getConnection());

@@ -6,6 +6,7 @@ include_once __DIR__ . '/../controller/universityContoller.php';
 include_once __DIR__ . '/../controller/feedbackController.php';
 include_once __DIR__ . '/../controller/externalSessionController.php';
 include_once __DIR__ . '/../controller/subscriptionController.php';
+include_once __DIR__ . '/../controller/externalSessionFeedback.php';
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== "undergraduate") {
     header("Location: /KuppiMate/src/view/login.php");
@@ -178,8 +179,6 @@ $account_status = $_SESSION['account_status'];
                         <button type="submit">Create Kuppi</button>
                     </div>
             </form>
-            <div id="addCategory">
-            </div>
             <div id="kuppiResultsection">
                 <?php if ($output != null) { ?>
                     <?php foreach ($output as $index => $output) { ?>
@@ -458,6 +457,12 @@ $account_status = $_SESSION['account_status'];
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
+                    } elseif ($_GET['s'] == '102') {
+                        echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Payment Failed Try Again !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
                     }
                 }
                 ?>
@@ -534,7 +539,7 @@ $account_status = $_SESSION['account_status'];
                                                     <p class="fs-6" id="about-tutor"></p>
 
                                                     <h3 class="fw-bold" id="tutor-fee"></h3>
-                                                    
+
                                                     <form method="post" action="/KuppiMate/src/controller/checkout.php">
                                                         <input type="hidden" name="course_id" id="course-id" value="">
                                                         <input type="hidden" name="course_title" id="course-title-set" value="">
@@ -567,7 +572,7 @@ $account_status = $_SESSION['account_status'];
                             <?php if ($averageRatingCount >= 3.5 && $sessionCount >= 2) { ?>
                                 <button data-bs-target="#ApprovalForm" data-bs-toggle="modal" class="btn btn-primary">Get Approval</button>
                             <?php } else { ?>
-                                <span class="badge bg-warning text-dark fs-6">Not Eligible Yet</span>
+                                <span class="badge bg-warning text-dark fs-6">Not Eligible</span>
                             <?php } ?>
                             <p>KuppiMate offers undergraduates a unique opportunity to earn by sharing their knowledge and conducting external sessions. By becoming a verified tutor, students can schedule and lead sessions on various subjects they excel in. Once approved, these sessions can be attended by other students and external leaners, providing a platform to not only teach but also to earn.
                                 The process is straightforward: get verified, schedule your sessions, and start earning from your expertise. Take advantage of this chance to make a difference and gain valuable experience while earning through KuppiMate.
@@ -657,7 +662,6 @@ $account_status = $_SESSION['account_status'];
                                     <button class="btn btn-secondary btn-sm" onclick="window.open('<?php echo $enrolled['driveLink']; ?>','_blank')" <?php if ($isRecorded) {
                                                                                                                                                             echo 'disabled';
                                                                                                                                                         } ?>>View Session Recording</button><br />
-
                                     <?php if ($isRecorded) { ?>
                                         <p><small>Sorry, recorded session is not available yet</small></p><br />
                                     <?php } else { ?>
@@ -687,9 +691,12 @@ $account_status = $_SESSION['account_status'];
                             </div>
                         </div>
                     <?php } ?>
-                <?php } else {
-                    echo "No enrolled kuppi found";
-                } ?>
+                <?php } else { ?>
+                    <div class="container ">
+                        <span class="badge bg-warning text-dark">No Enrolled Kuppis</span>
+                    </div>
+
+                <?php } ?>
             </div>
             <!-- display messages -->
             <?php
@@ -715,19 +722,19 @@ $account_status = $_SESSION['account_status'];
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">How was the Kupi Session?</h1>
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">How was the Kuppi Session?</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form action="/KuppiMate/src/controller/feedbackController.php" method="post" class="star-rating">
                                 <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
                                 <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
-                                <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
-                                <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
-                                <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
-                                <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
-                                <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
-                                <input type="number" name="ratingLevel" id="rating-value" hidden readonly><br />
+                                <span onclick="modalRating(1)" class="modal-star"><i class="bi bi-star-fill"></i></span>
+                                <span onclick="modalRating(2)" class="modal-star"><i class="bi bi-star-fill"></i></span>
+                                <span onclick="modalRating(3)" class="modal-star"><i class="bi bi-star-fill"></i></span>
+                                <span onclick="modalRating(4)" class="modal-star"><i class="bi bi-star-fill"></i></span>
+                                <span onclick="modalRating(5)" class="modal-star"><i class="bi bi-star-fill"></i></span>
+                                <input type="number" name="ratingLevel" id="modal-rating-value" hidden readonly><br />
                                 <input type="hidden" name="session_id" id="session-id" value="">
                                 <button type="submit" class="btn btn-primary mt-2">Submit</button>
                             </form>
@@ -736,181 +743,124 @@ $account_status = $_SESSION['account_status'];
                 </div>
             </div>
 
+
         </section>
         <section class="content" id="paid-courses">
             <div class="headerImage">
                 <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
             </div>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Paid Course Title
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <h3>Tiltle of the course Here</h3>
-                            <div class="course-links">
-                                <div class="container">
-                                    <button class="download btn btn-outline-success">
-                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
-                                    </button>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tutorDetails">
-                                <h5>Contact Course Tutor</h5>
-                                <div class="container">
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <b><label>Name :</label></b>
-                                            <label>Name goes Here</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Contact Number :</label></b>
-                                            <label>0710619833</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Email :</label></b>
-                                            <label>designs.yeran@gmail.com</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>University Name :</label></b>
-                                            <label>Uva Wellassa University</label><br />
-                                        </div>
+            <?php
+            if (isset($_SESSION['review_errors']) && !empty($_SESSION['review_errors'])) {
+                foreach ($_SESSION['review_errors'] as $error) {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>$error<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                }
+                unset($_SESSION['review_errors']);
+            }
+            if (isset($_GET['c'])) {
+                if ($_GET['c'] == '101') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show mt-2' role='alert'>Reviewed successfully !<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                } elseif ($_GET['c'] == '102') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>Failed to reviewed the session !<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                }
+            }
+            ?>
+            <?php if ($paidCourses != null) { ?>
+                <?php foreach ($paidCourses as $key => $paidCourse) { ?>
+                    <div class="accordion accordion-flush" id="accordionFlush<?php echo $key + 1 ?>">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-heading<?php echo $key + 1 ?>">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $key + 1 ?>" aria-expanded="false" aria-controls="flush-collapse<?php echo $key + 1 ?>">
+                                    <?php echo $paidCourse['title'] ?>
+                                </button>
+                            </h2>
+                            <div id="flush-collapse<?php echo $key + 1 ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?php echo $key + 1 ?>" data-bs-parent="#accordionFlush<?php echo $key + 1 ?>">
+                                <div class="accordion-body">
+                                    <div class="mt-4 course-links">
+                                        <div class="container">
+                                            <!-- material list-->
+                                            <h6 style="color: #667085; font-weight: 600;  " class="mt-4 fw-semibold">Download your course materials</h6>
+                                            <ol class="list-group list-group-flush mt-3">
 
+                                                <?php if ($paidCourse['file_names'] != null) {
+                                                    $fileNames = explode(',', $paidCourse['file_names']); ?>
+                                                    <?php foreach ($fileNames as $index => $fileName) { ?>
+                                                        <li class="list-group-item">
+                                                            <a class="link-success text-decoration-none" href="/KuppiMate/src/controller/external_material_uploads/<?php echo trim($fileNames[$index]); ?>">
+                                                                <i class="bi bi-arrow-down"></i>
+                                                                <?php echo ' ' . $fileNames[$index] . '&nbsp;&nbsp;&nbsp;'; ?>
+                                                            </a>
+                                                        </li>
+                                                    <?php } ?>
+                                                <?php } else { ?>
+                                                    <span class="badge bg-warning text-dark">No course materials available</span>
+                                                <?php  } ?>
+                                            </ol>
+                                            <div class="d-flex flex-column mb-3 mt-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting LInk :</label>
+                                                    <label>Link here</label><br />
+                                                    <label id="mDetail">Date/Time :</label>
+                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="addReview">
-                                <h5>Add a Review about the Course</h5>
-                                <div class="container">
-                                    <form class="star-rating">
-                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
-                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
-                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <input type="number" id="rating-value" readonly><br />
-                                        <input type="submit" value="Submit">
-                                    </form>
+                                    <div class="tutorDetails">
+                                        <h5>Contact Course Tutor</h5>
+                                        <div class="container">
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <b><label>Name :</label></b>
+                                                    <label><?php echo $paidCourse['first_name'] . ' ' . $paidCourse['last_name'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>Contact Number :</label></b>
+                                                    <label><?php echo $paidCourse['contact'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>Email :</label></b>
+                                                    <label><?php echo $paidCourse['email'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>University Name :</label></b>
+                                                    <label><?php echo $paidCourse['university_name'] ?></label><br />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="addReview">
+                                        <h5>Add a Review about the Course</h5>
+                                        <div <?php if ($reviewdIdList != null) {
+                                                    if (in_array($paidCourse['tutor_session_id'], $reviewdIdList)) {
+                                                        echo 'hidden';
+                                                    }
+                                                } ?> class="container">
+                                            <form action="/KuppiMate/src/controller/externalSessionFeedback.php" method="post" class="star-rating">
+                                                <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
+                                                <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
+                                                <span onclick="rating(1, <?php echo $key; ?>)" class="star star-<?php echo $key; ?>"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(2, <?php echo $key; ?>)" class="star star-<?php echo $key; ?>"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(3, <?php echo $key; ?>)" class="star star-<?php echo $key; ?>"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(4, <?php echo $key; ?>)" class="star star-<?php echo $key; ?>"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(5, <?php echo $key; ?>)" class="star star-<?php echo $key; ?>"><i class="bi bi-star-fill"></i></span>
+                                                <input type="text" name="tutorSessionId" value="<?php echo $paidCourse['tutor_session_id'] ?>" hidden>
+                                                <input type="number" name="ratingLevel" readonly hidden class="rating-value-<?php echo $key; ?>"><br />
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </div>
+                                        <?php if (in_array($paidCourse['tutor_session_id'], $reviewdIdList)) { ?>
+                                            <span class="m-auto mt-1 badge bg-warning text-dark">You have already reviewd</span>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Paid Course Title
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <h3>Tiltle of the course Here</h3>
-                            <div class="course-links">
-                                <div class="container">
-                                    <button class="download btn btn-outline-success">
-                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
-                                    </button>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tutorDetails">
-                                <h5>Contact Course Tutor</h5>
-                                <div class="container">
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <b><label>Name :</label></b>
-                                            <label>Name goes Here</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Contact Number :</label></b>
-                                            <label>0710619833</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Email :</label></b>
-                                            <label>designs.yeran@gmail.com</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>University Name :</label></b>
-                                            <label>Uva Wellassa University</label><br />
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="addReview">
-                                <h5>Add a Review about the Course</h5>
-                                <div class="container">
-                                    <form class="star-rating">
-                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
-                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
-                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <input type="number" id="rating-value" readonly><br />
-                                        <input type="submit" value="Submit">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <?php } ?>
+            <?php } else { ?>
+                <span class="badge fs-6 bg-warning text-dark">You don't have any paid courses</span>
+            <?php } ?>
         </section>
         <section class="content" id="my-courses">
             <div class="headerImage">
@@ -928,6 +878,34 @@ $account_status = $_SESSION['account_status'];
                 } elseif ($_GET['id'] == '102') {
                     echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
                     Error occurred ! please contact administrator
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }
+            }
+            if (isset($_GET['m'])) {
+                if ($_GET['m'] == '101') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                    Material Uploaded Successfully
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                } elseif ($_GET['m'] == '102') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                    Error occurred while uploading !
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                } elseif ($_GET['m'] == '103') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                    Unusual activity detected !
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                } elseif ($_GET['m'] == '104') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                    Successfully Deleted 
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                } elseif ($_GET['m'] == '105') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                    Failed to delete ! 
                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                     </div>";
                 }
@@ -975,23 +953,70 @@ $account_status = $_SESSION['account_status'];
                     </div>
                 </div>
             </div>
-            
+
             <hr>
-            <h4 style="color: #0B5ED7;" class="mt-0 fw-bold" >Your Approved External Courses</h4>
+
+            <!--approve external session display -->
+
+             <!--approve external session display -->
+
+             <h4 style="color: #0B5ED7;" class="mt-0 fw-bold">Your Approved External Courses</h4>
             <div class="accordion" id="accordionExample">
                 <?php if (!empty($approvedTutorSessions)) { ?>
                     <?php foreach ($approvedTutorSessions as $key => $approved) { ?>
                         <!-- Single Accordion Item -->
                         <div class="accordion-item mt-4">
                             <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button fw-bold " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $key+1;  ?>" aria-expanded="true" aria-controls="collapseOne">
+                                <button class="accordion-button fw-bold " type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $key + 1;  ?>" aria-expanded="true" aria-controls="collapseOne">
                                     <?php echo $approved['title'];  ?>
                                 </button>
                             </h2>
-                            <div id="collapse<?php echo $key+1;  ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div id="collapse<?php echo $key + 1;  ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
 
+                                    <!--upload materials-->
+
+                                    <form action="/KuppiMate/src/controller/tutorMaterialController.php" enctype="multipart/form-data" method="POST">
+                                        <input type="hidden" name="tutorSessionId" value="<?php echo $approved['id']; ?>">
+                                        <input class="Bvalue" type="file" accept=".zip,.rar" name="eXMaterials" required>
+                                        <button class="btn btn-primary btn-sm mt-2 material_upload" type="submit">Upload Learning Materials</button>
+                                        <br />
+                                    </form>
+
+                                    <!-- uploaded material list-->
+
+                                    <h6 style="color: #667085; font-weight: 600;  " class="mt-4 fw-semibold">Uploaded Materials</h6>
+                                    <ol class="list-group list-group-flush mt-3">
+
+                                        <?php if ($approved['file_names'] != null) {
+                                            $fileNames = explode(',', $approved['file_names']); ?>
+                                            <?php foreach ($fileNames as $index => $fileName) { ?>
+
+                                                <li class="list-group-item">
+
+                                                    <a class="link-success text-decoration-none" href="/KuppiMate/src/controller/external_material_uploads/<?php echo trim($fileNames[$index]); ?>">
+
+                                                        <i class="bi bi-arrow-down"></i>
+                                                        <?php echo ' ' . $fileNames[$index] . '&nbsp;&nbsp;&nbsp;'; ?>
+
+                                                    </a>
+                                                    <form action="/KuppiMate/src/controller/tutorMaterialController.php" method="post">
+                                                        <input type="text" name="materialIdSet" value="<?php echo $approved['materialId'] ?>" hidden>
+                                                        <button type="submit" class="border-0 bg-transparent ">
+                                                            <span class="badge bg-danger">Delete</span>
+                                                        </button>
+                                                    </form>
+
+
+                                                </li>
+
+                                            <?php } ?>
+                                        <?php } else { ?>
+                                            <span class="badge bg-warning text-dark">No upload materials available</span>
+                                        <?php  } ?>
+                                    </ol>
                                     <!-- Session Form -->
+                                    <hr>
                                     <form action="#">
                                         <div>
                                             <label class="form-label">Session Title</label><br />
@@ -1010,6 +1035,7 @@ $account_status = $_SESSION['account_status'];
                                             <button type="submit" class="btn btn-primary">Get the Link</button>
                                         </div>
                                     </form>
+                                    <hr>
 
                                     <!-- Meeting Details -->
                                     <div class="container mt-4">
@@ -1069,6 +1095,7 @@ $account_status = $_SESSION['account_status'];
                 <?php } ?>
 
             </div>
+
 
 
         </section>

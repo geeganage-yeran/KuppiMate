@@ -853,16 +853,26 @@ input[type="file"]:disabled{
     font-weight: 500;
 }
 .one {
-    color: rgb(255, 0, 0);
-  }
+    color: rgb(255, 0, 0); /* Red for 1 star */
+}
    
-  .two,.three,.four {
-    color: rgb(247, 210, 0);
-  }
+.two, .three, .four {
+    color: rgb(247, 210, 0); /* Yellow for 2, 3, or 4 stars */
+}
 
-  .five {
-    color: rgb(24, 159, 14);
-  }
+.five {
+    color: rgb(24, 159, 14); /* Green for 5 stars */
+}
+
+.modal-star {
+    cursor: pointer; /* Change cursor to pointer for better UX */
+    font-size: 24px; /* Adjust size as needed */
+    color: #ccc; /* Default star color (grey) */
+}
+
+.modal-star.selected {
+    color: inherit; /* Allow the color to inherit from the specific star class */
+}
 
 #paid-courses .tutorDetails label{
    margin-top: 10px;

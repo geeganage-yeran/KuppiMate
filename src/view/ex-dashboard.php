@@ -1,5 +1,8 @@
 <?php
-session_start();
+include_once __DIR__ . '/../controller/feedbackController.php';
+include_once __DIR__ . '/../controller/externalSessionController.php';
+include_once __DIR__ . '/../controller/subscriptionController.php';
+include_once __DIR__ . '/../controller/externalSessionFeedback.php';
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== "external_learner") {
     header("Location: /KuppiMate/src/view/login.php");
@@ -86,52 +89,121 @@ $account_status = $_SESSION['account_status'];
                 <p>Join courses conducted by undergraduates at a low cost</p>
             </div>
             <div class="courseContent">
+                <!-- message display -->
+                <?php
+                if (isset($_GET['s'])) {
+                    if ($_GET['s'] == '101') {
+                        echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Payment Success visit Paid courses section !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['s'] == '1001') {
+                        echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    Session request submitted successfully!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['s'] == '102') {
+                        echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    Payment Failed Try Again !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    }
+                }
+                ?>
                 <h4>Courses Available</h4>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Course Title Here</h5>
-                                <label>Yeran Lakvidu</label><br />
-                                <label class="time-period">3 Months , 25 Lectures</label><br />
-                                <label class="ratingval">4.2</label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label class="bi bi-star-fill"></label>
-                                <label>(37)</label>
-                                <p>LKR 6000.00</p>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#enrollNow" class="btn btn-primary">Enroll Now</a>
-                            </div>
-                            <!--popup enroll now-->
-                            <div class="modal fade" id="enrollNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title fw-bold" id="staticBackdropLabel">Course Title</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h5 class="fw-bold mb-1">Introduction</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                    <?php if ($courses != NULL) { ?>
+                        <?php foreach ($courses as $course) { ?>
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img src="/KuppiMate/public/images/progs.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo $course['title']; ?></h5>
+                                        <label>
+                                            <?php echo $course['first_name'] . ' '; ?>
+                                            <?php echo $course['last_name']; ?>
+                                        </label><br />
+                                        <label class="time-period"><?php echo $course['time_period']; ?></label><br />
+                                        <label class="ratingval"><?php echo number_format($course['average_feedback'], 1); ?></label>
+                                        <!-- calculating rating starts to be color -->
+                                        <?php
+                                        $average_feedback = number_format($course['average_feedback'], 1);
+                                        $full_stars = floor($average_feedback);
+                                        $half_star = ($average_feedback - $full_stars) >= 0.5 ? 1 : 0;
+                                        $total_stars = 5;
+                                        ?>
 
-                                            <h5 class="fw-bold mb-1">Course Content</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                                        <?php for ($i = 0; $i < $full_stars; $i++): ?>
+                                            <label class="bi bi-star-fill filled"></label>
+                                        <?php endfor; ?>
 
-                                            <h5 class="fw-bold mb-1">Who I Am</h5>
-                                            <p class="fs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat..</p>
+                                        <?php if ($half_star): ?>
+                                            <label class="bi bi-star-half filled"></label>
+                                        <?php endif; ?>
 
-                                            <h3 class="fw-bold">LKR.2000.00</h3>
-                                            <button type="button" class="btn btn-primary mt-2">Buy Now</button>
+                                        <?php for ($i = 0; $i < ($total_stars - $full_stars - $half_star); $i++): ?>
+                                            <label class="bi bi-star"></label>
+                                        <?php endfor; ?>
+
+                                        <label><?php echo '(' . $course['feedback_count'] . ')'; ?></label>
+                                        <p>LKR <?php echo number_format($course['tutor_fee'], 2, '.', ',') ?></p>
+                                        <?php if (in_array($course['id'], $alreadyEnrolledCourses)) { ?>
+                                            <button class="btn btn-primary" disabled>Already Enrolled</button>
+                                        <?php } else { ?>
+                                            <button
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#enrollNow"
+                                                data-session-id="<?php echo $course['id']; ?>"
+                                                data-session-title="<?php echo $course['title']; ?>"
+                                                data-description="<?php echo $course['description']; ?>"
+                                                data-course-content="<?php echo $course['course_content']; ?>"
+                                                data-about-tutor="<?php echo $course['about_tutor']; ?>"
+                                                data-tutor-fee="<?php echo $course['tutor_fee']; ?>"
+                                                class="btn btn-primary">
+                                                Enroll Now
+                                            </button>
+                                        <?php } ?>
+                                    </div>
+                                    <!-- Popup Enroll Now Modal -->
+                                    <div class="modal fade" id="enrollNow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title fw-bold" id="staticBackdropLabel"></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="fw-bold mb-1">Description</h5>
+                                                    <p class="fs-6" id="course-description"></p>
+
+                                                    <h5 class="fw-bold mb-1">Course Content</h5>
+                                                    <p class="fs-6" id="course-content"></p>
+
+                                                    <h5 class="fw-bold mb-1">Who I Am</h5>
+                                                    <p class="fs-6" id="about-tutor"></p>
+
+                                                    <h3 class="fw-bold" id="tutor-fee"></h3>
+
+                                                    <form method="post" action="/KuppiMate/src/controller/checkout.php">
+                                                        <input type="hidden" name="course_id" id="course-id" value="">
+                                                        <input type="hidden" name="course_title" id="course-title-set" value="">
+                                                        <input type="hidden" name="course_fee" id="course-fee-set" value="">
+                                                        <button type="submit" class="btn btn-primary mt-2">Buy Now</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        <?php }
+                    } else { ?>
+                        <span class="m-auto mt-5 fs-6 badge bg-warning text-dark">Sorry ! no sessions available</span>
+                    <?php } ?>
 
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -139,176 +211,134 @@ $account_status = $_SESSION['account_status'];
             <div class="headerImage">
                 <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
             </div>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                            Paid Course Title
-                        </button>
-                    </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <h3>Tiltle of the course Here</h3>
-                            <div class="course-links">
-                                <div class="container">
-                                    <button class="download btn btn-outline-success">
-                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
-                                    </button>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tutorDetails">
-                                <h5>Contact Course Tutor</h5>
-                                <div class="container">
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <b><label>Name :</label></b>
-                                            <label>Name goes Here</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Contact Number :</label></b>
-                                            <label>0710619833</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Email :</label></b>
-                                            <label>designs.yeran@gmail.com</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>University Name :</label></b>
-                                            <label>Uva Wellassa University</label><br />
-                                        </div>
+            <?php
+            if (isset($_SESSION['review_errors']) && !empty($_SESSION['review_errors'])) {
+                foreach ($_SESSION['review_errors'] as $error) {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>$error<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                }
+                unset($_SESSION['review_errors']);
+            }
+            if (isset($_GET['c'])) {
+                if ($_GET['c'] == '101') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show mt-2' role='alert'>Reviewd successfully !<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                } elseif ($_GET['c'] == '102') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>Failed to review the session !<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                }
+            }
+            ?>
+            <?php if ($paidCourses != null) { ?>
+                <?php foreach ($paidCourses as $key => $paidCourse) { ?>
+                    <div class="accordion accordion-flush" id="accordionFlush<?php echo $key + 1 ?>">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-heading<?php echo $key + 1 ?>">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $key + 1 ?>" aria-expanded="false" aria-controls="flush-collapse<?php echo $key + 1 ?>">
+                                    <?php echo $paidCourse['title'] ?>
+                                </button>
+                            </h2>
+                            <div id="flush-collapse<?php echo $key + 1 ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?php echo $key + 1 ?>" data-bs-parent="#accordionFlush<?php echo $key + 1 ?>">
+                                <div class="accordion-body">
+                                    <div class="mt-4 course-links">
+                                        <div class="container">
 
+                                            <!-- material list-->
+                                            <h6 style="color: #667085; font-weight: 600;  " class="mt-4 fw-semibold">Download your course materials</h6>
+                                            <ol class="list-group list-group-flush mt-3">
+
+                                                <?php if ($paidCourse['file_names'] != null) {
+                                                    $fileNames = explode(',', $paidCourse['file_names']); ?>
+                                                    <?php foreach ($fileNames as $index => $fileName) { ?>
+                                                        <li class="list-group-item">
+                                                            <a class="link-success text-decoration-none" href="/KuppiMate/src/controller/external_material_uploads/<?php echo trim($fileNames[$index]); ?>">
+                                                                <i class="bi bi-arrow-down"></i>
+                                                                <?php echo ' ' . $fileNames[$index] . '&nbsp;&nbsp;&nbsp;'; ?>
+                                                            </a>
+                                                        </li>
+                                                    <?php } ?>
+                                                <?php } else { ?>
+                                                    <span class="badge bg-warning text-dark">No course materials available</span>
+                                                <?php  } ?>
+                                            </ol>
+                                            
+                                            <div class="d-flex flex-column mb-3 mt-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting LInk :</label>
+                                                    <label>Link here</label><br />
+                                                    <label id="mDetail">Date/Time :</label>
+                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting LInk :</label>
+                                                    <label>Link here</label><br />
+                                                    <label id="mDetail">Date/Time :</label>
+                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting LInk :</label>
+                                                    <label>Link here</label><br />
+                                                    <label id="mDetail">Date/Time :</label>
+                                                    <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="addReview">
-                                <h5>Add a Review about the Course</h5>
-                                <div class="container">
-                                    <form class="star-rating">
-                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
-                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
-                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <input type="number" class="rating-value" readonly><br />
-                                        <input type="submit" value="Submit">
-                                    </form>
+                                    <div class="tutorDetails">
+                                        <h5>Contact Course Tutor</h5>
+                                        <div class="container">
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <b><label>Name :</label></b>
+                                                    <label><?php echo $paidCourse['first_name'] . ' ' . $paidCourse['last_name'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>Contact Number :</label></b>
+                                                    <label><?php echo $paidCourse['contact'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>Email :</label></b>
+                                                    <label><?php echo $paidCourse['email'] ?></label><br />
+                                                </div>
+                                                <div class="p-2">
+                                                    <b><label>University Name :</label></b>
+                                                    <label><?php echo $paidCourse['university_name'] ?></label><br />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="addReview">
+                                        <h5>Add a Review about the Course</h5>
+                                        <div <?php if (in_array($paidCourse['tutor_session_id'], $reviewdIdList)) {
+                                                    echo 'hidden';
+                                                } ?> class="container">
+                                            <form action="/KuppiMate/src/controller/externalSessionFeedback.php" method="post" class="star-rating">
+                                                <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
+                                                <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
+                                                <span onclick="rating(1, <?php echo $key; ?>)" class="star"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(2, <?php echo $key; ?>)" class="star"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(3, <?php echo $key; ?>)" class="star"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(4, <?php echo $key; ?>)" class="star"><i class="bi bi-star-fill"></i></span>
+                                                <span onclick="rating(5, <?php echo $key; ?>)" class="star"><i class="bi bi-star-fill"></i></span>
+                                                <input type="text" name="tutorSessionId" value="<?php echo $paidCourse['tutor_session_id'] ?>" hidden>
+                                                <input type="number" name="ratingLevel" readonly hidden class="rating-value"><br />
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </div>
+                                        <?php if (in_array($paidCourse['tutor_session_id'], $reviewdIdList)) { ?>
+                                            <span class="m-auto mt-1 badge bg-warning text-dark">You have already reviewd</span>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="accordion accordion-flush" id="accordionFlushExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                            Paid Course Title
-                        </button>
-                    </h2>
-                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body">
-                            <h3>Tiltle of the course Here</h3>
-                            <div class="course-links">
-                                <div class="container">
-                                    <button class="download btn btn-outline-success">
-                                        <span class="bi bi-cloud-arrow-down-fill"> Download Course Materials</span>
-                                    </button>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <label id="mDetail">Meeting LInk :</label>
-                                            <label>Link here</label><br />
-                                            <label id="mDetail">Date/Time :</label>
-                                            <label>06/02/13</label>&nbsp;&nbsp;<label>12.00PM</label><br />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tutorDetails">
-                                <h5>Contact Course Tutor</h5>
-                                <div class="container">
-                                    <div class="d-flex flex-column mb-3">
-                                        <div class="p-2">
-                                            <b><label>Name :</label></b>
-                                            <label>Name goes Here</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Contact Number :</label></b>
-                                            <label>0710619833</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>Email :</label></b>
-                                            <label>designs.yeran@gmail.com</label><br />
-                                        </div>
-                                        <div class="p-2">
-                                            <b><label>University Name :</label></b>
-                                            <label>Uva Wellassa University</label><br />
-                                        </div>
+                <?php } ?>
+            <?php } else { ?>
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="addReview">
-                                <h5>Add a Review about the Course</h5>
-                                <div class="container">
-                                    <form class="star-rating">
-                                        <textarea class="descriptionx form-control form-control-sm" name="description" rows="6" cols="80" maxlength="100" placeholder="Max Characters 100..." required></textarea></br>
-                                        <span id="rHead">Rate the Course Tutor&nbsp;</span><br />
-                                        <span onclick="rating(1)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(2)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(3)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(4)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <span onclick="rating(5)" class="star"><i class="bi bi-star-fill"></i></span>
-                                        <input type="number" class="rating-value" readonly><br />
-                                        <input type="submit" value="Submit">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </section>
         <section class="content" id="settings">
             <div class="container mt-5">

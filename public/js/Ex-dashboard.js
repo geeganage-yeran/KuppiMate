@@ -34,33 +34,77 @@ closeMenue.addEventListener("click", function () {
     sideBar.classList.remove("show");
 });
 
-//Rating Process
-const stars = document.getElementsByClassName("star");
-const ratingValue = document.getElementsByClassName("rating-value");
-function rating(n) {
-    remove();
+// Rating Process
+function rating(n, accordionIndex) {
+    const stars = document.getElementsByClassName("star");
+    const ratingValue = document.getElementsByClassName("rating-value");
+    
+    remove(accordionIndex);
+    
+    // Change class for stars within the current accordion
     for (let i = 0; i < n; i++) {
         if (n == 1) cls = "one";
         else if (n == 2) cls = "two";
         else if (n == 3) cls = "three";
         else if (n == 4) cls = "four";
         else if (n == 5) cls = "five";
-        stars[i].className = "star " + cls;
+        stars[accordionIndex * 5 + i].className = "star " + cls; // Adjust index to target the correct stars
     }
-    Array.from(ratingValue).forEach((ratingValue=>{
-        ratingValue.innerHTML=n;
-    }))
+    
+    // Update the rating value for the current accordion
+    ratingValue[accordionIndex].value = n; // Set the value of the rating input
 }
- 
-function remove() {
-    let i = 0;
-    while (i < 5) {
-        stars[i].className = "star";
-        i++;
+
+function remove(accordionIndex) {
+    const stars = document.getElementsByClassName("star");
+    
+    // Reset the stars within the current accordion
+    for (let i = accordionIndex * 5; i < accordionIndex * 5 + 5; i++) {
+        stars[i].className = "star"; // Reset the class to default
     }
 }
+
 
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
     return new bootstrap.Popover(popoverTriggerEl)
 })
+
+
+//courses buynow details display 
+const enrollButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+
+enrollButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        // Get data from button
+        const courseId = this.getAttribute('data-session-id');
+        const description = this.getAttribute('data-description');
+        const courseContent = this.getAttribute('data-course-content');
+        const aboutTutor = this.getAttribute('data-about-tutor');
+        const tutorFee = this.getAttribute('data-tutor-fee');
+        const courseTitle = this.getAttribute('data-session-title');
+        // Update modal content
+        document.getElementById('staticBackdropLabel').innerText = courseTitle; // or use a specific title if available
+        document.getElementById('course-description').innerText = description;
+        document.getElementById('course-content').innerText = courseContent;
+        document.getElementById('about-tutor').innerText = aboutTutor;
+        document.getElementById('tutor-fee').innerText = 'LKR:'+tutorFee+'.00';
+
+        // Set hidden input value
+        document.getElementById('course-id').value = courseId;
+        document.getElementById('course-title-set').value = courseTitle;
+        document.getElementById('course-fee-set').value = tutorFee;
+    });
+});
+
+//message timeout settings
+
+setTimeout(function () {
+    var alertElement = document.getElementById('alertMessage');
+    if (alertElement) {
+        alertElement.classList.remove('show');
+        setTimeout(function () {
+            alertElement.remove();
+        }, 300);
+    }
+}, 5000);

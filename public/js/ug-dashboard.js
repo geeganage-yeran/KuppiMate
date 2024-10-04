@@ -126,30 +126,74 @@ closeMenue.addEventListener("click", function () {
     sideBar.classList.remove("show");
 });
 
-//Rating Process
-const stars = document.getElementsByClassName("star");
-const ratingValue = document.getElementById("rating-value");
+//accordian review section 
 
-function rating(n) {
-    remove();
+function rating(n, accordionIndex) {
+    const stars = document.getElementsByClassName("star-" + accordionIndex);
+    const ratingValue = document.querySelector(".rating-value-" + accordionIndex);
+
+    remove(accordionIndex);
+
     for (let i = 0; i < n; i++) {
-        if (n == 1) cls = "one";
-        else if (n == 2) cls = "two";
-        else if (n == 3) cls = "three";
-        else if (n == 4) cls = "four";
-        else if (n == 5) cls = "five";
-        stars[i].className = "star " + cls;
+        let cls = "";
+        if (n === 1) cls = "one";
+        else if (n === 2) cls = "two";
+        else if (n === 3) cls = "three";
+        else if (n === 4) cls = "four";
+        else if (n === 5) cls = "five";
+        
+        stars[i].classList.add(cls);
     }
+
+    
     ratingValue.value = n;
 }
 
-function remove() {
-    let i = 0;
-    while (i < 5) {
-        stars[i].className = "star";
-        i++;
+function remove(accordionIndex) {
+    const stars = document.getElementsByClassName("star-" + accordionIndex);
+
+    
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].className = "star star-" + accordionIndex; // Reset the class to default
     }
 }
+
+// modal review for enrolled kuppis
+
+function modalRating(n) {
+    const modalStars = document.getElementsByClassName("modal-star");
+    const modalRatingValue = document.getElementById("modal-rating-value");
+
+
+    resetModalStars();
+
+
+    for (let i = 0; i < n; i++) {
+        modalStars[i].classList.add("selected");
+
+        if (n === 1) {
+            modalStars[i].classList.add("one");
+        } else if (n === 2 || n === 3 || n === 4) {
+            modalStars[i].classList.add("two", "three", "four");
+        } else if (n === 5) {
+            modalStars[i].classList.add("five");
+        }
+    }
+
+
+    modalRatingValue.value = n;
+}
+
+function resetModalStars() {
+    const modalStars = document.getElementsByClassName("modal-star");
+
+    
+    for (let i = 0; i < modalStars.length; i++) {
+        modalStars[i].className = "modal-star";
+    }
+}
+
+
 
 // setting previous dates off
 
@@ -223,6 +267,9 @@ setTimeout(function () {
     var alertElement = document.getElementById('alertMessage');
     if (alertElement) {
         alertElement.classList.remove('show');
+        setTimeout(function () {
+            alertElement.remove();
+        }, 300);
     }
 }, 5000);
 
@@ -285,7 +332,7 @@ enrollButtons.forEach(button => {
         document.getElementById('course-description').innerText = description;
         document.getElementById('course-content').innerText = courseContent;
         document.getElementById('about-tutor').innerText = aboutTutor;
-        document.getElementById('tutor-fee').innerText = 'LKR:'+tutorFee+'.00';
+        document.getElementById('tutor-fee').innerText = 'LKR:' + tutorFee + '.00';
 
         // Set hidden input value
         document.getElementById('course-id').value = courseId;
