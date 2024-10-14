@@ -56,6 +56,15 @@ $role = $_SESSION['role'];
             <div class="headerImage">
                 <img class="img-fluid" src="/KuppiMate/public/images/headerImage.png" alt="header-image">
             </div>
+            <?php if (isset($_GET['n'])) {
+                if ($_GET['n'] == '101') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>Notice Broadcasted Successfully<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                } elseif ($_GET['n'] == '102') {
+                    echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>Successfully Deleted<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                } elseif ($_GET['n'] == '103') {
+                    echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>Error Occurred<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></div>";
+                }
+            } ?>
             <div class="container admin-homecont">
                 <div class="row gx-3">
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
@@ -118,12 +127,12 @@ $role = $_SESSION['role'];
                                         <td><span class="description" data-bs-toggle="popover" data-bs-content="<?php echo $notice1['description']; ?>">View Description</span></td>
                                         <td>
                                             <form action="/KuppiMate/src/controller/adminController.php" method="POST">
-                                                <?php if ($notice1['broadcasted'] == 1) {
-                                                    echo '<button type="button" data-bs-toggle="modal" data-bs-target="#deleteNotice" class="btn btn-danger btn-sm">Remove Notice</button>';
-                                                } else {
-                                                    echo '<input type="hidden" name="noticeId" value="' . $notice1['id'] . '">';
-                                                    echo '<button type="submit" class="btn btn-primary btn-sm">Broadcast</button>';
-                                                } ?>
+                                                <?php if ($notice1['broadcasted'] == 1) { ?>
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#deleteNotice" data-session-id="<?php echo $notice1['id']; ?>" class="btn btn-danger btn-sm">Remove Notice</button>
+                                                <?php } else { ?>
+                                                    <input type="hidden" name="noticeId" value="<?php echo $notice1['id']; ?>">
+                                                    <button type="submit" class="btn btn-primary btn-sm">Broadcast</button>
+                                                <?php } ?>
                                             </form>
 
                                         </td>
@@ -224,7 +233,7 @@ $role = $_SESSION['role'];
                                             </form>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-session-id="<?php echo $verified['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteUser">Delete</button>
                                         </td>
                                     </tr>
                             <?php endforeach;
@@ -258,7 +267,7 @@ $role = $_SESSION['role'];
                                         <td><?php echo $exLearner['email'] ?></td>
                                         <td><?php echo $exLearner['contact'] ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteExternalUser">Delete</button>
+                                            <button type="button" class="btn btn-danger btn-sm" data-session-id="<?php echo $exLearner['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteExternalUser">Delete</button>
                                         </td>
                                     </tr>
                             <?php endforeach;
@@ -348,7 +357,9 @@ $role = $_SESSION['role'];
                                                     $isRecorded = true;
                                                 }
                                                 ?>
-                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {echo 'disabled';} ?>>Upload Link</button>
+                                                <button type="submit" class="btn btn-primary btn-sm mt-2" <?php if ($isRecorded) {
+                                                                                                                echo 'disabled';
+                                                                                                            } ?>>Upload Link</button>
                                             </td>
                                         </form>
                                         <td><span class="badge bg-success">Approved</span></td>
@@ -381,7 +392,7 @@ $role = $_SESSION['role'];
                                     <tr>
                                         <th scope="row"><?php echo $index + 1 ?></th>
                                         <td><?php echo $catNames['category_name']  ?></td>
-                                        <td><button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteCat">Delete</button></td>
+                                        <td><button type="submit" class="btn btn-danger btn-sm" data-session-id="<?php echo $catNames['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteCat">Delete</button></td>
                                     </tr>
                                 <?php }; ?>
                             <?php } else { ?>
@@ -392,6 +403,7 @@ $role = $_SESSION['role'];
                 </div>
                 <hr>
                 <div class="addCategory mt-4">
+                    <div id="alertMessage" class="mt-4"></div>
                     <?php if (isset($_GET['id'])) {
                         if ($_GET['id'] == '120') {
                             echo "<div id='alertMessage' class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
@@ -421,9 +433,9 @@ $role = $_SESSION['role'];
                     }
                     ?>
                     <h6 class="mb-3">If Category is not listed you can add it from here:</h6>
-                    <form action="/KuppiMate/src/controller/categoryController.php" method="post">
+                    <form action="/KuppiMate/src/controller/categoryController.php" onsubmit="return catNameValidation()" method="post">
                         <div>
-                            <input type="text" class="form-control" name="catName" placeholder="category name" required>
+                            <input type="text" class="form-control" id="catName" name="catName" placeholder="category name" required>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-primary btn-sm mt-2">Add Category</button>
@@ -621,23 +633,6 @@ $role = $_SESSION['role'];
                                         <td><?php echo $feedback['feedbackByFirstName'] . ' ' . $feedback['feedbackByLastName'] ?></td>
                                         <td><button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteFeedback" data-session-id="<?php echo $feedback['id']; ?>">Delete</button></td>
                                     </tr>
-                                    <!--Delete Feedback Verification-->
-                                    <div class="modal fade" id="deleteFeedback" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteFeedbackLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    Do you want to delete this feedback ?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <form action="/KuppiMate/src/controller/feedbackAdminController.php" method="post">
-                                                        <input type="hidden" id="deleteFeedbackSet" name="deleteFeedId" value="">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <button type="submit" class="btn btn-primary border-0">yes</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 <?php } ?>
                             <?php } else { ?>
                                 <span class="badge bg-warning text-dark">No Feedbacks To Display</span>
@@ -734,158 +729,197 @@ $role = $_SESSION['role'];
             </div>
         </section>
     </div>
+
     <!--undergrduate delete verification-->
-    <div class="modal fade" id="deleteUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteUser" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete this user ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this user will permanently remove them. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
-                        <input type="hidden" name="deleteId" value="<?php echo $verified['id']; ?>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="deleteUserIdSet" name="deleteId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--external delete verification-->
-    <div class="modal fade" id="deleteExternalUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteExternalUserLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteExternalUser" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete this user ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this user will permanently remove them. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
-                        <input type="hidden" name="deleteId" value="<?php echo $exLearner['id']; ?>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="deleteExUserIdSet" name="deleteId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--category delete verification not yet -->
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteCat" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this category will permanently remove it. This action cannot be undone.</p>
+                    <form action="/KuppiMate/src/controller/categoryDelete.php" method="post">
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="deleteCatIdSet" name="deleteCatId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--kuppi session delete verification-->
-    <div class="modal fade" id="deleteKuppi" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteKuppiLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteKuppi" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete this session ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this session will permanently remove it. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
-                        <input type="hidden" name="deleteKuppiSessionId" id="deleteKuppiSessionIdSet" value="">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--category delete verification-->
-    <div class="modal fade" id="deleteCat" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteCatLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    Do you want to delete this Category ?
-                </div>
-                <div class="modal-footer">
-                    <form action="/KuppiMate/src/controller/categoryDelete.php" method="post">
-                        <input type="hidden" name="deleteCatId" value="<?php echo $catNames['id']; ?>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" name="deleteKuppiSessionId" id="deleteKuppiSessionIdSet" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--delete notice verification-->
-    <div class="modal fade" id="deleteNotice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteNoticeLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteNotice" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete this notice ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this notice will permanently remove it. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/adminController.php" method="post">
-                        <input type="hidden" name="noticeDeleteId" value="<?php echo $notice1['id']; ?>">
-                        <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="noticeDeleteSet" name="noticeDeleteId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--Logout confirmation-->
-    <div class="modal fade" id="logoutConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutConfirmLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="logoutConfirm" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to logout ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-circle-fill icon-large"></i>
+                    </div>
+                    <p>Are you sure you want to log out ?</p>
                     <form action="/KuppiMate/src/controller/logout.php" method="post">
-                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger ps-4 pe-4">Ok</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--reject external session confirmation-->
-    <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="externalSessionRejectConfirm" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to reject this session ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>The selected session will be rejected. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                        <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
-                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--reject external session confirmation-->
-    <div class="modal fade" id="externalSessionRejectConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    Do you want to reject this session ?
-                </div>
-                <div class="modal-footer">
-                    <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                        <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
-                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="text" name="reject_session_id" id="reject_session_id_set" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Reject</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
     <!--delete external session confirmation-->
-    <div class="modal fade" id="externalSessionDeleteConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="externalSessionConfirmLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="externalSessionDeleteConfirm" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete this session ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this session will permanently remove it. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/externalSessionApproval.php" method="post">
-                        <input type="text" name="delete_session_id_admin" id="delete_session_id_admin_set" value="" hidden>
-                        <button type="button" class="btn btn-secondary text-white border-0" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary border-0">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="text" name="delete_session_id_admin" id="delete_session_id_admin_set" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <!--Delete Feedback Verification-->
+    <div class="modal fade customModal" data-bs-backdrop="static" id="deleteFeedback" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this feedback will permanently remove it. This action cannot be undone.</p>
+                    <form action="/KuppiMate/src/controller/feedbackAdminController.php" method="post">
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="deleteFeedbackSet" name="deleteFeedId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
     <script src="/KuppiMate/public/js/admin.js?v=<?php echo time(); ?>"></script>
 </body>

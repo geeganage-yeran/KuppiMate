@@ -316,7 +316,7 @@ externalSessionConfirmModal.addEventListener('show.bs.modal', function (event) {
 })
 
 //courses buynow details display 
-const enrollButtons = document.querySelectorAll('[data-bs-toggle="modal"]');
+const enrollButtons = document.querySelectorAll('.enroll-button[data-bs-toggle="modal"]');
 
 enrollButtons.forEach(button => {
     button.addEventListener('click', function () {
@@ -340,3 +340,13 @@ enrollButtons.forEach(button => {
         document.getElementById('course-fee-set').value = tutorFee;
     });
 });
+
+//pass id to the modals
+
+var confirmModal= document.getElementById('confirmModal');
+confirmModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var deleteSessionId = button.getAttribute('data-session-id');
+    var deleteSessionIdSet = document.getElementById('deleteSessionIdSet');
+    deleteSessionIdSet.value = deleteSessionId;
+})

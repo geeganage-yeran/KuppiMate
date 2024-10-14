@@ -323,7 +323,7 @@ $account_status = $_SESSION['account_status'];
                     </div>
                 <?php } ?>
             <?php } else { ?>
-
+                <span class="badge bg-warning text-dark">No Paid Courses To Display</span>
             <?php } ?>
         </section>
         <section class="content" id="settings">

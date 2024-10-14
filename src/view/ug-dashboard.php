@@ -51,7 +51,7 @@ $account_status = $_SESSION['account_status'];
             <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-cash-stack"></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
             <li><a href="#" onclick="showSection('my-courses')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;My Courses</a></li>
             <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
-            <li><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#logoutConfirm" href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -203,7 +203,7 @@ $account_status = $_SESSION['account_status'];
                                 <button class="material_upload" type="submit" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>Upload Kuppi Materials</button>
                                 <br />
                             </form>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete Session</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" data-session-id="<?php echo $output['id']; ?>" >Delete Session</button>
                             <button onclick="window.open('<?php echo $output['session_link']  ?>', '_blank');" class="btn btn-outline-success ps-4 pe-4" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>start</button>
                             <p>Approval process will complete within few minutes (Note : Only .Zip .Rar files are allowed to Upload)</p>
                         </div>
@@ -515,7 +515,7 @@ $account_status = $_SESSION['account_status'];
                                                 data-course-content="<?php echo $course['course_content']; ?>"
                                                 data-about-tutor="<?php echo $course['about_tutor']; ?>"
                                                 data-tutor-fee="<?php echo $course['tutor_fee']; ?>"
-                                                class="btn btn-primary">
+                                                class="btn btn-primary enroll-button">
                                                 Enroll Now
                                             </button>
                                         <?php } ?>
@@ -596,20 +596,20 @@ $account_status = $_SESSION['account_status'];
                     unset($_SESSION['form_errors']);
                 }
                 ?>
-
                 <!--External session approval form-->
                 <div class="modal fade" id="ApprovalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg  modal-dialog-scrollable">
+                    <div class="modal-dialog modal-lg modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="staticBackdropLabel">External Session Approval Form</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body"><!-- External session approval form -->
+                            <div class="modal-body">
+                                <!-- External session approval form -->
                                 <form action="/KuppiMate/src/controller/externalSessionController.php" method="post" onsubmit="return validateExternalCourseForm()">
                                     <div>
                                         <label>Course Title</label><br />
-                                        <input type="text" name="cTitle" id="cTitle" required autocomplete="off"></br>
+                                        <input type="text" name="cTitle" id="cTitle" required autocomplete="off"><br />
                                         <label>Time period</label><br />
                                         <input type="text" name="cTime" id="cTime" required autocomplete="off">
                                     </div>
@@ -629,15 +629,16 @@ $account_status = $_SESSION['account_status'];
                                         <label class="maxChar">Tell Something About You</label><br />
                                         <textarea class="description" name="descriptionA" id="descriptionA" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
                                     </div>
+                                    <div class="modal-footer">
+                                        <button type="reset" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Request Approval</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="reset" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Request Approval</button>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
         <section class="content" id="enrolled-kuppis">
@@ -797,13 +798,13 @@ $account_status = $_SESSION['account_status'];
                                             </ol>
                                             <!-- Session link -->
                                             <hr>
-                                                <div class="d-flex flex-column mb-3">
-                                                    <div class="p-2">
-                                                        <label id="mDetail">Meeting Link :</label>
-                                                        <label><?php echo $paidCourse['session_link']; ?></label><br />
-                                                        <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
-                                                    </div>
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting Link :</label>
+                                                    <label><?php echo $paidCourse['session_link']; ?></label><br />
+                                                    <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
                                                 </div>
+                                            </div>
                                             <hr>
                                         </div>
                                     </div>
@@ -1242,17 +1243,41 @@ $account_status = $_SESSION['account_status'];
         </section>
     </div>
     <!--delete session confirm-->
-    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal fade customModal" data-bs-backdrop="static" id="confirmModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    Do you want to delete the session ?
-                </div>
-                <div class="modal-footer">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-triangle-fill icon-large"></i>
+                        <h5>Warning!</h5>
+                    </div>
+                    <p>Deleting this session will permanently remove it. This action cannot be undone.</p>
                     <form action="/KuppiMate/src/controller/createKuppi.php" method="post">
-                        <input type="hidden" name="deleteSessionId" value="<?php echo $output['id']; ?>">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <button type="submit" class="btn btn-primary">yes</button>
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="deleteSessionIdSet" name="deleteSessionId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Logout confirmation-->
+    <div class="modal fade customModal" data-bs-backdrop="static" id="logoutConfirm" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-circle-fill icon-large"></i>
+                    </div>
+                    <p>Are you sure you want to log out ?</p>
+                    <form action="/KuppiMate/src/controller/logout.php" method="post">
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger ps-4 pe-4">Ok</button>
+                        </div>
                     </form>
                 </div>
             </div>

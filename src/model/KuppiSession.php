@@ -136,6 +136,11 @@ class KuppiSession
     {
         try {
 
+            $query0 = "DELETE FROM feedback WHERE `session_id`=? AND related_table='kuppisession'";
+            $stmt0 = $con->prepare($query0);
+            $stmt0->bindParam(1, $session_id);
+            $stmt0->execute();
+
             $query1 = "SELECT file_path FROM material WHERE kuppi_session_id=?";
             $stmt1 = $con->prepare($query1);
             $stmt1->bindParam(1, $session_id);

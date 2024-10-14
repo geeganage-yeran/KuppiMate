@@ -191,6 +191,11 @@ class TutorSession
             $stmtPayment->bindParam(1, $this->tutorSessionId);
             $stmtPayment->execute();
 
+            $queryPayment = "DELETE FROM feedback WHERE `session_id`=? AND related_table='tutorsession'";
+            $stmtPayment = $con->prepare($queryPayment);
+            $stmtPayment->bindParam(1, $this->tutorSessionId);
+            $stmtPayment->execute();
+
             $querySubscription = "DELETE FROM subscription WHERE tutor_session_id=?";
             $stmtSubscription = $con->prepare($querySubscription);
             $stmtSubscription->bindParam(1, $this->tutorSessionId);

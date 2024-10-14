@@ -213,6 +213,65 @@ class User
     public function deleteAccount($con)
     {
         try {
+
+            $queryAttendace = "DELETE FROM attendance WHERE `user_id`=?";
+            $stmtAttendance = $con->prepare($queryAttendace);
+            $stmtAttendance->bindParam(1, $this->userId);
+            $stmtAttendance->execute();
+
+            $queryFeedback = "DELETE FROM feedback WHERE created_by=?";
+            $stmtFeedback = $con->prepare($queryFeedback);
+            $stmtFeedback->bindParam(1, $this->userId);
+            $stmtFeedback->execute();
+
+            $queryNotice = "DELETE FROM notice WHERE created_by=?";
+            $stmtNotice = $con->prepare($queryNotice);
+            $stmtNotice->bindParam(1, $this->userId);
+            $stmtNotice->execute();
+
+            $querySubscription = "DELETE FROM subscription WHERE created_by=?";
+            $stmtSubscription = $con->prepare($querySubscription);
+            $stmtSubscription->bindParam(1, $this->userId);
+            $stmtSubscription->execute();
+
+            $queryPayment = "DELETE FROM payment WHERE created_by=?";
+            $stmtPayment = $con->prepare($queryPayment);
+            $stmtPayment->bindParam(1, $this->userId);
+            $stmtPayment->execute();
+
+            $queryMaterial = "SELECT file_path FROM material WHERE created_by=?";
+            $stmtMaterial = $con->prepare($queryMaterial);
+            $stmtMaterial->bindParam(1, $this->userId);
+            $stmtMaterial->execute();
+            $filePaths = $stmtMaterial->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!empty($filePaths)) {
+                $query3 = "DELETE FROM material WHERE created_by=?";
+                $stmt3 = $con->prepare($query3);
+                $stmt3->bindParam(1, $this->userId);
+                $stmt3->execute();
+
+                if ($stmt3->rowCount() > 0) {
+                    foreach ($filePaths as $filePath) {
+                        if (file_exists($filePath) && is_writable($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+
+            $queryTutorSession = "DELETE FROM tutorsession WHERE created_by=?";
+            $stmtTutorSession = $con->prepare($queryTutorSession);
+            $stmtTutorSession->bindParam(1, $this->userId);
+            $stmtTutorSession->execute();
+
+            $queryKuppi = "DELETE FROM kuppisession WHERE created_by=?";
+            $stmtKuppi = $con->prepare($queryKuppi);
+            $stmtKuppi->bindParam(1, $this->userId);
+            $stmtKuppi->execute();
+
             $query1 = "SELECT verification_file_path FROM users WHERE id=?";
             $stmt1 = $con->prepare($query1);
             $stmt1->bindParam(1, $this->userId);
@@ -349,7 +408,7 @@ class User
         try {
             $query="UPDATE users SET password=? WHERE email=?";
             $stmt=$con->prepare($query);
-            $stmt->bindparam(1,$this->password);
+            $stmt->bindparam(1,password_hash($this->password,PASSWORD_BCRYPT));
             $stmt->bindparam(2,$this->email);
             $stmt->execute();
 

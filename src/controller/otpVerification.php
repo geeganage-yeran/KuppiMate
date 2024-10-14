@@ -14,4 +14,4 @@ if (isset($_POST['digit1'], $_POST['digit2'], $_POST['digit3'], $_POST['digit4']
     }
 }
 
-?>
+

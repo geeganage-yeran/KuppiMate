@@ -36,7 +36,7 @@ class Notice
     public function listNotices($con)
     {
         try {
-            $query = "SELECT u.first_name, uni.name, c.category_name, n.*, DATE(n.created_date) AS created_date 
+            $query = "SELECT DISTINCT u.first_name, uni.name, c.category_name, n.*, DATE(n.created_date) AS created_date 
             FROM notice n 
             JOIN category c ON c.id = n.category_id 
             JOIN users u ON u.id = n.created_by 

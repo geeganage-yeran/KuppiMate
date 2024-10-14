@@ -79,17 +79,21 @@ $noticeToDisplay=$noticeSet->listNotices(Dbconnector::getConnection());
 if(isset($_POST['noticeId'])){
     $noticeId=$_POST['noticeId'];
     if($noticeSet->broadcastNotice(Dbconnector::getConnection(),$noticeId)){
-        header("Location:/KuppiMate/src/view/admin-dashboard.php");
+        header("Location:/KuppiMate/src/view/admin-dashboard.php?n=101");
+        exit();
+    }else{
+        header("Location:/KuppiMate/src/view/admin-dashboard.php?n=103");
         exit();
     }
 }
 if(isset($_POST['noticeDeleteId'])){
     $noticeDeleteId=$_POST['noticeDeleteId'];
     if($noticeSet->deleteNotice(Dbconnector::getConnection(), $noticeDeleteId)){
-        header("Location:/KuppiMate/src/view/admin-dashboard.php");
+        header("Location:/KuppiMate/src/view/admin-dashboard.php?n=102");
         exit();
     }else{
-        echo 'error occur';
+        header("Location:/KuppiMate/src/view/admin-dashboard.php?n=103");
+        exit();
     }
 }
 

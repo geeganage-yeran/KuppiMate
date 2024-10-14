@@ -1,6 +1,4 @@
-//passing session id to the confirmation modal when approve the external sessions
-
-
+//passing id sto the confirmation modals
 
 var externalSessionRejectConfirmModal= document.getElementById('externalSessionRejectConfirm');
 externalSessionRejectConfirmModal.addEventListener('show.bs.modal', function (event){
@@ -34,11 +32,44 @@ deleteKuppiModal.addEventListener('show.bs.modal', function (event){
     deleteKuppiSessionIdSet.value = deleteKuppiId;
 })
 
+var deleteNoticeModal= document.getElementById('deleteNotice');
+deleteNoticeModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var deleteNoticeId = button.getAttribute('data-session-id');
+    var noticeDeleteSet = document.getElementById('noticeDeleteSet');
+    noticeDeleteSet.value = deleteNoticeId;
+})
+
+
+var deleteUserModal= document.getElementById('deleteUser');
+deleteUserModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var deleteUserId = button.getAttribute('data-session-id');
+    var deleteUserIdSet = document.getElementById('deleteUserIdSet');
+    deleteUserIdSet.value = deleteUserId;
+})
+
+var deleteExternalUserModal= document.getElementById('deleteExternalUser');
+deleteExternalUserModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var deleteExUserId = button.getAttribute('data-session-id');
+    var deleteExUserIdSet = document.getElementById('deleteExUserIdSet');
+    deleteExUserIdSet.value = deleteExUserId;
+})
+
+var deleteCatModal= document.getElementById('deleteCat');
+deleteCatModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var deleteCatId = button.getAttribute('data-session-id');
+    var deleteCatIdSet = document.getElementById('deleteCatIdSet');
+    deleteCatIdSet.value = deleteCatId;
+})
 
 //message timeout settings
 
 setTimeout(function () {
     var alertElement = document.getElementById('alertMessage');
+    console.log(alertElement);
     if (alertElement) {
         alertElement.classList.remove('show');
         setTimeout(function () {
@@ -46,3 +77,15 @@ setTimeout(function () {
         }, 300);
     }
 }, 5000);
+
+//category name validation
+
+function catNameValidation(){
+    var categoryName=document.getElementById('catName').value.trim();
+
+    if (!categoryName.match(/^[a-zA-Z .-]+$/)) {
+        alert('You cannot use numbers and special characters except . and -');
+        return false;
+    }
+    return true;
+}
