@@ -22,6 +22,34 @@ function HeaderVisibility() {
 HeaderVisibility();
 window.addEventListener("resize",HeaderVisibility);
 
+//settings validate
+function validateSetting() {
+    const fname = document.getElementById("fname").value;
+    const lname = document.getElementById("lname").value;
+    const email = document.getElementById("email").value;
+    const contact = document.getElementById("contact").value;
+
+    if (fname == '' && lname == '' && email == '' && contact == '') {
+        alert('At least one field should be filled to update the profile');
+        return false;
+    } else if (fname !== '' && !fname.match(/^[a-zA-Z]+$/)) {
+        alert('Invalid characters in first name field');
+        return false;
+    } else if (lname !== '' && !lname.match(/^[a-zA-Z]+$/)) {
+        alert('Invalid characters in last name field');
+        return false;
+    } else if (email !== '' && !email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+        alert('Invalid characters in email');
+        return false;
+    } else if (contact !== '' && !contact.match(/^\d{10}$/)) {
+        alert('Invalid contact number use the format as 07XXXXXXXX');
+        return false;
+    }
+    return true;
+
+}
+
+
 //Ham menue
 const hambMenu = document.getElementById("hambMenu");
 const sideBar = document.getElementById("sidebar");

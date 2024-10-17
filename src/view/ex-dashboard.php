@@ -39,7 +39,7 @@ $account_status = $_SESSION['account_status'];
             <li><a href="#" onclick="showSection('externalSession')"><i class="bi bi-person-lines-fill"></i>&nbsp;&nbsp;&nbsp;External Tutor Sessions</a></li>
             <li><a href="#" onclick="showSection('paid-courses')"><i class="bi bi-cash-stack"></i>&nbsp;&nbsp;&nbsp;Paid Courses</a></li>
             <li><a href="#" onclick="showSection('settings')"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;&nbsp;Settings</a></li>
-            <li style="margin-top: 170px;"><a href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
+            <li style="margin-top: 170px;"><a data-bs-toggle="modal" data-bs-target="#logoutConfirm" href="/KuppiMate/src/controller/logout.php"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
     <div class="mainContainer">
@@ -60,21 +60,21 @@ $account_status = $_SESSION['account_status'];
                         <div>
                             <i class="bi bi-person-lines-fill"></i>
                             <p class="homecont-p">About external session</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>External sessions on KuppiMate allow verified undergraduates to host educational sessions for both peers and external learners. These sessions can be free or paid, providing flexible learning opportunities.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-person-video3"></i>
                             <p class="homecont-p">Join for an external session</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>Registered users can browse available sessions, select one of interest, and complete payment and registration for the session.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-question-lg"></i>
                             <p class="homecont-p">Any questions</p>
-                            <p>Just click on the Join for a kuppi and you can join for any Kuppi session in Sri Lanka government universities</p>
+                            <p>You can just send an email to kuppimate@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,10 @@ $account_status = $_SESSION['account_status'];
                             </div>
                         <?php }
                     } else { ?>
-                        <span class="m-auto mt-5 fs-6 badge bg-warning text-dark">Sorry ! no sessions available</span>
+                        <div class="container alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Session Available
+                        </div>
+
                     <?php } ?>
 
                 </div>
@@ -255,19 +258,21 @@ $account_status = $_SESSION['account_status'];
                                                         </li>
                                                     <?php } ?>
                                                 <?php } else { ?>
-                                                    <span class="badge bg-warning text-dark">No course materials available</span>
+                                                    <div class="container alert alert-danger" role="alert">
+                                                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Course Materials Available
+                                                    </div>
                                                 <?php  } ?>
                                             </ol>
-                                            
+
                                             <!-- Session link -->
                                             <hr>
-                                                <div class="d-flex flex-column mb-3">
-                                                    <div class="p-2">
-                                                        <label id="mDetail">Meeting Link :</label>
-                                                        <label><?php echo $paidCourse['session_link']; ?></label><br />
-                                                        <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
-                                                    </div>
+                                            <div class="d-flex flex-column mb-3">
+                                                <div class="p-2">
+                                                    <label id="mDetail">Meeting Link :</label>
+                                                    <label><?php echo $paidCourse['session_link']; ?></label><br />
+                                                    <button onclick="window.open('<?php echo $paidCourse['session_link']; ?>','_blank')" type="button" class="btn btn-primary bg-primary btn-sm">Join Now</button>
                                                 </div>
+                                            </div>
                                             <hr>
                                         </div>
                                     </div>
@@ -323,7 +328,9 @@ $account_status = $_SESSION['account_status'];
                     </div>
                 <?php } ?>
             <?php } else { ?>
-                <span class="badge bg-warning text-dark">No Paid Courses To Display</span>
+                <div class="container alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Paid Courses To Display
+                </div>
             <?php } ?>
         </section>
         <section class="content" id="settings">
@@ -426,7 +433,7 @@ $account_status = $_SESSION['account_status'];
                 </div>
             </div>
             <div class="container">
-                <form action="/KuppiMate/src/controller/exProfileController.php" method="post" class="row g-3">
+                <form action="/KuppiMate/src/controller/exProfileController.php" onsubmit="return validateSetting()" method="post" class="row g-3">
                     <div class="class-md-12">
                         <h4>Edit Profile</h4>
                     </div>
@@ -478,6 +485,25 @@ $account_status = $_SESSION['account_status'];
                 </form>
             </div>
         </section>
+    </div>
+    <!--Logout confirmation-->
+    <div class="modal fade customModal" data-bs-backdrop="static" id="logoutConfirm" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-circle-fill icon-large"></i>
+                    </div>
+                    <p>Are you sure you want to log out ?</p>
+                    <form action="/KuppiMate/src/controller/logout.php" method="post">
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-danger ps-4 pe-4">Ok</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
 </body>

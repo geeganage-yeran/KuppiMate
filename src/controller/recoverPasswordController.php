@@ -36,10 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     if ($user->recoveryUpdate(Dbconnector::getConnection())){
         unset($_SESSION['email']);
+        unset($_SESSION['otp']);
+        unset($_SESSION['otp_time']);
         header("Location: /KuppiMate/src/view/recover_success.php");
         exit();
     }else{
         unset($_SESSION['email']);
+        unset($_SESSION['otp']);
+        unset($_SESSION['otp_time']);
         header("Location: /KuppiMate/src/view/recovery_password.php?id=115");
         exit();
     }

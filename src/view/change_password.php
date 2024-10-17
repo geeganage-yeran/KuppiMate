@@ -19,9 +19,9 @@ if (!isset($_SESSION['email'])) {
     <div id="new-password-container" class="container hidden">
        <h2>Set a new password</h2>
         <p >Create a new password. Ensure it differs from previous ones for security.</p>
-        <form action="/KuppiMate/src/controller/recoverPasswordController.php" method="post" >
-            <input type="password" name="new-password" placeholder="Password" required><br>
-            <input type="password" name="con-password" placeholder="Confirm Password" required><br>
+        <form action="/KuppiMate/src/controller/recoverPasswordController.php" method="post" onsubmit="return validateUpdatePassword()" >
+            <input type="password" id="uPassword" name="new-password" placeholder="Password" required><br>
+            <input type="password" id="cPassword" name="con-password" placeholder="Confirm Password" required><br>
             <button type="submit" class="reset">Update Password</button>
         </form>
         <?php
@@ -36,5 +36,6 @@ if (!isset($_SESSION['email'])) {
         }
         ?>
     </div>
+    <script src="/KuppiMate/public/js/Ac-recovery.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

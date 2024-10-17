@@ -30,15 +30,15 @@ if (!isset($_SESSION['email'])) {
             <input type="text" maxlength="1" class="code-input" name="digit5" required>
             <button class="reset" type="submit">Verify Code</button><br>
         </form>
-        <label id="bottomText">Haven't got the email yet? <a href="/KuppiMate/src/view/recovery_password.php">Resend email</a></label>
+        <label id="bottomText">Haven't got the email yet? <a href="/KuppiMate/src/controller/mail.php">Resend email</a></label>
         <?php
         if (isset($_GET['id'])) {
             if ($_GET['id'] == '102') {
-                echo "<div style='margin-top:10px; color:#0b7a09; font-size:15px;text-align:center; '>OTP sent successfully</div>";
+                echo "<div id='otpMessage' style='margin-top:10px; color:#0b7a09; font-size:15px;text-align:center; '>OTP sent successfully</div>";
             } elseif ($_GET['id'] == '103') {
-                echo "<div style='margin-top:10px; color: red; font-size:15px; text-align:center;'>Please Try Again!</div>";
+                echo "<div id='otpMessage' style='margin-top:10px; color: red; font-size:15px; text-align:center;'>Please Try Again!</div>";
             } elseif ($_GET['id'] == '104') {
-                echo "<div style='margin-top:10px; color: red; font-size:15px; text-align:center; '>Not Match or Expired !</div>";
+                echo "<div id='otpMessage' style='margin-top:10px; color: red; font-size:15px; text-align:center; '>Not Match or Expired !</div>";
             }
         }
         ?>

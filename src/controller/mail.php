@@ -7,10 +7,14 @@ include_once __DIR__ . '/../model/User.php';
 include_once __DIR__ . '/../model/Dbconnector.php';
 require __DIR__ . '/../../vendor/autoload.php';
 
-if (isset($_POST['email'])) {
+if (isset($_POST['email']) || isset($_SESSION['email'])) {
 
     $user=new User();
     $email = $_POST['email'];
+
+    if(isset($_SESSION['email'])){
+        $email=$_SESSION['email'];
+    }
 
     if($user->verifyUser(Dbconnector::getConnection(),$email)){
         header("Location: /KuppiMate/src/view/recovery_password.php?id=101");
@@ -96,7 +100,7 @@ if (isset($_POST['email'])) {
                                 </div>
                                 <div class="otp">' . $otp . '</div>
                                 <div class="footer">
-                                    <p>This code will expire in 1 minute.</p>
+                                    <p>This code will expire in 2 minute.</p>
                                 </div>
                             </div>
                         </body>

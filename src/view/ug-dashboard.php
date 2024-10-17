@@ -203,13 +203,15 @@ $account_status = $_SESSION['account_status'];
                                 <button class="material_upload" type="submit" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>Upload Kuppi Materials</button>
                                 <br />
                             </form>
-                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" data-session-id="<?php echo $output['id']; ?>" >Delete Session</button>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmModal" data-session-id="<?php echo $output['id']; ?>">Delete Session</button>
                             <button onclick="window.open('<?php echo $output['session_link']  ?>', '_blank');" class="btn btn-outline-success ps-4 pe-4" <?php echo ($output['status'] == 'pending') ? 'disabled' : ''; ?>>start</button>
                             <p>Approval process will complete within few minutes (Note : Only .Zip .Rar files are allowed to Upload)</p>
                         </div>
                     <?php }; ?>
                 <?php  } else { ?>
-                    <span class="badge bg-secondary">No Session Created Yet</span>
+                    <div class="container alert alert-danger text-center" role="alert">
+                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Session Created Yet
+                    </div>
                 <?php } ?>
             </div>
         </section>
@@ -289,9 +291,11 @@ $account_status = $_SESSION['account_status'];
                                 </div>
                             </div>
                         <?php } ?>
-                    <?php } else {
-                        echo '<span class="badge bg-secondary">No Notices Available</span>';
-                    } ?>
+                    <?php } else { ?>
+                        <div class="container alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Notice Available
+                        </div>
+                    <?php  } ?>
                 </div>
 
             <?php } elseif ($isSearched == 1) { ?>
@@ -335,9 +339,11 @@ $account_status = $_SESSION['account_status'];
                                 </div>
                             </div>
                         <?php } ?>
-                    <?php } else {
-                        echo '<span class="badge bg-secondary">No Notices Available</span>';
-                    } ?>
+                    <?php } else { ?>
+                        <div class="container alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Notice Available
+                        </div>
+                    <?php  } ?>
                 </div>
 
             <?php } elseif ($isSearched == 2) { ?>
@@ -381,9 +387,11 @@ $account_status = $_SESSION['account_status'];
                                 </div>
                             </div>
                         <?php } ?>
-                    <?php } else {
-                        echo '<span class="badge bg-secondary">No Notices Available</span>';
-                    } ?>
+                    <?php } else { ?>
+                        <div class="container alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Notice Available
+                        </div>
+                    <?php  } ?>
                 </div>
 
             <?php } elseif ($isSearched == 3) { ?>
@@ -427,9 +435,11 @@ $account_status = $_SESSION['account_status'];
                                 </div>
                             </div>
                         <?php } ?>
-                    <?php } else {
-                        echo '<span class="badge bg-secondary">No Notices Available</span>';
-                    } ?>
+                    <?php } else { ?>
+                        <div class="container alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Notice Available
+                        </div>
+                    <?php  } ?>
                 </div>
             <?php } ?>
         </section>
@@ -554,7 +564,9 @@ $account_status = $_SESSION['account_status'];
                             </div>
                         <?php }
                     } else { ?>
-                        <span class="m-auto mt-5 fs-6 badge bg-warning text-dark">Sorry ! no sessions available</span>
+                        <div class="container alert alert-danger text-center fw-bold" role="alert">
+                            <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Sessions Available
+                        </div>
                     <?php } ?>
 
                 </div>
@@ -693,10 +705,9 @@ $account_status = $_SESSION['account_status'];
                         </div>
                     <?php } ?>
                 <?php } else { ?>
-                    <div class="container ">
-                        <span class="badge bg-warning text-dark">No Enrolled Kuppis</span>
+                    <div class="container alert alert-danger" role="alert">
+                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Enrolled Kuppis Available
                     </div>
-
                 <?php } ?>
             </div>
             <!-- display messages -->
@@ -793,7 +804,9 @@ $account_status = $_SESSION['account_status'];
                                                         </li>
                                                     <?php } ?>
                                                 <?php } else { ?>
-                                                    <span class="badge bg-warning text-dark">No course materials available</span>
+                                                    <div class="container alert alert-danger" role="alert">
+                                                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Course Materials Available
+                                                    </div>
                                                 <?php  } ?>
                                             </ol>
                                             <!-- Session link -->
@@ -862,7 +875,9 @@ $account_status = $_SESSION['account_status'];
                     </div>
                 <?php } ?>
             <?php } else { ?>
-                <span class="badge fs-6 bg-warning text-dark">You don't have any paid courses</span>
+                <div class="container alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, You Don't Have Any Paid Courses
+                </div>
             <?php } ?>
         </section>
         <section class="content" id="my-courses">
@@ -935,7 +950,9 @@ $account_status = $_SESSION['account_status'];
                         </div>
                     <?php }
                 } else { ?>
-                    <span class="badge fs-6 bg-warning text-dark">You don't have any pending or rejected external tutor sessions</span>
+                    <div class="container alert alert-danger text-center" role="alert">
+                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>You Don't Have Any Pending or Rejected External Tutor Sessions
+                    </div>
                 <?php } ?>
             </div>
 
@@ -1013,7 +1030,9 @@ $account_status = $_SESSION['account_status'];
 
                                             <?php } ?>
                                         <?php } else { ?>
-                                            <span class="badge bg-warning text-dark">No upload materials available</span>
+                                            <div class="container alert alert-danger" role="alert">
+                                                <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, No Upload Materials Available
+                                            </div>
                                         <?php  } ?>
                                     </ol>
                                     <!-- Session link -->
@@ -1064,7 +1083,9 @@ $account_status = $_SESSION['account_status'];
                                                     </div>
                                                 <?php }
                                             } else { ?>
-                                                <span class="badge bg-warning text-dark">Not Rated Yet</span>
+                                                <div class="container alert alert-danger mt-3" role="alert">
+                                                    <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Not Rated Yet
+                                                </div>
                                             <?php } ?>
                                         </div>
 
@@ -1075,7 +1096,9 @@ $account_status = $_SESSION['account_status'];
                         </div>
                     <?php }
                 } else { ?>
-                    <span class="badge bg-warning text-dark">You don't have any approved external tutor sessions</span>
+                    <div class="container alert alert-danger" role="alert">
+                        <i class="bi bi-exclamation-octagon me-2 fs-4"></i>Sorry, You Don't Have Any Approved External Tutor Sessions
+                    </div>
                 <?php } ?>
 
             </div>
