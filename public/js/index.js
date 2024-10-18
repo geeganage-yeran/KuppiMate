@@ -61,3 +61,13 @@ function formValidate2(){
     }
     return true;
 }
+
+
+//enable submit button when check the checkbox
+
+function enableSubmit1(){
+    document.getElementById("submitBtn1").disabled=false;
+}
+function enableSubmit2(){
+    document.getElementById("submitBtn2").disabled=false;
+}

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/KuppiMate/public/css/login.css?v=<?php echo time(); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>KuppiMate</title>
 </head>
 
@@ -42,6 +43,7 @@
                         <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <a href="/KuppiMate/src/view/recovery_password.php"><span class="d-block mt-1">Forgotten Your Password?</span></a>
                     </div>
+                    <div class="g-recaptcha mb-2" data-sitekey="6LeNWmUqAAAAADsueyvXOs44jY93PJY6KSdRxqrC" data-callback="enableSubmit2" ></div>
                     <div class="mb-3 mt-4">
                         <input type="submit" class="form-control p-2" value="Login">
                     </div>
@@ -56,6 +58,12 @@
                         } elseif ($_GET['s'] == '4') {
                             echo "<div class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
                                     You are not a registerd User Please register !
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                        }elseif ($_GET['s'] == '5') {
+                            echo "<div class='alert alert-danger alert-dismissible fade show  mt-4' role='alert'>
+                                    reCAPTCHA verification failed. Please try again !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";

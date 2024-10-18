@@ -128,3 +128,8 @@ span{
 .container a{
     text-decoration: none;
 }
+
+.g-recaptcha {
+    transform: scale(0.95); 
+    transform-origin: 0 0;
+}

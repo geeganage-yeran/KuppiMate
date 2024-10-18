@@ -10,6 +10,7 @@ include_once __DIR__ . '/../controller/universityContoller.php';
     <link rel="stylesheet" href="/KuppiMate/public/css/index.css?v=<?php echo time(); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title>KuppiMate</title>
 </head>
 
@@ -49,6 +50,12 @@ include_once __DIR__ . '/../controller/universityContoller.php';
         } elseif ($_GET['s'] == '2') {
             echo "<div class='alert alert-warning alert-dismissible fade show  mt-4' role='alert'>
                                     User Email Already Registerd!
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+        }elseif ($_GET['s'] == '5') {
+            echo "<div class='alert alert-warning alert-dismissible fade show  mt-4' role='alert'>
+                                    reCAPTCHA verification failed. Please try again !
                                     <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
                                     </button>
                                     </div>";
@@ -177,8 +184,9 @@ include_once __DIR__ . '/../controller/universityContoller.php';
                                     <input type="file" class="form-control" name="verficationDoc" required>
                                     <label class="veri-desc">For the verification process please upload a valid verification <span data-bs-toggle="popover" data-bs-content="You can upload a clear photo of your university ID or any valid document for verification.">document</span></label>
                                 </div>
+                                <div class="g-recaptcha mb-2" data-sitekey="6LeNWmUqAAAAADsueyvXOs44jY93PJY6KSdRxqrC" data-callback="enableSubmit1" ></div>
                                 <div class="mb-3">
-                                    <input type="submit" class="form-control p-2" value="Register">
+                                    <input type="submit" disabled id="submitBtn1" class="form-control p-2" value="Register">
                                 </div>
                             </form>
                         </div>
@@ -226,8 +234,9 @@ include_once __DIR__ . '/../controller/universityContoller.php';
                                 <div class="mb-3">
                                     <input type="password" class="form-control" name="rpassword" id="rpassword2" placeholder="Confirm Password" required>
                                 </div>
+                                <div class="g-recaptcha mb-2" data-sitekey="6LeNWmUqAAAAADsueyvXOs44jY93PJY6KSdRxqrC" data-callback="enableSubmit2" ></div>
                                 <div class="mb-3">
-                                    <input type="submit" class="form-control p-2" value="Register">
+                                    <input type="submit" disabled class="form-control p-2" id="submitBtn2" value="Register">
                                 </div>
                             </form>
                         </div>
