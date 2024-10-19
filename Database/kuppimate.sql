@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2024 at 04:21 PM
+-- Generation Time: Oct 19, 2024 at 06:47 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,9 +47,8 @@ CREATE TABLE `attendance` (
 INSERT INTO `attendance` (`id`, `user_id`, `session_id`, `related_table`, `attended_date`, `status`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
 (10, 47, 61, 'kuppisession', '2024-09-26 16:51:16', 'attended', 47, NULL, '2024-09-26 16:51:16', '2024-09-26 16:51:16'),
 (13, 47, 62, 'kuppisession', '2024-10-03 09:16:58', 'attended', 47, NULL, '2024-10-03 09:16:58', '2024-10-03 09:16:58'),
-(14, 46, 61, 'kuppisession', '2024-10-04 10:05:15', 'attended', 46, NULL, '2024-10-04 10:05:15', '2024-10-04 10:05:15'),
-(15, 46, 62, 'kuppisession', '2024-10-04 10:05:23', 'attended', 46, NULL, '2024-10-04 10:05:23', '2024-10-04 10:05:23'),
-(16, 45, 64, 'kuppisession', '2024-10-04 10:54:23', 'attended', 45, NULL, '2024-10-04 10:54:23', '2024-10-04 10:54:23');
+(16, 45, 64, 'kuppisession', '2024-10-04 10:54:23', 'attended', 45, NULL, '2024-10-04 10:54:23', '2024-10-04 10:54:23'),
+(17, 47, 66, 'kuppisession', '2024-10-07 04:19:15', 'attended', 47, NULL, '2024-10-07 04:19:15', '2024-10-07 04:19:15');
 
 -- --------------------------------------------------------
 
@@ -79,16 +78,13 @@ INSERT INTO `category` (`id`, `category_name`, `created_by`, `updated_by`, `crea
 (64, 'Civil Engineering', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (65, 'Computer Science', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (66, 'Economics', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
-(67, 'Education', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (68, 'Electrical Engineering', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (69, 'English', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (70, 'Environmental Science', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (71, 'Finance', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (72, 'Information Technology', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
 (73, 'Law', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
-(74, 'Marketing', 15, NULL, '2024-07-16 04:47:09', '2024-07-16 04:47:09'),
-(93, 'Fashion Design', 15, 15, '2024-08-05 04:15:39', '2024-08-05 04:15:39'),
-(95, 'categorynew', 15, 15, '2024-08-05 06:29:48', '2024-08-05 06:29:48');
+(93, 'Fashion Design', 15, 15, '2024-08-05 04:15:39', '2024-08-05 04:15:39');
 
 -- --------------------------------------------------------
 
@@ -113,10 +109,7 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `session_id`, `related_table`, `comment`, `rating`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(28, 2, 'tutorsession', 'you are very good tutor well unsertood', 4, 47, NULL, '2024-10-04 08:06:17', '2024-10-04 08:06:17'),
-(31, 61, 'kuppisession', 'FWFQFQF', 5, 47, NULL, '2024-10-04 09:52:23', '2024-10-04 09:52:23'),
-(33, 5, 'tutorsession', 'bes session ever', 4, 51, NULL, '2024-10-04 10:02:34', '2024-10-04 10:02:34'),
-(34, 61, 'kuppisession', 'goo for ever', 4, 46, NULL, '2024-10-04 10:05:39', '2024-10-04 10:05:39');
+(31, 61, 'kuppisession', 'FWFQFQF', 5, 47, NULL, '2024-10-04 09:52:23', '2024-10-04 09:52:23');
 
 -- --------------------------------------------------------
 
@@ -173,8 +166,7 @@ CREATE TABLE `material` (
 --
 
 INSERT INTO `material` (`id`, `kuppi_session_id`, `tutor_session_id`, `file_size`, `file_name`, `file_type`, `file_path`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(19, 61, NULL, 23492, '61.zip', NULL, 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/material-uploads/61.zip', 45, 45, '2024-09-15 15:28:19', '2024-09-15 15:28:19'),
-(40, NULL, 5, 161343, '5_1186.zip', NULL, 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/external_material_uploads/5_1186.zip', 45, 45, '2024-10-04 04:50:16', '2024-10-04 04:50:16');
+(19, 61, NULL, 23492, '61.zip', NULL, 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/material-uploads/61.zip', 45, 45, '2024-09-15 15:28:19', '2024-09-15 15:28:19');
 
 -- --------------------------------------------------------
 
@@ -220,15 +212,6 @@ CREATE TABLE `payment` (
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `payment`
---
-
-INSERT INTO `payment` (`id`, `user_id`, `tutor_session_id`, `amount`, `payment_date`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(4, 47, 5, 6000.00, '2024-09-29 12:18:06', 47, NULL, '2024-09-29 12:18:06', '2024-09-29 12:18:06'),
-(7, 51, 5, 6000.00, '2024-10-03 14:35:13', 51, NULL, '2024-10-03 14:35:13', '2024-10-03 14:35:13'),
-(9, 50, 5, 6000.00, '2024-10-03 15:10:08', 50, NULL, '2024-10-03 15:10:08', '2024-10-03 15:10:08');
-
 -- --------------------------------------------------------
 
 --
@@ -245,15 +228,6 @@ CREATE TABLE `subscription` (
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `subscription`
---
-
-INSERT INTO `subscription` (`id`, `user_id`, `tutor_session_id`, `subscribed_date`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(3, 47, 5, '2024-09-29 12:18:06', 47, NULL, '2024-09-29 12:18:06', '2024-09-29 12:18:06'),
-(6, 51, 5, '2024-10-03 14:35:13', 51, NULL, '2024-10-03 14:35:13', '2024-10-03 14:35:13'),
-(8, 50, 5, '2024-10-03 15:10:08', 50, NULL, '2024-10-03 15:10:08', '2024-10-03 15:10:08');
 
 -- --------------------------------------------------------
 
@@ -283,7 +257,6 @@ CREATE TABLE `tutorsession` (
 --
 
 INSERT INTO `tutorsession` (`id`, `title`, `description`, `course_content`, `about_tutor`, `tutor_fee`, `drive_link`, `session_link`, `time_period`, `status`, `created_by`, `updated_by`, `created_date`, `updated_date`) VALUES
-(5, 'new javascript from zero to hero for beginers', 'new javascript from zero to hero for beginers new javascript from zero to hero for beginers new javascript from zero to hero for beginers new javascript from zero to hero for beginers', 'new javascript from zero to hero for beginers new javascript from zero to hero for beginers new javascript from zero to hero for beginers', 'new javascript from zero to hero for beginers new javascript from zero to hero for beginers new javascript from zero to hero for beginers new javascript from zero to hero for beginers', 6000, NULL, 'https://learn.zoom.us/j/65991087445?pwd=ekZyWFpEMDY5R1I2UGJzczd0aTRrdz09', '5 months', 'approved', 45, 15, '2024-09-29 08:52:49', '2024-09-29 08:52:49'),
 (6, 'new mernstack course from zero to hero', 'The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript', 'The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript', 'The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript The MERN stack is a collection of technologies that help developers build robust and scalable web applications using JavaScript', 5500, NULL, 'https://learn.zoom.us/j/65991087445?pwd=ekZyWFpEMDY5R1I2UGJzczd0aTRrdz09', '6 months', 'approved', 45, 15, '2024-10-04 10:26:12', '2024-10-04 10:26:12');
 
 -- --------------------------------------------------------
@@ -348,13 +321,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `contact`, `role`, `account_status`, `verification_file_name`, `verification_file_path`, `verification_file_type`, `verification_file_size`, `is_verified`, `last_login`, `created_by`, `updated_by`, `created_date`, `updated_date`, `university_id`) VALUES
-(15, 'admin', 'admin', 'admin@gmail.com', '$2y$10$JN2QrqVJbqcyGcZ4K6o1yuAbXqbt.kIhiUDOVTQqWe5S20GDmqaDu', '0710619833', 'administrator', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-04 17:11:22', NULL, NULL, '2024-07-14 04:11:52', '2024-07-14 04:11:52', NULL),
-(45, 'yeran', 'lakvidu', 'geeganageyeran@gmail.com', '$2y$10$JN2QrqVJbqcyGcZ4K6o1yuAbXqbt.kIhiUDOVTQqWe5S20GDmqaDu', '0710619833', 'undergraduate', 'active', '66e674e1ae8f2.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e674e1ae8f2.png', 'image/png', 25533, 1, '2024-10-04 16:51:45', NULL, NULL, '2024-09-15 05:47:13', '2024-09-15 05:47:13', 6),
-(46, 'piyumi', 'weerasinghe', 'piyumiweerasinghe201@gmail.com', '$2y$10$i6PEC1bYwPAU0MPO6B0PH.CyUnKCGx5mXed0GNcdQwC8XQMLB/vZy', '0710619833', 'undergraduate', 'active', '66e7dba692a8e.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e7dba692a8e.png', 'image/png', 25533, 1, '2024-10-04 10:05:09', NULL, NULL, '2024-09-16 07:17:58', '2024-09-16 07:17:58', 10),
-(47, 'sathil', 'lakvidu', 'designs.yeran@gmail.com', '$2y$10$KYlqdJF2mXvBXNRe9gVIt.hR38oD8UayMGfEOgKgXJrd.VyYZXUfG', '0710619833', 'undergraduate', 'active', '66e7dd72d6633.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e7dd72d6633.png', 'image/png', 25533, 1, '2024-10-04 16:49:28', NULL, NULL, '2024-09-16 07:25:39', '2024-09-16 07:25:39', 1),
+(15, 'admin', 'admin', 'admin@gmail.com', '$2y$10$JN2QrqVJbqcyGcZ4K6o1yuAbXqbt.kIhiUDOVTQqWe5S20GDmqaDu', '0710619833', 'administrator', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-19 04:43:13', NULL, NULL, '2024-07-14 04:11:52', '2024-07-14 04:11:52', NULL),
+(45, 'yeran', 'lakvidu', 'geeganageyeran@gmail.com', '$2y$10$JN2QrqVJbqcyGcZ4K6o1yuAbXqbt.kIhiUDOVTQqWe5S20GDmqaDu', '0710619833', 'undergraduate', 'active', '66e674e1ae8f2.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e674e1ae8f2.png', 'image/png', 25533, 1, '2024-10-18 16:36:32', NULL, NULL, '2024-09-15 05:47:13', '2024-09-15 05:47:13', 6),
+(47, 'sathil', 'lakvidu', 'designs.yeran@gmail.com', '$2y$10$tmTuuts18VVl9Vs7qFgdmOhsyM1nkXgooswHd1HtuQUhew3p66Bye', '0710619833', 'undergraduate', 'active', '66e7dd72d6633.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e7dd72d6633.png', 'image/png', 25533, 1, '2024-10-18 11:23:47', NULL, NULL, '2024-09-16 07:25:39', '2024-09-16 07:25:39', 1),
 (49, 'kamal', 'perera', 'kamal@gmail.com', '$2y$10$tduXA0uRU83FkZJ8aXKFa.xMgTV.iNblrrqn4BxzWqh8F.BSUwdvq', '0710619833', 'undergraduate', 'inactive', '66e7dfcd2477a.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/66e7dfcd2477a.png', 'image/png', 25533, 0, '2024-09-16 07:35:41', NULL, NULL, '2024-09-16 07:35:41', '2024-09-16 07:35:41', 8),
-(50, 'nelara', 'damnadee', 'nelara@gmail.com', '$2y$10$8j2GkmzdFeKyOQHTwokIWuJYvaJZFCaS27C3m5RTHwpF5drxhfMNS', '0710619833', 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-04 10:04:45', NULL, NULL, '2024-10-03 13:30:29', '2024-10-03 13:30:29', NULL),
-(51, 'chamal', 'saminda', 'chamal@gmail.com', '$2y$10$H49jWFYuyyD1r/8kCMzNOuaTAjC8B3r7O0Y/lvgvs9sTgHH70Olgq', '0710619833', 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-04 16:56:33', NULL, NULL, '2024-10-03 14:34:21', '2024-10-03 14:34:21', NULL);
+(51, 'chamal', 'saminda', 'chamal@gmail.com', '$2y$10$H49jWFYuyyD1r/8kCMzNOuaTAjC8B3r7O0Y/lvgvs9sTgHH70Olgq', '0710619833', 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-17 17:07:41', NULL, NULL, '2024-10-03 14:34:21', '2024-10-03 14:34:21', NULL),
+(52, 'nisal', 'ranasinghe', 'nisal@gmail.com', '$2y$10$FNiQd7ZS2pwuy3S4kqri8.bDr3qpv852BEPbJDyBaBPHr/vkxO35C', '0710619833', 'undergraduate', 'inactive', '6712810d8ca41.png', 'C:\\xampp\\htdocs\\KuppiMate\\src\\controller/uploads/6712810d8ca41.png', 'image/png', 25533, 0, '2024-10-18 15:38:53', NULL, NULL, '2024-10-18 15:38:53', '2024-10-18 15:38:53', 1),
+(53, 'kalhari', 'perera', 'kalhari@gmail.com', '$2y$10$0aUi6a5Bm5nnttVvQHyrb.MFs2Thiw7kz/5KYpwxQmMzHdAYThvwO', '0710619833', 'external_learner', 'active', NULL, NULL, NULL, NULL, 1, '2024-10-18 16:04:25', NULL, NULL, '2024-10-18 16:04:25', '2024-10-18 16:04:25', NULL);
 
 --
 -- Indexes for dumped tables
@@ -466,37 +439,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `kuppisession`
 --
 ALTER TABLE `kuppisession`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `material`
 --
 ALTER TABLE `material`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `payment`
@@ -526,7 +499,7 @@ ALTER TABLE `university`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
