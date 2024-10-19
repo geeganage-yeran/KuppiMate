@@ -24,14 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $categoryId = $_POST['category'];
         $userId = $_SESSION['id'];
 
-        if (!empty($title) && !preg_match('/^[a-zA-Z0-9\s\-_\.()]+$/', $title)) {
+        if (!empty($title) && !preg_match('/^[a-zA-Z0-9\s\-_\.(),]+$/', $title)) {
             $errorMessage = 'Invalid title you canot use special characters in title only allowed (- , _ , .)';
             $_SESSION['errorMessage'] = $errormessage;
             header("Location: /KuppiMate/src/view/ug-dashboard.php?id=1");
             exit();
         }
 
-        if (!empty($title) && !preg_match('/^[a-zA-Z0-9\s\-_\.()]+$/', $description)) {
+        if (!empty($description) && !preg_match('/^[a-zA-Z0-9\s\-_\.(),]+$/', $description)) {
             $errorDescription = 'Invalid description you canot use special characters in decription only allowed (- , _ , .)';
             header("Location: /KuppiMate/src/view/ug-dashboard.php?id=1");
             exit();

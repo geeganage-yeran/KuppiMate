@@ -106,7 +106,7 @@ $role = $_SESSION['role'];
                     <table class="table table-hover text-center">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
+                                <th scope="col">No</th>
                                 <th scope="col">Created By</th>
                                 <th scope="col">Category Name</th>
                                 <th scope="col">Created Date</th>
@@ -149,6 +149,34 @@ $role = $_SESSION['role'];
         <section class="content" id="user-management">
             <div class="container">
                 <h4>Undergraduates - Pending Verifications</h4>
+                <?php if (isset($_GET['u'])) {
+                    if ($_GET['u'] == '5') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    The user activated suceesfully.
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['u'] == '6') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    User deleted successfully.
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['u'] == '7') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    User account deactivated successfully.
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    } elseif ($_GET['u'] == '8') {
+                        echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
+                                    User account activated successfully.
+                                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                                    </button>
+                                    </div>";
+                    }
+                }
+                ?>
                 <div class="pVerification table-responsive">
                     <table class="table table-hover text-center table-responsive">
                         <thead>
@@ -178,10 +206,7 @@ $role = $_SESSION['role'];
                                         </td>
 
                                         <td>
-                                            <form action="/KuppiMate/src/controller/adminController.php" method="POST">
-                                                <input type="hidden" name="acivateId" value="<?php echo $result['id']; ?>">
-                                                <button type="submit" class="btn btn-primary btn-sm">Activate</button>
-                                            </form>
+                                            <button class="btn btn-primary btn-sm" data-session-id="<?php echo $result['id']; ?>" data-bs-toggle="modal" data-bs-target="#activateUser">Activate</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -707,7 +732,7 @@ $role = $_SESSION['role'];
                                 <th scope="col">Course Name</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Time</th>
-                                <th scope="col">Ammount</th>
+                                <th scope="col">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -911,6 +936,28 @@ $role = $_SESSION['role'];
                             <input type="hidden" id="deleteFeedbackSet" name="deleteFeedId" value="" hidden>
                             <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-delete btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Activate user Verification-->
+    <div class="modal fade customModal" data-bs-backdrop="static" id="activateUser" tabindex="-1" aria-labelledby="activateUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <i class="bi bi-exclamation-circle-fill icon-large"></i>
+                        <h5>Confirm Account Activation</h5>
+                    </div>
+                    <p>Activating this account will enable access. Are you sure you want to proceed?</p>
+                    <form action="/KuppiMate/src/controller/adminController.php" method="post">
+                        <div class="d-flex justify-content-center mt-4">
+                            <input type="hidden" id="activateUserIdSet" name="activateUserId" value="" hidden>
+                            <button type="button" class="btn btn-cancel btn-outline-dark me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-delete btn-primary">Activate</button>
                         </div>
                     </form>
                 </div>

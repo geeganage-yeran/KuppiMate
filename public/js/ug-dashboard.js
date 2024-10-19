@@ -141,18 +141,18 @@ function rating(n, accordionIndex) {
         else if (n === 3) cls = "three";
         else if (n === 4) cls = "four";
         else if (n === 5) cls = "five";
-        
+
         stars[i].classList.add(cls);
     }
 
-    
+
     ratingValue.value = n;
 }
 
 function remove(accordionIndex) {
     const stars = document.getElementsByClassName("star-" + accordionIndex);
 
-    
+
     for (let i = 0; i < stars.length; i++) {
         stars[i].className = "star star-" + accordionIndex; // Reset the class to default
     }
@@ -187,7 +187,7 @@ function modalRating(n) {
 function resetModalStars() {
     const modalStars = document.getElementsByClassName("modal-star");
 
-    
+
     for (let i = 0; i < modalStars.length; i++) {
         modalStars[i].className = "modal-star";
     }
@@ -253,6 +253,24 @@ function validateSetting() {
     }
     return true;
 
+}
+
+//create kuppi validation 
+
+function createKuppi() {
+    const kTitle = document.getElementById("kTitle").value;
+    const kDescription = document.getElementById("kDescription").value;
+    
+    const regex = /^[a-zA-Z0-9\s\-_\.(),]+$/;
+
+    if (!kTitle.match(regex)) {
+        alert('Invalid characters in kuppi title');
+        return false;
+    } else if (!kDescription.match(regex)) {
+        alert('Invalid characters in kuppi description');
+        return false;
+    }
+    return true;
 }
 
 //set session id for feedback
@@ -343,8 +361,8 @@ enrollButtons.forEach(button => {
 
 //pass id to the modals
 
-var confirmModal= document.getElementById('confirmModal');
-confirmModal.addEventListener('show.bs.modal', function (event){
+var confirmModal = document.getElementById('confirmModal');
+confirmModal.addEventListener('show.bs.modal', function (event) {
     var button = event.relatedTarget;
     var deleteSessionId = button.getAttribute('data-session-id');
     var deleteSessionIdSet = document.getElementById('deleteSessionIdSet');

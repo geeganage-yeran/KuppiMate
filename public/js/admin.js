@@ -65,6 +65,14 @@ deleteCatModal.addEventListener('show.bs.modal', function (event){
     deleteCatIdSet.value = deleteCatId;
 })
 
+var confirmUserModal= document.getElementById('activateUser');
+confirmUserModal.addEventListener('show.bs.modal', function (event){
+    var button = event.relatedTarget;
+    var activateUserId = button.getAttribute('data-session-id');
+    var activateUserIdSet = document.getElementById('activateUserIdSet');
+    activateUserIdSet.value = activateUserId;
+})
+
 //message timeout settings
 
 setTimeout(function () {

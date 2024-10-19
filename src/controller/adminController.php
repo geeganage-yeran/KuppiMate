@@ -12,31 +12,31 @@ $exLearnerList = $user->userList(Dbconnector::getConnection(), "externalLearnerL
 $category=new Category();
 $catList=$category->getCategory(Dbconnector::getConnection());
 
-if (isset($_POST['acivateId'])) {
-    $user->setuserId($_POST['acivateId']);
+if (isset($_POST['activateUserId'])) {
+    $user->setuserId($_POST['activateUserId']);
     if ($user->ugAccountActivation(Dbconnector::getConnection())) {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?s=5");
+        header("Location: /KuppiMate/src/view/admin-dashboard.php?u=5");
         exit();
     };
 }
 if (isset($_POST['deleteId'])) {
     $user->setuserId($_POST['deleteId']);
     if ($user->deleteAccount(Dbconnector::getConnection())) {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?s=6");
+        header("Location: /KuppiMate/src/view/admin-dashboard.php?u=6");
         exit();
     }
 }
 if (isset($_POST["inactiveId"])) {
     $user->setuserId($_POST["inactiveId"]);
     if ($user->inactiveAccount(Dbconnector::getConnection())) {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?s=7");
+        header("Location: /KuppiMate/src/view/admin-dashboard.php?u=7");
         exit();
     }
 }
 if (isset($_POST["reactiveId"])) {
     $user->setuserId($_POST["reactiveId"]);
     if ($user->reactiveAccount(Dbconnector::getConnection())) {
-        header("Location: /KuppiMate/src/view/admin-dashboard.php?s=8");
+        header("Location: /KuppiMate/src/view/admin-dashboard.php?u=8");
         exit();
     }
 }

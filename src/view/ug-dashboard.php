@@ -72,35 +72,35 @@ $account_status = $_SESSION['account_status'];
                         <div>
                             <i class="bi bi-person-workspace"></i>
                             <p class="homecont-p">How to join for a Kuppi</p>
-                            <p>To join a Kuppi session on KuppiMate, first sign up with your email address and complete the academic verification process. After logging in, go to upcoming Kuppi sessions, select one that matches your academic needs, and click on the session link to join and participate.</p>
+                            <p>To join a Kuppi session on KuppiMate, sign up with your email address and complete the academic verification process. Once logged in, go to the "Join for a Kuppi" select one that suits your academic needs, and click the enroll now to get the session link to join and participate</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-people-fill"></i>
                             <p class="homecont-p">How to schedule a Kuppi</p>
-                            <p>To schedule a Kuppi session on KuppiMate, log in and navigate to the create a kuppi section. Enter the details such as topic, date, time, and university, then submit your request for approval. Once approved, your session will appear on the notice board for others to join.</p>
+                            <p>To schedule a Kuppi session on KuppiMate, log in and navigate to the "Create a Kuppi" section. Enter details such as the topic, date, time, then submit your request for approval. Once approved, your session will appear on the notice board for others to join.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-person-lines-fill"></i>
                             <p class="homecont-p">About external session</p>
-                            <p>External sessions on KuppiMate allow verified undergraduates to host educational sessions for both peers and external learners. These sessions can be free or paid, providing flexible learning opportunities.</p>
+                            <p>External sessions on KuppiMate allow verified undergraduates to host educational sessions for both peers and external learners. These sessions can be offered as either free or paid, providing flexible learning opportunities for all participants.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-person-video3"></i>
                             <p class="homecont-p">Join for an external session</p>
-                            <p>Registered users can browse available sessions, select one of interest, and complete payment and registration for the session.</p>
+                            <p>Registered users can browse available sessions, select one of interest, and complete the payment and registration process for the session.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4 mb-4">
                         <div>
                             <i class="bi bi-question-lg"></i>
                             <p class="homecont-p">Any questions</p>
-                            <p>You can just send an email to kuppimate@gmail.com</p>
+                            <p>You can simply send an email to kuppimate@gmail.com.</p>
                         </div>
                     </div>
                 </div>
@@ -147,18 +147,19 @@ $account_status = $_SESSION['account_status'];
             }
             ?>
             <!--message display section end-->
-            <form action="/KuppiMate/src/controller/createKuppi.php" method="POST">
+
+            <form action="/KuppiMate/src/controller/createKuppi.php" method="POST" onsubmit="return createKuppi()">
                 <div class="createKuppiContainer">
                     <div id="createKuppiHeading">Schedule your Kuppi Session</div>
                     <div id="CreateKuppiTitle">
                         <label>Session Title</label><br>
-                        <input type="text" name="tName" required autocomplete="off">
+                        <input type="text" name="tName" id="kTitle" required autocomplete="off">
                     </div>
                     <div id="CreateKuppiFrom">
                         <label>Time and Date</label><br>
-                        <input class="Kdate Kuppifrom" type="datetime-local" name="startDate" required>
+                        <input class="Kdate Kuppifrom" type="datetime-local" id="kSTime" name="startDate" required>
                         <label>to</label>
-                        <input class="Kdate Kuppito" type="datetime-local" name="endDate" required>
+                        <input class="Kdate Kuppito" type="datetime-local" id="kETime" name="endDate" required>
                     </div>
                     <div id="selectCategory">
                         <label>Session Category</label><br>
@@ -172,7 +173,7 @@ $account_status = $_SESSION['account_status'];
                     </div>
                     <div class="textArea">
                         <label class="maxChar">Session Description</label><br>
-                        <textarea class="description" name="description" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
+                        <textarea class="description" name="description" id="kDescription" rows="6" cols="50" maxlength="300" placeholder="Max Characters 300..." required></textarea>
                     </div>
                     <div id="CreateSection">
                         <button type="reset">Cancle</button>
@@ -586,8 +587,7 @@ $account_status = $_SESSION['account_status'];
                             <?php } else { ?>
                                 <span class="badge bg-warning text-dark fs-6">Not Eligible</span>
                             <?php } ?>
-                            <p>KuppiMate offers undergraduates a unique opportunity to earn by sharing their knowledge and conducting external sessions. By becoming a verified tutor, students can schedule and lead sessions on various subjects they excel in. Once approved, these sessions can be attended by other students and external leaners, providing a platform to not only teach but also to earn.
-                                The process is straightforward: get verified, schedule your sessions, and start earning from your expertise. Take advantage of this chance to make a difference and gain valuable experience while earning through KuppiMate.
+                            <p>KuppiMate provides undergraduates with a unique opportunity to earn by sharing their knowledge through external sessions. By becoming a verified tutor, students can schedule and lead sessions on subjects they excel in. Once approved, these sessions are open to other students and external learners, offering a platform to teach and earn. The process is simple: get verified, schedule your sessions, and start earning from your expertise. It's a great way to make a difference, gain valuable experience, and earn through KuppiMate.
                             </p>
                         </div>
                     </div>

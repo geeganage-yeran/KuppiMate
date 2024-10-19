@@ -21,7 +21,7 @@ function formValidate1(){
     }else if(!lName.match(/^[a-zA-Z'-]+$/)){
         alert('Check your last name');
         return false;
-    }else if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/)){
+    }else if(!password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).{8,}$/)){
         alert('Password should contain at least one uppercase letter, one lowercase letter, one special character, and a minimum length of 8');
         return false;
     }else if(password!==rpassword){
@@ -49,7 +49,7 @@ function formValidate2(){
     }else if(!lName2.match(/^[a-zA-Z'-]+$/)){
         alert('Check your last name');
         return false;
-    }else if(!password2.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/)){
+    }else if(!password2.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#]).{8,}$/)){
         alert('Password should contain at least one uppercase letter, one lowercase letter, one special character, and a minimum length of 8');
         return false;
     }else if(password2!==rpassword2){
