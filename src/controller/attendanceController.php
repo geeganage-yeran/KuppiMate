@@ -7,6 +7,7 @@ $attendance=new Attendance();
 
 $isEnrolled=$attendance->getAttendance(Dbconnector::getConnection());
 $enrolledList=$attendance->listAttendance(Dbconnector::getConnection(),$_SESSION['id']);
+$attendanceKuppi=$attendance->getAttendnaceDetails(Dbconnector::getConnection());
 
 if($_SERVER["REQUEST_METHOD"]=='POST'){
     if(isset($_POST['sId'],$_POST['uId'])){

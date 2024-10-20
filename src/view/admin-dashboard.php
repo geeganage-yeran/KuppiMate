@@ -4,6 +4,7 @@ include_once __DIR__ . '/../controller/externalSessionApproval.php';
 include_once __DIR__ . '/../controller/feedbackAdminController.php';
 include_once __DIR__ . '/../controller/paymentController.php';
 include_once __DIR__ . '/../controller/subscriptionController.php';
+include_once __DIR__ . '/../controller/attendanceController.php';
 
 
 
@@ -41,6 +42,7 @@ $role = $_SESSION['role'];
             <li><a href="#" onclick="showSection('External-sessions')"><i class="bi bi-easel3-fill"></i>&nbsp;&nbsp;&nbsp;External Sessions</a></li>
             <li><a href="#" onclick="showSection('user-feedbacks')"><i class="bi bi-fingerprint"></i>&nbsp;&nbsp;&nbsp;User Feedbacks</a></li>
             <li><a href="#" onclick="showSection('payments')"><i class="bi bi-cash"></i>&nbsp;&nbsp;&nbsp;Payment Details</a></li>
+            <li><a href="#" onclick="showSection('kuppi-attendance')"><i class="bi bi-person-raised-hand"></i>&nbsp;&nbsp;&nbsp;Attendance Details</a></li>
             <li class="mt-3" style="margin-top: 90px;"><a href="" data-bs-toggle="modal" data-bs-target="#logoutConfirm"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;&nbsp;Log out</a></li>
         </ul>
     </div>
@@ -753,6 +755,34 @@ $role = $_SESSION['role'];
                 </div>
             </div>
         </section>
+        <section class="content" id="kuppi-attendance">
+            <div class="attendance table-responsive mt-4">
+                <table class="table table-hover text-center table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Attendee Name</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Date|Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if ($attendanceKuppi != null) { ?>
+                            <?php foreach ($attendanceKuppi as $index => $attendance) { ?>
+                                <tr>
+                                    <th scope="row"><?php echo $index + 1 ?></th>
+                                    <td><?php echo $attendance['first_name'] . ' ' . $attendance['last_name'] ?></td>
+                                    <td><?php echo $attendance['title'] ?></td>
+                                    <td><?php echo $attendance['created_date'] ?></td>
+                                </tr>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <span class="badge bg-warning text-dark">No Attendance Details To Display</span>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
     </div>
 
     <!--undergrduate delete verification-->
@@ -964,7 +994,6 @@ $role = $_SESSION['role'];
             </div>
         </div>
     </div>
-
 
 
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
