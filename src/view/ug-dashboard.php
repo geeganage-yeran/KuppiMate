@@ -597,9 +597,7 @@ $account_status = $_SESSION['account_status'];
                         </div>
                     </div>
                 </div>
-
                 <!--display error-->
-
                 <?php
                 if (isset($_SESSION['form_errors']) && !empty($_SESSION['form_errors'])) {
                     foreach ($_SESSION['form_errors'] as $error) {

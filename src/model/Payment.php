@@ -47,4 +47,5 @@ class Payment {
             echo "Error: " . $e->getMessage();
         }
     }
+
 }

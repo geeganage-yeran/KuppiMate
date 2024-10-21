@@ -473,6 +473,7 @@ $role = $_SESSION['role'];
         </section>
         <section class="content" id="External-sessions">
             <div class="container">
+                <!--Error Messages---->
                 <?php if (isset($_GET['ex'])) {
                     if ($_GET['ex'] == '101') {
                         echo "<div id='alertMessage' class='alert alert-success alert-dismissible fade show  mt-4' role='alert'>
@@ -972,7 +973,6 @@ $role = $_SESSION['role'];
             </div>
         </div>
     </div>
-
     <!--Activate user Verification-->
     <div class="modal fade customModal" data-bs-backdrop="static" id="activateUser" tabindex="-1" aria-labelledby="activateUserModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -994,7 +994,6 @@ $role = $_SESSION['role'];
             </div>
         </div>
     </div>
-
 
     <script src="/KuppiMate/public/js/Ex-dashboard.js?v=<?php echo time(); ?>"></script>
     <script src="/KuppiMate/public/js/admin.js?v=<?php echo time(); ?>"></script>
